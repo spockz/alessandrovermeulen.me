@@ -1,0 +1,1286 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Alessandro Vermeulen</title>
+  <meta name="author" content="Alessandro Vermeulen">
+
+  
+  <meta name="description" content="After the first
+release of my tool on hackage this release
+actually is a working package. The previous one didn’t install out of the box. The most &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://alessandrovermeulen.me/blog/page/3">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <!--<script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>-->
+  <link href="/atom.xml" rel="alternate" title="Alessandro Vermeulen" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<!-- <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css"> -->
+<!-- <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css"> -->
+<!-- <script src="http://cachedcommons.org/javascripts/jquery/jquery.disqus.js" type="text/javascript"></script> -->
+<link href='http://fonts.googleapis.com/css?family=Open+Sans|Droid+Serif' rel='stylesheet' type='text/css'>
+
+</head>
+
+<body   >
+
+  <section class="container">
+    <header role="banner"><hgroup>
+  <header id="pageheader">
+    <header role="banner" id="banner">
+      <h1><a href="/">Alessandro Vermeulen</a></h1>
+      
+        <p>Alessandro Vermeulen's blog about languages, programming, Computer Science, photography and the Web. <a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS"><i class="icon-rss"></i></a></p>
+      
+    </header>
+  </header>
+</hgroup>
+
+</header>
+    <nav role="navigation"><nav class="navbar">
+  <ul class="nav nav-pills">
+  <li><a href="/about">About</a></li>
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+
+  <ul class="pull-right subscription nav nav-pills" data-subscription="rss">
+  
+  </ul>
+
+  <form class="navbar-search pull-right" action="http://google.com/search" method="get">
+  <fieldset role="search" id="searchfieldset">
+    <input type="hidden" name="q" value="site:alessandrovermeulen.me" />
+
+    <div class="input-append">
+      <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+      <button type="submit" class="btn"><i class="icon-search"></i></button>
+    </div>
+  </fieldset>
+  </form>
+</nav>
+<!--
+<ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:alessandrovermeulen.me" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+
+ --></nav>
+    <!--[if lt IE 9]>
+    <div class="alert alert-block">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <h4>Warning!</h4>
+      Your version of Internet Explorer is seriously outdated. Please upgrade to a decent version of <a href="http://windows.microsoft.com/en-us/internet-explorer/download-ie">Internet Explorer</a> or <a href="http://www.google.com/chrome">Chrome</a> or <a href="http://www.mozilla.org/en-US/firefox/new/">Firefox</a>.
+    </div>
+    <![endif]-->
+    <div id="main">
+      <div id="content">
+        <div class="row-fluid">
+<div class="blog-index span9">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2010/11/01/lhs2tex-hl-0.1.1.1-released/">lhs2TeX-hl 0.1.1.1 Released</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-11-01T00:00:00+00:00" pubdate data-updated="true">Nov 1<span>st</span>, 2010</time>
+        
+         | <a href="/2010/11/01/lhs2tex-hl-0.1.1.1-released/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>After the <a href="http://alessandrovermeulen.me/2010/10/23/lhs2tex-hl-released/">first
+release</a> of my tool on hackage <a href="http://hackage.haskell.org/package/lhs2TeX-hl-0.1.1.1">this release</a>
+actually is a working package. The previous one didn’t install out of the box.</p>
+
+<p>The most important <code>changes </code> are:</p>
+
+<ol>
+  <li>Added a filter for rewrite rules that aren’t “lhs2TeX safe”, e.g. <code>format () = ...</code>;</li>
+  <li>I hardcoded the default formatting rules for several of lhs2TeX defaults,
+including but not limited to <code>-&gt;</code>, <code>&lt;-</code> and <code>=&gt;</code>. This is not a desirable
+solution but it suits my purposes.</li>
+</ol>
+
+<p>You can do literal (numeral, character and string) formatting easily with
+lhs2TeX itself with the following directives:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="latex"><span class="line"><span class="c">%subst char a    	= &quot;\color{char}\text{\tt &#39;&#39;&quot; a &quot;&#39;&#39;}&quot;</span>
+</span><span class="line"><span class="c">%subst string a  	= &quot;\color{string}\text{\tt \char34 &quot; a &quot;\char34}&quot;</span>
+</span><span class="line"><span class="c">%subst numeral a =  &quot;\color{numeral}{ &quot; a &quot; }&quot;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2010/10/23/lhs2tex-hl-released/">lhs2TeX-hl Released</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-10-23T00:00:00+00:00" pubdate data-updated="true">Oct 23<span>rd</span>, 2010</time>
+        
+         | <a href="/2010/10/23/lhs2tex-hl-released/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I’m proud to announce the first release of my lhs2TeX-hl tool. For us who fancy using colours in our presentations or papers this should now go a whole lot easier. Go to the <a href="http://alessandrovermeulen.me/projects/lhs2texhl/">lhs2TeX-hl homepage</a>!</p>
+
+<p>Install it like this:</p>
+
+<p>[bash]
+&gt; cabal install lhs2TeX-hl
+[/bash]</p>
+
+<p>lhs2TeX-hl is run before you run lhs2TeX and you supply it with the input file and the output file. A typical execution would look like this:</p>
+
+<p>[bash]
+&gt; lhs2TeX-hl -o MyPaper.fmt MyPaper.lhs
+&gt; lhs2TeX -o MyPaper.Tex MyPaper.lhs
+&gt; pdflatex MyPaper.tex
+[/bash]</p>
+
+<p>It’s important to note here that you should’ve added the following line to your MyPaper.lhs file:</p>
+<pre>%include MyPaper.fmt</pre>
+<p>And that you have the following commands defined in your latex file:</p>
+<ul>
+	<li> \lhsCHkeyword</li>
+	<li>\lhsCHprelude</li>
+	<li>\lhsCHtype</li>
+	<li>\lhsCHlitNumber</li>
+	<li>\lhsCHconstructor</li>
+	<li>\lhsCHfunction</li>
+	<li>\lhsCHinfixoperator</li>
+</ul>
+<p>For example, like this:</p>
+<pre>\definecolor{datatype}{RGB}{42,0,217}
+\definecolor{class}{RGB}{197,11,16}
+\definecolor{fieldname}{RGB}{0,0,162}
+\definecolor{prelude}{RGB}{64,80,117}
+\definecolor{numeral}{RGB}{0,0,205}
+\definecolor{infixoperator}{RGB}{42,0,217}
+\definecolor{constructor}{RGB}{0,161,0}
+\definecolor{keyword}{RGB}{229,120,0}
+\definecolor{special1}{RGB}{159,138,0}
+
+\newcommand{\lhsCHfunction}[1]{\color{infixoperator}}
+\newcommand{\lhsCHinfixoperator}[1]{\color{infixoperator}}
+\newcommand{\lhsCHprelude}[1]{\color{prelude}{\mathbf{#1}}}
+\newcommand{\lhsCHkeyword}[1]{\color{keyword}{\textbf{#1}}}
+\newcommand{\lhsCHconstructor}[1]{\color{constructor}{\textbf{#1}}}
+\newcommand{\lhsCHlitNumber}[1]{\color{numeral}}
+\newcommand{\lhsCHtype}[1]{\color{datatype}}</pre>
+<p>And then you might end up with something that looks like this:</p>
+
+<p>[caption id=”attachment_306” align=”aligncenter” width=”300” caption=”Literate Highlighter Code v0.1.0.2”]<a href="http://alessandrovermeulen.me/wp-content/2010/10/Screen-shot-2010-10-23-at-18.41.00.png"><img class="size-medium wp-image-306" title="Screen shot 2010-10-23 at 18.41.00" src="http://alessandrovermeulen.me/wp-content/2010/10/Screen-shot-2010-10-23-at-18.41.00-300x255.png" alt="Literate Highlighter Code v0.1.0.2" width="300" height="255" /></a>[/caption]</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2010/09/10/how-to-setup-afp-on-debian-lenny/">How to Setup AFP on Debian Lenny</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-09-10T00:00:00+00:00" pubdate data-updated="true">Sep 10<span>th</span>, 2010</time>
+        
+         | <a href="/2010/09/10/how-to-setup-afp-on-debian-lenny/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>After some time of struggling with MacFuse (+MacFusion) and SSHFS I set out to get something that works nice, is integrated in OS X nicely and above all, is not sslooow. AFP which is all of this is available for Debian but without support of the new encrypted password mechanism.</p>
+
+<p>To this extent I searched and found a nice tutorial: <a href="http://routerjockey.com/2009/08/28/setting-up-apple-filing-protocol-and-bonjour-under-debian/">Setting up Apple Filing Protocol and Bonjour under Debian</a>.</p>
+
+<p>Apparently is was there when I tried this the last time and I missed it. But now it works. This works seamlessly with OS X 10.6. I now even have a nice heavy duty server icon in the Finder for my Debian machine. This is because of the avahi service.</p>
+
+<p>This how to also explains how to setup your TimeMachine to backup to the Debian server.</p>
+
+<p><a href="http://alessandrovermeulen.me/wp-content/2010/09/Screen-shot-2010-09-10-at-12.24.28.png"><img class="alignnone size-medium wp-image-265" title="Screenshot of my Debian machine in the Finder" src="http://alessandrovermeulen.me/wp-content/2010/09/Screen-shot-2010-09-10-at-12.24.28-300x225.png" alt="Screenshot of my Debian machine in the Finder" width="300" height="225" /></a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2010/04/28/moving-to-doctrine-1.2.x/">Moving to Doctrine 1.2.x</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-04-28T00:00:00+00:00" pubdate data-updated="true">Apr 28<span>th</span>, 2010</time>
+        
+         | <a href="/2010/04/28/moving-to-doctrine-1.2.x/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Here are some updates on my previous article. <a href="http://alessandrovermeulen.me/2009/04/17/doctrine-meets-codeigniter/">Doctrine meets Codeigniter</a>.</p>
+
+<p>Do not forget to add the following autoload directive to your hooks/doctrine.php and the doctrine.php cli:</p>
+
+<p>[php]spl_autoload_register(array(‘Doctrine’, ‘modelsAutoload’));[/php]</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2010/02/10/debian-lenny-and-the-haskell-platform/">Debian Lenny and the Haskell Platform</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-02-10T00:00:00+00:00" pubdate data-updated="true">Feb 10<span>th</span>, 2010</time>
+        
+         | <a href="/2010/02/10/debian-lenny-and-the-haskell-platform/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Currently there is no package for the Haskell-Platform in Debian stable. However, the source of this platform and GHC is available for download at <a href="http://www.haskell.org/ghc/">ghc</a> and <a href="http://www.haskell.org/platform">platform</a>.</p>
+
+<p>However, there are some issues to solve when installing the platform from source. Mainly you’ll be missing several packages. The following commands worked at my own Debian machine. If you find out that’s something is missing that was apparently already installed on my machine, don’t hesitate to leave a comment.</p>
+
+<p>The following commands are all executed as <em>root</em>.
+First we need to download the sources, I’m using the x86 sources, but feel free to use the x64 version:
+[bash]
+cd /tmp
+wget http://www.haskell.org/ghc/dist/6.10.4/ghc-6.10.4-i386-unknown-linux-n.tar.bz2
+wget http://hackage.haskell.org/platform/2009.2.0.2/haskell-platform-2009.2.0.2.tar.gz
+[/bash]</p>
+
+<p>Now we need to extract these sources:</p>
+
+<p>[bash]
+tar xvf ghc-6.10.4-i386-unknown-linux-n.tar.bz2
+tar xvzf haskell-platform-2009.2.0.2.tar.gz
+[/bash]</p>
+
+<p>Before we do any other stuff, let’s ensure that we have all the packages and libraries we need before continuing.</p>
+
+<p>[bash]
+apt-get install build-essential libghc6-opengl-dev libghc6-glut-dev libeditline-dev libedit2 libedit-dev
+[/bash]</p>
+
+<p>Also make sure that you apply this patch to the platform, the bug has been around for some time now but hasn’t been fixed apparently, it can be found at <a href="http://trac.haskell.org/haskell-platform/ticket/84">bug #84</a>:</p>
+
+<p>[bash]
+patch -p0 haskell-platform-2009.2.0.2/scripts/install.sh
+Index: haskell-platform-2009.2.0.2/scripts/install.sh
+===================================================================
+— haskell-platform-2009.2.0.2.orig/scripts/install.sh
++++ haskell-platform-2009.2.0.2/scripts/install.sh
+@@ -34,13 +34,23 @@ install_pkg () {
+   fi
+ }</p>
+
+<p>+# Is this exact version of the package already installed?
++is_pkg_installed () {
++  PKG_VER=$1
++  grep &#8221; ${PKG_VER} &#8221; installed.packages &gt; /dev/null 2&gt;&amp;1
++}
++
+ # Actually do something!
+ cd packages
+ for pkg in <code>cat platform.packages</code>; do
+-  cd &#8220;${pkg}&#8221; || die &#8220;The directory for the component ${PKG} is missing&#8221;
+-  echo &#8220;Installing ${pkg}…&#8221;
+-  install_pkg ${pkg}
+-  cd ..
++  if is_pkg_installed &#8220;${pkg}&#8221;; then
++    echo &#8220;Platform package ${pkg} is already installed. Skipping…&#8221;
++  else
++    cd &#8220;${pkg}&#8221; || die &#8220;The directory for the component ${PKG} is missing&#8221;
++    echo &#8220;Installing ${pkg}…&#8221;
++    install_pkg ${pkg}
++    cd ..
++  fi
+ done</p>
+
+<p>echo
+[/bash]</p>
+
+<p>Now go to the ghc dir and build it.</p>
+
+<p>[bash]
+cd ghc-6.10.4
+./configure
+make install
+[/bash]</p>
+
+<p>And if all of this goes well you can now go to the haskell-platform dir and install it:</p>
+
+<p>[bash]
+cd ../haskell-platform-2009.2.0.2/
+./configure
+make
+make install
+[/bash]</p>
+
+<p>And done! :)</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2010/01/03/haskell-datatypes-and-folds-part-ii/">Datatypes and Folds: Part II</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-01-03T00:00:00+00:00" pubdate data-updated="true">Jan 3<span>rd</span>, 2010</time>
+        
+         | <a href="/2010/01/03/haskell-datatypes-and-folds-part-ii/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Non-mutually recursive and Mutually recursive datatypes</h3>
+<p>Welcome back. In this post we will look at creating type algebra’s and folds for more complicated data types. In essence, this exercise will not be any more difficult than the previous ones, provided that you stick with the steps. Up in this part, are the non-mutually recursive datatypes and mutually recursive datatypes.</p>
+
+<p>First up, data structures that are recursive into other data structures. The folds for these data structures are no more complex than their `simpler’ forms. In fact, you could treat them the same, but for clarity we will treat them as distinct. If you want to know more about the previous part, it might help your search if you look for the keyword <em>catamorphism</em>.</p>
+
+<h4>Non-mutually recursive datastructures</h4>
+<p>Look at the following data structure. It’s <em>data constructors</em> refer both back to the data structure itself and to another data structure. The other data structure has no reference back to this structure. This kind of data structures are quite common.</p>
+
+<p>[haskell]
+data MaybeTree a = Node (Maybe a) (MaybeTree a) (MaybeTree a)
+                   | Leaf (Maybe a)
+– This one is already defined in the prelude
+data Maybe a = Just a | Nothing
+[/haskell]</p>
+
+<p>Recall that in our previous folds and algebras we choose to replace our self-recursive types with a free variable <code>r</code>. In this case we also have a reference to another data structure, namely <code>Maybe a</code>. We will denote this by using another free variable, lets say <code>m</code>.</p>
+
+<p>[haskell]
+type MaybeTreeAlgebra a m r = (  ( m -&gt; r -&gt; r -&gt; r – Node
+                                 , m -&gt; r           – Leaf
+                                 )
+                              ,  ( a -&gt; m           – Just 
+                                 , m                – Nothing
+                                 )             <br />
+                              )
+[/haskell]</p>
+
+<p>Notice that we’ve split up the the functions for each data type in separate tuples. This is to make the algebra somewhat more readable. It has one disadvantage though which we’ll see later on.</p>
+
+<p>We obtained this algebra by methodically looking at the types of the constructor functions and replacing any recursive types by their free variable counterparts, <code>r</code> for <code>MaybeTree a</code> and <code>m</code> for <code>Maybe a</code>.</p>
+
+<p>Now we are going to construct the fold function. We will be doing this in exactly the same way as we did with all previous folds.</p>
+
+<ol>
+  <li>Determine which datatypes are used (previously there was only one); This step is very simple if you already have the algebra.</li>
+  <li>for each of these datatypes exhaustively define a fold function;</li>
+<li>look at the result.</li>
+</ol>
+
+<p>Following these steps again gives us the fold on our datatype. Please convince yourself that this is the case by defining <code>foldMaybeTree</code> yourself. </p>
+
+<p>If we do it exactly as described above it will provide us with the following fold. Notice that we gave meaningful names to every replacement function stating the datatype they are intended for. Except for the top level function which we called <code>f</code>. This is because writing out the whole name for that function everywhere would be to much of a hassle and if you use <code>f</code> for this way it will be quite clear in time.</p>
+
+<p>[haskell]
+foldMaybeTree’ :: MaybeTreeAlgebra a m r -&gt; MaybeTree a -&gt; r
+foldMaybeTree’ ((node, leaf), (just, nothing)) = f
+  where f (Node x l r) = node (maybe x) (f l) (f r)
+        f (Leaf x)     = leaf (maybe x)
+        maybe (Just x)  = just x
+        maybe (Nothing) = nothing
+[/haskell]</p>
+
+<p>Notice that we are using a datatype here that is already defined in the prelude. It would be wise to check whether someone didn’t already provide a fold function for our little datatype <code>Maybe a</code>. Because that’s we essentially did, we inlined the fold for <code>Maybe a</code> inside our fold for <code>MaybeTree a</code>. Obviously this isn’t a problem if you are sure that your datatype will stay `contained in’ in your datatype. </p>
+
+<p>So we see that it is prudent to check for already existing folds if we use already existing datatypes. And it turns out that there already is a fold for <code>Maybe a</code>, namely <code>maybe</code>.</p>
+
+<p>[haskell]
+maybe :: b -&gt; (a -&gt; b) -&gt; Maybe a -&gt; b
+maybe n _ Nothing  = n
+maybe _ f (Just x) = f x
+[/haskell]</p>
+
+<p>So lets refine our little procedure to determine the fold of a datatype:</p>
+
+<ol>
+  <li>Determine which datatypes are used (previously there was only one); This step is very simple if you already have the algebra.</li>
+  <li>for each of these datatypes exhaustively define a fold function or check whether such a fold function already exists;</li>
+<li>look at the result.</li>
+</ol>
+
+<p>If we now use this knowledge our fold function can be written as follows:</p>
+
+<p>[haskell]
+foldMaybeTree :: MaybeTreeAlgebra a m r -&gt; MaybeTree a -&gt; r
+foldMaybeTree ((node, leaf), (just, nothing)) = f
+  where f (Node x l r) = node (fmaybe x) (f l) (f r)
+        f (Leaf x)     = leaf (fmaybe x)
+        fmaybe = maybe nothing just
+[/haskell]</p>
+
+<p>We’ve seen how to use algebra’s but we haven’t seen a step by step procedure for creating one. So let’s add that to our procedure for creating our own folds. In our order to create the algebras as we’ve seen them here, with tupled functions you can follow this procedure:</p>
+
+<p>For each data constructor in your datatype: create a function that takes the same parameters as the constructor function and replace every occurrence of a reference to one of your datatypes with a unique type variable (two occurrences to the same type should get the same variable). These functions should be grouped in tuples by their datatype. Do not forget to name all the type variables in the left-hand side of the type definition.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2010/01/01/doctrine-unable-to-parse-string-unable-to-parse-line-0/">Doctrine: Unable to Parse String: Unable to Parse Line 0 (</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-01-01T00:00:00+00:00" pubdate data-updated="true">Jan 1<span>st</span>, 2010</time>
+        
+         | <a href="/2010/01/01/doctrine-unable-to-parse-string-unable-to-parse-line-0/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Normally this error would mean that you have some weird syntax error somewhere in your yml files. However, if you are sure everything is up to spec be sure to check whether there are any `hidden’ files in the folder. Such files start with a dot and are also read and parsed by the command line generator. </p>
+
+<p>This could potentially fail, in case you get the aforementioned error. Be sure to remove these files before proceeding. To check whether there are any, go to the directory and retrieve it’s listing.</p>
+
+<p>[bash]
+cd /some/path/to/your/yml/files
+ls -lha
+[/bash]</p>
+
+<p>If you see any files starting with a dot and ending in .yml be sure to check them for any valuable content and throw them away.</p>
+
+<p>Thanks to <a href="http://blog.rajatpandit.com/2009/08/23/doctrine_parser_exception-fail-some-error-message/">rajat pandit</a> for hinting to this solution.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2009/12/17/haskell-datatypes-and-folds/">Haskell Datatypes and Folds: Part I</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-12-17T00:00:00+00:00" pubdate data-updated="true">Dec 17<span>th</span>, 2009</time>
+        
+         | <a href="/2009/12/17/haskell-datatypes-and-folds/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Welcome to this little explanation on how to determine the fold of a Haskell
+datatype. First we’ll look at how we define functions over lists, something
+everyone starting with Haskell should be sufficiently familiar with, after which
+we move on to the datatypes. You’ll see different ways how to calculate the sum
+of a list, how to fold over a list, what datatypes are and, how to fold over a
+datatype, specifically the <code>BinTree a</code> datatype. Most importantly, I hope you
+will grow to understand what a fold is, and why they are so important and useful
+when programming Haskell.</p>
+
+<p>During our functional programming course at Utrecht University I noticed
+students having anxiety of datatypes and even more for folds. Not because they
+couldn’t grasp the workings of a single example but more a lack of a view on the
+complete picture and lack of experience with the Haskell datatype way.</p>
+
+<p>So, what are datatypes? Datatypes are a way of notating the abstract structure
+of your data. There are several datastructures known to man, such as lists and
+trees.</p>
+<h3>Lists</h3>
+<p>Lists in Haskell are used in several ways. Today we will look at how to
+calculate the sum of a list. Intuitively you calculate the sum of a list by
+adding its elements together. Starting with the first element and then
+continuing on to the rest. This is how we literally translate that thought into
+Haskell code:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+</pre></td><td class="code"><pre><code class="haskell"><span class="line"><span class="nf">sum</span> <span class="ow">::</span> <span class="p">[</span><span class="kt">Int</span><span class="p">]</span> <span class="ow">-&gt;</span> <span class="kt">Int</span>
+</span><span class="line"><span class="nf">sum</span> <span class="kt">[]</span>     <span class="ow">=</span> <span class="mi">0</span>
+</span><span class="line"><span class="nf">sum</span> <span class="p">(</span><span class="n">x</span><span class="kt">:</span><span class="n">xs</span><span class="p">)</span> <span class="ow">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">sum</span> <span class="n">xs</span>
+</span><span class="line"><span class="c1">-- sum [1..4] = 10</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Would we be calculating the product of the list, we’d do the same except we
+multiply instead of adding.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+</pre></td><td class="code"><pre><code class="haskell"><span class="line"><span class="nf">product</span> <span class="ow">::</span> <span class="p">[</span><span class="kt">Int</span><span class="p">]</span> <span class="ow">-&gt;</span> <span class="kt">Int</span>
+</span><span class="line"><span class="nf">product</span> <span class="kt">[]</span>     <span class="ow">=</span> <span class="mi">1</span>
+</span><span class="line"><span class="nf">product</span> <span class="p">(</span><span class="n">x</span><span class="kt">:</span><span class="n">xs</span><span class="p">)</span> <span class="ow">=</span> <span class="n">x</span> <span class="o">*</span> <span class="n">product</span> <span class="n">xs</span>
+</span><span class="line"><span class="c1">-- product [1..4] = 24</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Looking at these two examples we can see that we have two similarities. We
+always have recursion on the tail of the list and we do something with the head
+of the list and the result of the recursion. In the first example we add them
+together, and in product we multiply them. Another property of most functions
+over lists is that there is a base case for the empty list. We call this the
+<em>identity</em> of our function, sometimes also referred to as <em>unit</em>.
+The identity of addition is 0 and the identity of multiplication is 1.</p>
+
+<p>Now we look at one of the folds over lists defined in the prelude,
+<code>foldr</code>. Make sure you know what each parameter stands for.
+<strong>Note:</strong> There are some downsides to this function, mostly that it
+will not work for large lists, you’ll see more on this later.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+</pre></td><td class="code"><pre><code class="haskell"><span class="line"><span class="nf">foldr</span> <span class="ow">::</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">b</span> <span class="ow">-&gt;</span> <span class="n">b</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="n">b</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="n">a</span><span class="p">]</span> <span class="ow">-&gt;</span> <span class="n">b</span>
+</span><span class="line"><span class="nf">foldr</span> <span class="n">f</span> <span class="n">z</span> <span class="kt">[]</span>     <span class="ow">=</span> <span class="n">z</span>
+</span><span class="line"><span class="nf">foldr</span> <span class="n">f</span> <span class="n">z</span> <span class="p">(</span><span class="n">x</span><span class="kt">:</span><span class="n">xs</span><span class="p">)</span> <span class="ow">=</span> <span class="n">f</span> <span class="n">x</span> <span class="p">(</span><span class="n">foldr</span> <span class="n">f</span> <span class="n">z</span> <span class="n">xs</span><span class="p">)</span>
+</span><span class="line"><span class="c1">-- The line above can also be written as:</span>
+</span><span class="line"><span class="c1">-- foldr f z (x:xs) = x `f` (foldr f z xs)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Now, take a moment to let this function soak in and try to think of how you
+would define <code>sum</code> and <code>product</code> in terms of this
+<code>foldr</code>. Crucial at this point is to notice that we do not see any
+type hardcoded in the type of <code>foldr</code> It may be helpful to look at
+this fold, which is the identity function for lists:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="haskell"><span class="line"><span class="nf">idList</span> <span class="ow">::</span> <span class="p">[</span><span class="n">a</span><span class="p">]</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="n">a</span><span class="p">]</span>
+</span><span class="line"><span class="nf">idList</span> <span class="n">list</span> <span class="ow">=</span> <span class="n">foldr</span> <span class="p">(</span><span class="kt">:</span><span class="p">)</span> <span class="kt">[]</span> <span class="n">list</span>
+</span><span class="line"><span class="c1">-- Recall: [1,2,3,4,5] == 1 : 2 : 3 : 4 : 5 : []</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>If we look at our sum function, the operator between each recursive call is
+<code>(+)</code> and our base case is 0. So that’s what we are going to use for
+our sum in terms of foldr.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="haskell"><span class="line"><span class="nf">sumList</span> <span class="ow">::</span> <span class="p">[</span><span class="kt">Int</span><span class="p">]</span> <span class="ow">-&gt;</span> <span class="kt">Int</span>
+</span><span class="line"><span class="nf">sumList</span> <span class="n">list</span> <span class="ow">=</span> <span class="n">foldr</span> <span class="p">(</span><span class="o">+</span><span class="p">)</span> <span class="mi">0</span> <span class="n">list</span>
+</span><span class="line"><span class="c1">-- sumList [1..4] = 10</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Thus far we only have lists of <code>Int</code> for our examples. However, for
+sake of usability we will now move on to lists of numeric elements. Because
+<code>(+)</code> is defined for all numbers. (If you wish to read more on this
+subject please look up classes and instances.) Notice how the type of sumList
+changes while it’s definition remains unaltered.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="haskell"><span class="line"><span class="nf">sumList</span> <span class="ow">::</span> <span class="kt">Num</span> <span class="n">a</span> <span class="ow">=&gt;</span> <span class="p">[</span><span class="n">a</span><span class="p">]</span> <span class="ow">-&gt;</span> <span class="n">a</span>
+</span><span class="line"><span class="nf">sumList</span> <span class="n">list</span> <span class="ow">=</span> <span class="n">foldr</span> <span class="p">(</span><span class="o">+</span><span class="p">)</span> <span class="mi">0</span> <span class="n">list</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Now that we have seen how we can determine the function and identity for our
+fold from our recursive function to a definition in terms of <code>foldr</code>.
+And most importantly, the foldr takes care of the recursive nature of the list
+for us and the only thing it asks us in return for that is an operator and an
+identity for your operation. So the fold can now be used to define several
+operations on lists.</p>
+
+<p>I told you about a problem of <code>foldr</code>. Depending on the size of your
+list the above <code>sumList</code> may not work. Try the following on your
+machine:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="nv">$ </span>ghci
+</span><span class="line">Prelude&gt; <span class="nb">let </span><span class="nv">sumList</span> <span class="o">=</span> foldr <span class="o">(</span>+<span class="o">)</span> 0
+</span><span class="line">Prelude&gt; sumList <span class="o">[</span>1..1000000<span class="o">]</span>
+</span><span class="line">*** Exception: stack overflow
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Now try:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="nv">$ </span>ghci
+</span><span class="line">Prelude&gt; <span class="nb">let </span><span class="nv">sumList</span> <span class="o">=</span> Data.List.foldl<span class="err">&#39;</span> <span class="o">(</span>+<span class="o">)</span> 0
+</span><span class="line">Prelude&gt; sumList <span class="o">[</span>1..1000000<span class="o">]</span>
+</span><span class="line">500000500000
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>For a complete overview and analysis on <code>foldr</code> and
+<code>foldl</code> please read <a href="http://www.cs.nott.ac.uk/~gmh/fold.pdf">A tutorial on the universality and
+expressiveness of fold</a>, by Graham Hutton.</p>
+
+<h3>Trees</h3>
+<p>First, let’s take a look at how data structures in Haskell can be defined. In
+short we have the <code>data</code> keyword, followed by zero or more <code>type
+variables</code>, a <code>=</code> and then a number of <code>data
+constructors</code> separated by a <code>|</code>.</p>
+
+<p>Now that you have familiarized yourself with lists we can proceed to a slightly
+more complicated datastructure. The Tree. In this example we will use a simple
+binary tree. A binary tree can be denoted as follows:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="haskell"><span class="line"><span class="kr">data</span> <span class="kt">BinTree</span> <span class="n">a</span> <span class="ow">=</span> <span class="kt">Node</span> <span class="n">a</span> <span class="p">(</span><span class="kt">BinTree</span> <span class="n">a</span><span class="p">)</span> <span class="p">(</span><span class="kt">BinTree</span> <span class="n">a</span><span class="p">)</span> <span class="o">|</span> <span class="kt">Leaf</span> <span class="kr">deriving</span> <span class="p">(</span><span class="kt">Show</span><span class="p">,</span> <span class="kt">Eq</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>In this case <code>BinTree</code> is the <em>type constructor</em> and
+<code>Node</code> and <code>Leaf</code> the data <em>data constructors</em>.</p>
+
+<p>Remember that the goal of folds is to separate the implementation of the
+recursion from the actual operation we want to execute on the datatype. So we
+have one function, the <em>fold</em>, that takes care of the recursion and
+several other functions that use this fold to specify certain semantics on the
+datatype. We are going to calculate the sum of all elements in this tree.</p>
+
+<p>The above binary tree has elements in the nodes and nothing in the leaves. You
+can notice the recursive occurrence of &#8220;BinTree a<code>' in the node. We
+see two constructors in this datatype, </code>Node<code> and </code>Leaf<code>.
+The Node constructor expects some value of type </code>a<code> and two subtrees
+of type </code>BinTree a<code>, and the </code>Leaf` constructor has no
+parameters. In Haskell:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="haskell"><span class="line"><span class="kt">Node</span> <span class="ow">::</span> <span class="n">a</span> <span class="ow">-&gt;</span> <span class="kt">BinTree</span> <span class="n">a</span> <span class="ow">-&gt;</span> <span class="kt">BinTree</span> <span class="n">a</span> <span class="ow">-&gt;</span> <span class="kt">BinTree</span> <span class="n">a</span>
+</span><span class="line"><span class="kt">Leaf</span> <span class="ow">::</span> <span class="kt">BinTree</span> <span class="n">a</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Notice that our list also has two constructors, namely the <code>(:)</code>
+constructor that adds an element and the constructor for the empty list,
+<code>[]</code>. Analogously we have the <code>Node</code> and <code>Leaf</code>
+constructors. If we were allowed to use the <code>(:)</code> and <code>[]</code>
+constructor in our own Haskell code, the datatype for a list would look like
+this:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="haskell"><span class="line"><span class="kr">data</span> <span class="kt">List</span> <span class="n">a</span> <span class="ow">=</span> <span class="p">(</span><span class="kt">:</span><span class="p">)</span> <span class="n">a</span> <span class="p">(</span><span class="kt">List</span> <span class="n">a</span><span class="p">)</span> <span class="o">|</span> <span class="kt">[]</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Also, it is customary to keep the arguments for the functions in the same order
+as the constructors are defined in the datatype, and to name the identifiers
+containing the functions the same as the constructor function but in lowercase.
+Applying this we get:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+</pre></td><td class="code"><pre><code class="haskell"><span class="line"><span class="nf">foldBinTree</span> <span class="ow">::</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="kt">BinTree</span> <span class="n">a</span> <span class="ow">-&gt;</span> <span class="kt">BinTree</span> <span class="n">a</span> <span class="ow">-&gt;</span> <span class="kt">BinTree</span> <span class="n">a</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="kt">BinTree</span> <span class="n">a</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="kt">BinTree</span> <span class="n">a</span> <span class="ow">-&gt;</span> <span class="o">??</span>
+</span><span class="line"><span class="nf">foldBinTree</span> <span class="n">node</span> <span class="n">leaf</span> <span class="ow">=</span> <span class="n">f</span>
+</span><span class="line">  <span class="kr">where</span> <span class="n">f</span> <span class="p">(</span><span class="kt">Node</span> <span class="n">x</span> <span class="n">left</span> <span class="n">right</span><span class="p">)</span> <span class="ow">=</span> <span class="n">node</span> <span class="n">x</span> <span class="p">(</span><span class="n">f</span> <span class="n">left</span><span class="p">)</span> <span class="p">(</span><span class="n">f</span> <span class="n">right</span><span class="p">)</span>
+</span><span class="line">        <span class="n">f</span> <span class="p">(</span><span class="kt">Leaf</span><span class="p">)</span>              <span class="ow">=</span> <span class="n">leaf</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>I left out the result type of this fold, try to find it yourself before
+continuing.</p>
+
+<p>By following our code we can see that every case, the case for <code>Node</code>
+and the one for <code>Leaf</code>, result in a <code>BinTree a</code>.
+Consequently the complete result of the function is a <code>BinTree a</code></p>
+
+<p>Now recall that we previously used a fold to calculate the sum of a list. With
+that fold we were not restricted to a list. Which is also clearly visible by
+looking at the type of <code>foldr</code> it contains only type variables. As we
+want to calculate sum of the elements in this tree, which is something of type
+<code>a</code> and not of type <code>BinTree a</code> we have to revise the type
+of our fold. Notice the recurrence of the datatype in it’s declaration,
+<code>BinTree a</code>. We will replace all of these occurrences in the types of
+our functions with a free type variable, say <code>r</code>:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+</pre></td><td class="code"><pre><code class="haskell"><span class="line"><span class="nf">foldBinTree</span> <span class="ow">::</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">r</span> <span class="ow">-&gt;</span> <span class="n">r</span> <span class="ow">-&gt;</span> <span class="n">r</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="kt">BinTree</span> <span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">r</span>
+</span><span class="line"><span class="nf">foldBinTree</span> <span class="n">node</span> <span class="n">leaf</span> <span class="ow">=</span> <span class="n">f</span>
+</span><span class="line">  <span class="kr">where</span> <span class="n">f</span> <span class="p">(</span><span class="kt">Node</span> <span class="n">x</span> <span class="n">left</span> <span class="n">right</span><span class="p">)</span> <span class="ow">=</span> <span class="n">node</span> <span class="n">x</span> <span class="p">(</span><span class="n">f</span> <span class="n">left</span><span class="p">)</span> <span class="p">(</span><span class="n">f</span> <span class="n">right</span><span class="p">)</span>
+</span><span class="line">        <span class="n">f</span> <span class="p">(</span><span class="kt">Leaf</span><span class="p">)</span>              <span class="ow">=</span> <span class="n">leaf</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Keep in mind that I used ‘eta reduction’ in the above code. This means that the
+last parameter (in this case the tree) isn’t explicitly specified as it would
+appear at the very end of the parameter list and ath the very end of the
+definition. (<a href="http://www.haskell.org/haskellwiki/Eta_conversion">More on
+eta reduction</a>.) So, now let’s do something with this fold. Suppose we have
+the following tree:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+</pre></td><td class="code"><pre><code class="haskell"><span class="line"><span class="nf">bintree</span> <span class="ow">=</span> <span class="kt">Node</span> <span class="mi">1</span>
+</span><span class="line">            <span class="p">(</span><span class="kt">Node</span> <span class="mi">2</span>
+</span><span class="line">              <span class="p">(</span><span class="kt">Node</span> <span class="mi">3</span> <span class="kt">Leaf</span> <span class="kt">Leaf</span><span class="p">)</span>
+</span><span class="line">              <span class="p">(</span><span class="kt">Node</span> <span class="mi">3</span> <span class="kt">Leaf</span> <span class="kt">Leaf</span><span class="p">)</span>
+</span><span class="line">            <span class="p">)</span>
+</span><span class="line">            <span class="p">(</span><span class="kt">Node</span> <span class="mi">2</span>
+</span><span class="line">              <span class="p">(</span><span class="kt">Node</span> <span class="mi">3</span> <span class="kt">Leaf</span> <span class="kt">Leaf</span><span class="p">)</span>
+</span><span class="line">              <span class="p">(</span><span class="kt">Node</span> <span class="mi">3</span> <span class="kt">Leaf</span> <span class="kt">Leaf</span><span class="p">)</span>
+</span><span class="line">            <span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>A visual representation:</p>
+<pre>            1
+          /  \
+         2    2
+        / \  / \
+       3   3 3  3</pre>
+<p>Now we can define several traversals over this tree. Let’s calculate the sum of
+all values in the tree.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="haskell"><span class="line"><span class="nf">sumBinTree</span> <span class="ow">::</span> <span class="kt">Num</span> <span class="n">a</span> <span class="ow">=&gt;</span> <span class="kt">BinTree</span> <span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">a</span>
+</span><span class="line"><span class="nf">sumBinTree</span> <span class="ow">=</span> <span class="n">foldBinTree</span> <span class="p">(</span><span class="nf">\</span><span class="n">val</span> <span class="n">res_left</span> <span class="n">res_right</span> <span class="ow">-&gt;</span> <span class="n">val</span> <span class="o">+</span> <span class="n">res_left</span> <span class="o">+</span> <span class="n">res_right</span><span class="p">)</span>
+</span><span class="line">                         <span class="mi">0</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<h4>Algebras</h4>
+<p>The type of our foldBinTree is now more compact. However, there will be
+datatypes that contain a larger sum of constructors that also may have more or
+less parameters than in our case. Defining the type of the fold on those
+datatypes as we have done before will inevitably lead to very clumsy type
+signatures. The idea is that we split up the section that denotes our functions
+into a separate type, namely the <em>algebra</em>.</p>
+
+<p>So now we define an algebra for our data structure. To do this we again look at
+each data constructor and determine it’s type. The fold function takes care of
+the recursion, so applying this thought consequently gives us the following
+types and fold.</p>
+
+<p>Keep in mind that we have to change the type of our fold, but not the definition
+of the fold itself!</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+</pre></td><td class="code"><pre><code class="haskell"><span class="line"><span class="kr">type</span> <span class="kt">BinTreeAlgebra</span> <span class="n">a</span> <span class="n">r</span> <span class="ow">=</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">r</span> <span class="ow">-&gt;</span> <span class="n">r</span> <span class="ow">-&gt;</span> <span class="n">r</span><span class="p">,</span> <span class="c1">-- Node</span>
+</span><span class="line">                           <span class="n">r</span> <span class="c1">-- Leaf</span>
+</span><span class="line">                          <span class="p">)</span>
+</span><span class="line">
+</span><span class="line"><span class="nf">foldBinTree</span> <span class="ow">::</span> <span class="kt">BinTreeAlgebra</span> <span class="n">a</span> <span class="n">r</span> <span class="ow">-&gt;</span> <span class="kt">BinTree</span> <span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">r</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Now we can again define a sum on all <code>Num a</code> trees. Notice that we
+went from to seperate parameters for the functions to one tuple with two
+elements.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="haskell"><span class="line"><span class="nf">sumBinTree</span> <span class="ow">::</span> <span class="kt">Num</span> <span class="n">a</span> <span class="ow">=&gt;</span> <span class="kt">BinTree</span> <span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">a</span>
+</span><span class="line"><span class="nf">sumBinTree</span> <span class="ow">=</span> <span class="n">foldBinTree</span> <span class="p">(</span><span class="nf">\</span><span class="n">val</span> <span class="n">res_left</span> <span class="n">res_right</span> <span class="ow">-&gt;</span> <span class="n">val</span> <span class="o">+</span> <span class="n">res_left</span> <span class="o">+</span> <span class="n">res_right</span><span class="p">,</span>
+</span><span class="line">                          <span class="mi">0</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="nv">$ </span>ghci bintree.hs
+</span><span class="line">*Main&gt; bintree
+</span><span class="line">Node 1 <span class="o">(</span>Node 2 <span class="o">(</span>Node 3 Leaf Leaf<span class="o">)</span> <span class="o">(</span>Node 3 Leaf Leaf<span class="o">))</span> <span class="o">(</span>Node 2 <span class="o">(</span>Node 3 Leaf Leaf<span class="o">)</span> <span class="o">(</span>Node 3 Leaf Leaf<span class="o">))</span>
+</span><span class="line">*Main&gt; sumBinTree bintree
+</span><span class="line">19
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>That’s it for now. If you did not understand everything by the end of this
+article, don’t panic. It will sink in eventually. Let this rest a day or two,
+and then read this article again and you’ll understand folds better. :)</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2009/09/08/setting-up-multiple-applications-with-codeigniter/">Setting Up Multiple Applications With CodeIgniter</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-09-08T00:00:00+00:00" pubdate data-updated="true">Sep 8<span>th</span>, 2009</time>
+        
+         | <a href="/2009/09/08/setting-up-multiple-applications-with-codeigniter/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>In addition to my previous post where I discussed the <a title="Setting up CodeIgniter Basics" href="http://alessandrovermeulen.me/2009/05/22/setting-up-codeigniter/">initial
+setup of your application</a> with CI (CodeIgniter), I’ll use this post to
+provide a method of setting up your environment for multiple applications.
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2009/09/08/setting-up-multiple-applications-with-codeigniter/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2009/07/12/extending-the-v-in-mvc-revisited/">Extending the v in MVC - Revisited</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-07-12T00:00:00+00:00" pubdate data-updated="true">Jul 12<span>th</span>, 2009</time>
+        
+         | <a href="/2009/07/12/extending-the-v-in-mvc-revisited/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>This post is an revised version of ‘Extending the V in MVC on the web’ of November 9, 2008.</p>
+
+<hr />
+
+<p>When I first started working with the MVC method it was with my own framework.
+After noticing that maintaining my own framework would be very time-comsuming I
+embarked on the search for a free, fast and widely supported PHP web framework.
+The one I found that time was ‘<a href="http://www.codeigniter.com">CodeIgniter</a>’.</p>
+
+<p>After working on different projects I noticed that most websites present the
+same data to the visitor in several different formats. Think of RSS/Atom for
+blog posts for use in an RSS reader together with the (x)html versions.</p>
+
+<p>While essentially providing the same data to the visitor the programmer of the
+website has to put sizable amount of work to add little extra functionality in
+the form of an RSS feed. Repeating a lod of code for input validation, data
+retrieval from the database and creating extra routes into the application. As
+you can imagine this could grow into a tedious job.</p>
+
+<p>I’ll be describing techniques known and in use today, but reinvented each time
+again as a (new) developer starts working on an web application. Here we’ll be
+giving them name and be describing them.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2009/07/12/extending-the-v-in-mvc-revisited/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/blog/page/4/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/blog/page/2/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar span3">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts" class="unstyled">
+    
+      <li class="post">
+        <a href="/2015/08/31/finaglecon/">FinagleCon</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/12/04/orchestration-support-announced-on-dockercon/">Orchestration support announced on DockerCon</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/07/15/notes-on-the-advanced-akka-course/">Notes on the Advanced Akka course</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/07/13/the-difference-between-shallow-and-deep-embedding/">The difference between shallow and deep embedding</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/07/08/combining-graphviz-dot-and-tikz-with-dot2tex/">Combining graphviz (dot) and TikZ with dot2tex</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+<section class="tag-cloud">
+  <h1>Tags</h1>
+  <span class='rank-4'><a href='/tags/partials'>partials</a></span> <span class='rank-3'><a href='/tags/lhs2tex-hl'>lhs2tex-hl</a></span> <span class='rank-4'><a href='/tags/lhs2tex'>lhs2tex</a></span> <span class='rank-5'><a href='/tags/colour'>colour</a></span> <span class='rank-5'><a href='/tags/Software'>Software</a></span> <span class='rank-4'><a href='/tags/TikZ'>TikZ</a></span> <span class='rank-5'><a href='/tags/cabal'>cabal</a></span> <span class='rank-5'><a href='/tags/web'>web</a></span> <span class='rank-5'><a href='/tags/Docker'>Docker</a></span> <span class='rank-5'><a href='/tags/os-x'>os x</a></span> <span class='rank-5'><a href='/tags/layout'>layout</a></span> <span class='rank-5'><a href='/tags/syntax-highlighting'>syntax highlighting</a></span> <span class='rank-4'><a href='/tags/xhtml'>xhtml</a></span> <span class='rank-5'><a href='/tags/Haskell-platform'>Haskell platform</a></span> <span class='rank-5'><a href='/tags/attribute-grammars'>attribute grammars</a></span> <span class='rank-5'><a href='/tags/JavaScript'>JavaScript</a></span> <span class='rank-4'><a href='/tags/Scala'>Scala</a></span> <span class='rank-1'><a href='/tags/Haskell'>Haskell</a></span> <span class='rank-5'><a href='/tags/html5'>html5</a></span> <span class='rank-4'><a href='/tags/css'>css</a></span> <span class='rank-4'><a href='/tags/LaTeX'>LaTeX</a></span> <span class='rank-5'><a href='/tags/Web'>Web</a></span> <span class='rank-4'><a href='/tags/php'>php</a></span> <span class='rank-4'><a href='/tags/rss'>rss</a></span> <span class='rank-5'><a href='/tags/com'>com</a></span> <span class='rank-4'><a href='/tags/mvc'>mvc</a></span> <span class='rank-4'><a href='/tags/partial'>partial</a></span> <span class='rank-5'><a href='/tags/delphi-2009'>delphi 2009</a></span> <span class='rank-4'><a href='/tags/Graphviz'>Graphviz</a></span> <span class='rank-5'><a href='/tags/debian'>debian</a></span> <span class='rank-5'><a href='/tags/Finagle'>Finagle</a></span> <span class='rank-5'><a href='/tags/applescript'>applescript</a></span> <span class='rank-5'><a href='/tags/Akka'>Akka</a></span> <span class='rank-4'><a href='/tags/fold'>fold</a></span> <span class='rank-5'><a href='/tags/type-algebra'>type algebra</a></span> <span class='rank-5'><a href='/tags/uuagc'>uuagc</a></span> <span class='rank-5'><a href='/tags/lenny'>lenny</a></span> <span class='rank-5'><a href='/tags/hackage'>hackage</a></span> <span class='rank-3'><a href='/tags/codeigniter'>codeigniter</a></span> <span class='rank-3'><a href='/tags/open-source'>open source</a></span> <span class='rank-4'><a href='/tags/textmate'>textmate</a></span> <span class='rank-5'><a href='/tags/orm'>orm</a></span> <span class='rank-4'><a href='/tags/doctrine'>doctrine</a></span> <span class='rank-5'><a href='/tags/ghc'>ghc</a></span> 
+</section>
+<section>
+  <h1>About Me</h1>
+  <p>Alessandro Vermeulen is a Functional Programming enthousiast and Computer Sciences MSc
+     alumnus from Utrecht University. His thesis was on incremental evaluation of Haskell programs.</p>
+</section>
+<section>
+  <h1>Blogroll</h1>
+  <ul class="unstyled">
+    <li class="nav-header">Friends</li>
+    <li><a href="http://blog.timmybankers.nl">Tim Soethout</a></li>
+    <li><a href="https://thijsalkema.de/blog/">Thijs Alkemade</a></li>
+    <li><a href="http://www.norm2782.com/">Jurriën Stutterheim</a></li>
+  </ul>
+
+  <ul class="unstyled">
+    <li class="nav-header">Interesting Companies</li>
+    <li><a href="https://typesafe.com" rel="nofollow">Typesafe</a></li>
+    <li><a href="http://www.binksoftware.nl/" rel="nofollow">BINK software B.V.</a></li>
+  </ul>
+
+  <ul class="unstyled">
+    <li class="nav-header">Personal</li>
+    <li><a href="http://www.linkedin.com/in/alessandrovermeulen" rel="nofollow">LinkedIn</a></li>
+  </ul>
+</section>
+
+  
+</aside>
+</div>
+      </div>
+    </div>
+    <footer role="contentinfo" id="pagefooter"><p>
+  Copyright &copy; 2015 - Alessandro Vermeulen -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+<script src="http://hyphenator.googlecode.com/svn/tags/Version%203.2.0/Hyphenator.js?bm=true" type="text/javascript"></script>
+</footer>
+    
+
+<script type="text/javascript">
+      var disqus_shortname = 'alessandrovermeulen';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+<!-- <script type="text/javascript">
+$(document).ready(function() {
+  $('#disqus_thread').disqus({
+    domain:     "alessandrovermeulen",
+    title:      document.title,
+    developer:  window.location.hostname == "localhost" ? 1 : 0,
+    show_count: true,
+    prettify:   true,
+    markdown:   true,
+    //iframe_css: "http://somewhere.com/stylesheets/disqus.css",
+    ready: function() {
+      // this is when your disqus comments finally load
+      console.log("Comment count: " + $.disqus.commentCount().toString());
+      console.log("Reaction count: " + $.disqus.reactionCount().toString());
+    },
+    added: function(comments) {
+      // do something with the newly added comment divs.
+    },
+    edit: function(textarea) {
+      // called when someone clicks the "reply" button.
+    }
+  });
+});
+</script> -->
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+  </section>
+
+  
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  
+    ga('create', 'UA-9190312-1', 'auto');
+    ga('send', 'pageview');
+  </script>
+
+
+  <script src="/javascripts/modernizr-2.0.js" type="text/javascript"></script>
+  <script src="/javascripts/jquery-1.10.2.min.js" type="text/javascript"></script>
+  <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+  <script src="/javascripts/photography.js" type="text/javascript"></script>
+  <!-- mathjax config similar to math.stackexchange -->
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      inlineMath: [ ['$', '$'] ],
+      displayMath: [ ['$$', '$$']],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    messageStyle: "none",
+    "HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"] }
+  });
+  </script>
+  <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML" type="text/javascript"></script>
+
+</body>
+</html>

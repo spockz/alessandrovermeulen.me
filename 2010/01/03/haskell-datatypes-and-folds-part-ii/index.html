@@ -1,0 +1,448 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Datatypes and Folds: Part II - Alessandro Vermeulen</title>
+  <meta name="author" content="Alessandro Vermeulen">
+
+  
+  <meta name="description" content="Non-mutually recursive and Mutually recursive datatypes
+Welcome back. In this post we will look at creating type algebra’s and folds for more &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://alessandrovermeulen.me/2010/01/03/haskell-datatypes-and-folds-part-ii">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <!--<script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>-->
+  <link href="/atom.xml" rel="alternate" title="Alessandro Vermeulen" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<!-- <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css"> -->
+<!-- <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css"> -->
+<!-- <script src="http://cachedcommons.org/javascripts/jquery/jquery.disqus.js" type="text/javascript"></script> -->
+<link href='http://fonts.googleapis.com/css?family=Open+Sans|Droid+Serif' rel='stylesheet' type='text/css'>
+
+</head>
+
+<body   >
+
+  <section class="container">
+    <header role="banner"><hgroup>
+  <header id="pageheader">
+    <header role="banner" id="banner">
+      <h1><a href="/">Alessandro Vermeulen</a></h1>
+      
+        <p>Alessandro Vermeulen's blog about languages, programming, Computer Science, photography and the Web. <a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS"><i class="icon-rss"></i></a></p>
+      
+    </header>
+  </header>
+</hgroup>
+
+</header>
+    <nav role="navigation"><nav class="navbar">
+  <ul class="nav nav-pills">
+  <li><a href="/about">About</a></li>
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+
+  <ul class="pull-right subscription nav nav-pills" data-subscription="rss">
+  
+  </ul>
+
+  <form class="navbar-search pull-right" action="http://google.com/search" method="get">
+  <fieldset role="search" id="searchfieldset">
+    <input type="hidden" name="q" value="site:alessandrovermeulen.me" />
+
+    <div class="input-append">
+      <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+      <button type="submit" class="btn"><i class="icon-search"></i></button>
+    </div>
+  </fieldset>
+  </form>
+</nav>
+<!--
+<ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:alessandrovermeulen.me" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+
+ --></nav>
+    <!--[if lt IE 9]>
+    <div class="alert alert-block">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <h4>Warning!</h4>
+      Your version of Internet Explorer is seriously outdated. Please upgrade to a decent version of <a href="http://windows.microsoft.com/en-us/internet-explorer/download-ie">Internet Explorer</a> or <a href="http://www.google.com/chrome">Chrome</a> or <a href="http://www.mozilla.org/en-US/firefox/new/">Firefox</a>.
+    </div>
+    <![endif]-->
+    <div id="main">
+      <div id="content">
+        <div class="row-fluid">
+  <div class="span9">
+  <article class="hentry" role="article">
+    
+  <header>
+    
+      <h1 class="entry-title">Datatypes and Folds: Part II</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-01-03T00:00:00+00:00" pubdate data-updated="true">Jan 3<span>rd</span>, 2010</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h3>Non-mutually recursive and Mutually recursive datatypes</h3>
+<p>Welcome back. In this post we will look at creating type algebra’s and folds for more complicated data types. In essence, this exercise will not be any more difficult than the previous ones, provided that you stick with the steps. Up in this part, are the non-mutually recursive datatypes and mutually recursive datatypes.</p>
+
+<p>First up, data structures that are recursive into other data structures. The folds for these data structures are no more complex than their `simpler’ forms. In fact, you could treat them the same, but for clarity we will treat them as distinct. If you want to know more about the previous part, it might help your search if you look for the keyword <em>catamorphism</em>.</p>
+
+<h4>Non-mutually recursive datastructures</h4>
+<p>Look at the following data structure. It’s <em>data constructors</em> refer both back to the data structure itself and to another data structure. The other data structure has no reference back to this structure. This kind of data structures are quite common.</p>
+
+<p>[haskell]
+data MaybeTree a = Node (Maybe a) (MaybeTree a) (MaybeTree a)
+                   | Leaf (Maybe a)
+– This one is already defined in the prelude
+data Maybe a = Just a | Nothing
+[/haskell]</p>
+
+<p>Recall that in our previous folds and algebras we choose to replace our self-recursive types with a free variable <code>r</code>. In this case we also have a reference to another data structure, namely <code>Maybe a</code>. We will denote this by using another free variable, lets say <code>m</code>.</p>
+
+<p>[haskell]
+type MaybeTreeAlgebra a m r = (  ( m -&gt; r -&gt; r -&gt; r – Node
+                                 , m -&gt; r           – Leaf
+                                 )
+                              ,  ( a -&gt; m           – Just 
+                                 , m                – Nothing
+                                 )             <br />
+                              )
+[/haskell]</p>
+
+<p>Notice that we’ve split up the the functions for each data type in separate tuples. This is to make the algebra somewhat more readable. It has one disadvantage though which we’ll see later on.</p>
+
+<p>We obtained this algebra by methodically looking at the types of the constructor functions and replacing any recursive types by their free variable counterparts, <code>r</code> for <code>MaybeTree a</code> and <code>m</code> for <code>Maybe a</code>.</p>
+
+<p>Now we are going to construct the fold function. We will be doing this in exactly the same way as we did with all previous folds.</p>
+
+<ol>
+  <li>Determine which datatypes are used (previously there was only one); This step is very simple if you already have the algebra.</li>
+  <li>for each of these datatypes exhaustively define a fold function;</li>
+<li>look at the result.</li>
+</ol>
+
+<p>Following these steps again gives us the fold on our datatype. Please convince yourself that this is the case by defining <code>foldMaybeTree</code> yourself. </p>
+
+<p>If we do it exactly as described above it will provide us with the following fold. Notice that we gave meaningful names to every replacement function stating the datatype they are intended for. Except for the top level function which we called <code>f</code>. This is because writing out the whole name for that function everywhere would be to much of a hassle and if you use <code>f</code> for this way it will be quite clear in time.</p>
+
+<p>[haskell]
+foldMaybeTree’ :: MaybeTreeAlgebra a m r -&gt; MaybeTree a -&gt; r
+foldMaybeTree’ ((node, leaf), (just, nothing)) = f
+  where f (Node x l r) = node (maybe x) (f l) (f r)
+        f (Leaf x)     = leaf (maybe x)
+        maybe (Just x)  = just x
+        maybe (Nothing) = nothing
+[/haskell]</p>
+
+<p>Notice that we are using a datatype here that is already defined in the prelude. It would be wise to check whether someone didn’t already provide a fold function for our little datatype <code>Maybe a</code>. Because that’s we essentially did, we inlined the fold for <code>Maybe a</code> inside our fold for <code>MaybeTree a</code>. Obviously this isn’t a problem if you are sure that your datatype will stay `contained in’ in your datatype. </p>
+
+<p>So we see that it is prudent to check for already existing folds if we use already existing datatypes. And it turns out that there already is a fold for <code>Maybe a</code>, namely <code>maybe</code>.</p>
+
+<p>[haskell]
+maybe :: b -&gt; (a -&gt; b) -&gt; Maybe a -&gt; b
+maybe n _ Nothing  = n
+maybe _ f (Just x) = f x
+[/haskell]</p>
+
+<p>So lets refine our little procedure to determine the fold of a datatype:</p>
+
+<ol>
+  <li>Determine which datatypes are used (previously there was only one); This step is very simple if you already have the algebra.</li>
+  <li>for each of these datatypes exhaustively define a fold function or check whether such a fold function already exists;</li>
+<li>look at the result.</li>
+</ol>
+
+<p>If we now use this knowledge our fold function can be written as follows:</p>
+
+<p>[haskell]
+foldMaybeTree :: MaybeTreeAlgebra a m r -&gt; MaybeTree a -&gt; r
+foldMaybeTree ((node, leaf), (just, nothing)) = f
+  where f (Node x l r) = node (fmaybe x) (f l) (f r)
+        f (Leaf x)     = leaf (fmaybe x)
+        fmaybe = maybe nothing just
+[/haskell]</p>
+
+<p>We’ve seen how to use algebra’s but we haven’t seen a step by step procedure for creating one. So let’s add that to our procedure for creating our own folds. In our order to create the algebras as we’ve seen them here, with tupled functions you can follow this procedure:</p>
+
+<p>For each data constructor in your datatype: create a function that takes the same parameters as the constructor function and replace every occurrence of a reference to one of your datatypes with a unique type variable (two occurrences to the same type should get the same variable). These functions should be grouped in tuples by their datatype. Do not forget to name all the type variables in the left-hand side of the type definition.</p>
+</div>
+
+
+    <footer>
+      <p class="meta">
+        
+  
+
+<span class="byline author vcard">Posted by <span class="fn"><a rel="author" href="https://plus.google.com/103782975895345685833">Alessandro Vermeulen</a></span></span>
+
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-01-03T00:00:00+00:00" pubdate data-updated="true">Jan 3<span>rd</span>, 2010</time>
+        
+
+
+      </p>
+      
+        <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://alessandrovermeulen.me/2010/01/03/haskell-datatypes-and-folds-part-ii/" data-via="" data-counturl="http://alessandrovermeulen.me/2010/01/03/haskell-datatypes-and-folds-part-ii/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+</div>
+
+      
+      <p class="meta">
+        
+          <a class="basic-alignment left" href="/2010/01/01/doctrine-unable-to-parse-string-unable-to-parse-line-0/" title="Previous Post: Doctrine: Unable to parse string: Unable to parse line 0 (">&laquo; Doctrine: Unable to parse string: Unable to parse line 0 (</a>
+        
+        
+          <a class="basic-alignment right" href="/2010/02/10/debian-lenny-and-the-haskell-platform/" title="next Post: Debian Lenny and the Haskell Platform">Debian Lenny and the Haskell Platform &raquo;</a>
+        
+      </p>
+    </footer>
+  </article>
+  
+    <section>
+      <h1>Comments</h1>
+      <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+    </section>
+  
+  </div>
+  
+  <aside class="sidebar span3">
+    
+      <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts" class="unstyled">
+    
+      <li class="post">
+        <a href="/2015/08/31/finaglecon/">FinagleCon</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/12/04/orchestration-support-announced-on-dockercon/">Orchestration support announced on DockerCon</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/07/15/notes-on-the-advanced-akka-course/">Notes on the Advanced Akka course</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/07/13/the-difference-between-shallow-and-deep-embedding/">The difference between shallow and deep embedding</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/07/08/combining-graphviz-dot-and-tikz-with-dot2tex/">Combining graphviz (dot) and TikZ with dot2tex</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+<section class="tag-cloud">
+  <h1>Tags</h1>
+  <span class='rank-5'><a href='/tags/Web'>Web</a></span> <span class='rank-4'><a href='/tags/lhs2tex'>lhs2tex</a></span> <span class='rank-4'><a href='/tags/LaTeX'>LaTeX</a></span> <span class='rank-5'><a href='/tags/uuagc'>uuagc</a></span> <span class='rank-4'><a href='/tags/fold'>fold</a></span> <span class='rank-5'><a href='/tags/Akka'>Akka</a></span> <span class='rank-4'><a href='/tags/TikZ'>TikZ</a></span> <span class='rank-4'><a href='/tags/textmate'>textmate</a></span> <span class='rank-5'><a href='/tags/web'>web</a></span> <span class='rank-4'><a href='/tags/partial'>partial</a></span> <span class='rank-5'><a href='/tags/syntax-highlighting'>syntax highlighting</a></span> <span class='rank-5'><a href='/tags/html5'>html5</a></span> <span class='rank-5'><a href='/tags/ghc'>ghc</a></span> <span class='rank-3'><a href='/tags/open-source'>open source</a></span> <span class='rank-5'><a href='/tags/Finagle'>Finagle</a></span> <span class='rank-4'><a href='/tags/Scala'>Scala</a></span> <span class='rank-5'><a href='/tags/hackage'>hackage</a></span> <span class='rank-4'><a href='/tags/rss'>rss</a></span> <span class='rank-5'><a href='/tags/type-algebra'>type algebra</a></span> <span class='rank-5'><a href='/tags/lenny'>lenny</a></span> <span class='rank-5'><a href='/tags/Haskell-platform'>Haskell platform</a></span> <span class='rank-4'><a href='/tags/mvc'>mvc</a></span> <span class='rank-5'><a href='/tags/Docker'>Docker</a></span> <span class='rank-5'><a href='/tags/JavaScript'>JavaScript</a></span> <span class='rank-3'><a href='/tags/codeigniter'>codeigniter</a></span> <span class='rank-1'><a href='/tags/Haskell'>Haskell</a></span> <span class='rank-4'><a href='/tags/Graphviz'>Graphviz</a></span> <span class='rank-4'><a href='/tags/partials'>partials</a></span> <span class='rank-5'><a href='/tags/applescript'>applescript</a></span> <span class='rank-5'><a href='/tags/cabal'>cabal</a></span> <span class='rank-3'><a href='/tags/lhs2tex-hl'>lhs2tex-hl</a></span> <span class='rank-5'><a href='/tags/os-x'>os x</a></span> <span class='rank-4'><a href='/tags/php'>php</a></span> <span class='rank-5'><a href='/tags/delphi-2009'>delphi 2009</a></span> <span class='rank-5'><a href='/tags/Software'>Software</a></span> <span class='rank-5'><a href='/tags/debian'>debian</a></span> <span class='rank-5'><a href='/tags/colour'>colour</a></span> <span class='rank-4'><a href='/tags/xhtml'>xhtml</a></span> <span class='rank-5'><a href='/tags/layout'>layout</a></span> <span class='rank-4'><a href='/tags/css'>css</a></span> <span class='rank-5'><a href='/tags/attribute-grammars'>attribute grammars</a></span> <span class='rank-5'><a href='/tags/com'>com</a></span> <span class='rank-5'><a href='/tags/orm'>orm</a></span> <span class='rank-4'><a href='/tags/doctrine'>doctrine</a></span> 
+</section>
+<section>
+  <h1>About Me</h1>
+  <p>Alessandro Vermeulen is a Functional Programming enthousiast and Computer Sciences MSc
+     alumnus from Utrecht University. His thesis was on incremental evaluation of Haskell programs.</p>
+</section>
+<section>
+  <h1>Blogroll</h1>
+  <ul class="unstyled">
+    <li class="nav-header">Friends</li>
+    <li><a href="http://blog.timmybankers.nl">Tim Soethout</a></li>
+    <li><a href="https://thijsalkema.de/blog/">Thijs Alkemade</a></li>
+    <li><a href="http://www.norm2782.com/">Jurriën Stutterheim</a></li>
+  </ul>
+
+  <ul class="unstyled">
+    <li class="nav-header">Interesting Companies</li>
+    <li><a href="https://typesafe.com" rel="nofollow">Typesafe</a></li>
+    <li><a href="http://www.binksoftware.nl/" rel="nofollow">BINK software B.V.</a></li>
+  </ul>
+
+  <ul class="unstyled">
+    <li class="nav-header">Personal</li>
+    <li><a href="http://www.linkedin.com/in/alessandrovermeulen" rel="nofollow">LinkedIn</a></li>
+  </ul>
+</section>
+
+    
+  </aside>
+  
+</div>
+      </div>
+    </div>
+    <footer role="contentinfo" id="pagefooter"><p>
+  Copyright &copy; 2015 - Alessandro Vermeulen -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+<script src="http://hyphenator.googlecode.com/svn/tags/Version%203.2.0/Hyphenator.js?bm=true" type="text/javascript"></script>
+</footer>
+    
+
+<script type="text/javascript">
+      var disqus_shortname = 'alessandrovermeulen';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://alessandrovermeulen.me/2010/01/03/haskell-datatypes-and-folds-part-ii/';
+        var disqus_url = 'http://alessandrovermeulen.me/2010/01/03/haskell-datatypes-and-folds-part-ii/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+<!-- <script type="text/javascript">
+$(document).ready(function() {
+  $('#disqus_thread').disqus({
+    domain:     "alessandrovermeulen",
+    title:      document.title,
+    developer:  window.location.hostname == "localhost" ? 1 : 0,
+    show_count: true,
+    prettify:   true,
+    markdown:   true,
+    //iframe_css: "http://somewhere.com/stylesheets/disqus.css",
+    ready: function() {
+      // this is when your disqus comments finally load
+      console.log("Comment count: " + $.disqus.commentCount().toString());
+      console.log("Reaction count: " + $.disqus.reactionCount().toString());
+    },
+    added: function(comments) {
+      // do something with the newly added comment divs.
+    },
+    edit: function(textarea) {
+      // called when someone clicks the "reply" button.
+    }
+  });
+});
+</script> -->
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+  </section>
+
+  
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  
+    ga('create', 'UA-9190312-1', 'auto');
+    ga('send', 'pageview');
+  </script>
+
+
+  <script src="/javascripts/modernizr-2.0.js" type="text/javascript"></script>
+  <script src="/javascripts/jquery-1.10.2.min.js" type="text/javascript"></script>
+  <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+  <script src="/javascripts/photography.js" type="text/javascript"></script>
+  <!-- mathjax config similar to math.stackexchange -->
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      inlineMath: [ ['$', '$'] ],
+      displayMath: [ ['$$', '$$']],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    messageStyle: "none",
+    "HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"] }
+  });
+  </script>
+  <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML" type="text/javascript"></script>
+
+</body>
+</html>

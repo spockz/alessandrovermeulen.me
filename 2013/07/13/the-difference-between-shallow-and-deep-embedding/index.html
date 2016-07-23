@@ -1,0 +1,534 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>The difference between shallow and deep embedding - Alessandro Vermeulen</title>
+  <meta name="author" content="Alessandro Vermeulen">
+
+  
+  <meta name="description" content="Deep and shallow embedding are terms associated with Domain Specific Languages
+(DSL). A DSL is a language geared toward a specific domain. The dot &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://alessandrovermeulen.me/2013/07/13/the-difference-between-shallow-and-deep-embedding">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <!--<script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>-->
+  <link href="/atom.xml" rel="alternate" title="Alessandro Vermeulen" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<!-- <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css"> -->
+<!-- <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css"> -->
+<!-- <script src="http://cachedcommons.org/javascripts/jquery/jquery.disqus.js" type="text/javascript"></script> -->
+<link href='http://fonts.googleapis.com/css?family=Open+Sans|Droid+Serif' rel='stylesheet' type='text/css'>
+
+</head>
+
+<body   >
+
+  <section class="container">
+    <header role="banner"><hgroup>
+  <header id="pageheader">
+    <header role="banner" id="banner">
+      <h1><a href="/">Alessandro Vermeulen</a></h1>
+      
+        <p>Alessandro Vermeulen's blog about languages, programming, Computer Science, photography and the Web. <a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS"><i class="icon-rss"></i></a></p>
+      
+    </header>
+  </header>
+</hgroup>
+
+</header>
+    <nav role="navigation"><nav class="navbar">
+  <ul class="nav nav-pills">
+  <li><a href="/about">About</a></li>
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+
+  <ul class="pull-right subscription nav nav-pills" data-subscription="rss">
+  
+  </ul>
+
+  <form class="navbar-search pull-right" action="http://google.com/search" method="get">
+  <fieldset role="search" id="searchfieldset">
+    <input type="hidden" name="q" value="site:alessandrovermeulen.me" />
+
+    <div class="input-append">
+      <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+      <button type="submit" class="btn"><i class="icon-search"></i></button>
+    </div>
+  </fieldset>
+  </form>
+</nav>
+<!--
+<ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:alessandrovermeulen.me" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+
+ --></nav>
+    <!--[if lt IE 9]>
+    <div class="alert alert-block">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <h4>Warning!</h4>
+      Your version of Internet Explorer is seriously outdated. Please upgrade to a decent version of <a href="http://windows.microsoft.com/en-us/internet-explorer/download-ie">Internet Explorer</a> or <a href="http://www.google.com/chrome">Chrome</a> or <a href="http://www.mozilla.org/en-US/firefox/new/">Firefox</a>.
+    </div>
+    <![endif]-->
+    <div id="main">
+      <div id="content">
+        <div class="row-fluid">
+  <div class="span9">
+  <article class="hentry" role="article">
+    
+  <header>
+    
+      <h1 class="entry-title">The Difference Between Shallow and Deep Embedding</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-07-13T23:06:00+00:00" pubdate data-updated="true">Jul 13<span>th</span>, 2013</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Deep and shallow embedding are terms associated with Domain Specific Languages
+(DSL). A DSL is  a language geared toward a specific domain. The <a href="http://www.graphviz.org/content/dot-language" target="_blank">dot language</a> is
+an example of such a DSL for describing Graphs. Conceptually, a shallow
+embedding captures the semantics of the data of the domain in a data type and
+provides a <em>fixed</em> interpretation of the data, whereas a deep embedding goes
+beyond this and captures the semantics of the operations on the domain enabling
+<em>variable</em> interpretations.</p>
+
+<p>We will illustrate this difference by embedding a simple expression language
+with summation, multiplication and constants in
+<a href="http://www.haskell.org">Haskell</a>. Haskell is especially well-suited for and
+often used as a host language for embedded DSLs.</p>
+
+<p>We express our language with the following interface. A type synonym <code>Exp</code> for
+normal <code>Int</code>s and three separate functions representing summation,
+multiplication, and constants.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+</pre></td><td class="code"><pre><code class="haskell"><span class="line"><span class="kr">type</span> <span class="kt">Exp</span> <span class="ow">=</span> <span class="kt">Int</span>
+</span><span class="line">
+</span><span class="line"><span class="nf">plus</span>  <span class="ow">::</span> <span class="kt">Exp</span> <span class="ow">-&gt;</span> <span class="kt">Exp</span> <span class="ow">-&gt;</span> <span class="kt">Exp</span>
+</span><span class="line"><span class="nf">times</span> <span class="ow">::</span> <span class="kt">Exp</span> <span class="ow">-&gt;</span> <span class="kt">Exp</span> <span class="ow">-&gt;</span> <span class="kt">Exp</span>
+</span><span class="line"><span class="nf">const</span> <span class="ow">::</span> <span class="kt">Int</span>        <span class="ow">-&gt;</span> <span class="kt">Exp</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>We embedded the <em>data</em> of the domain in Haskell and provided functions for
+construction of the  model and we can easily represent the calculation of an
+expression as $4 + 6 * 8$ with the following lines of Haskell:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="haskell"><span class="line"><span class="nf">val</span> <span class="ow">=</span> <span class="n">const</span> <span class="mi">4</span> <span class="p">`</span><span class="n">plus</span><span class="p">`</span> <span class="p">(</span><span class="n">const</span> <span class="mi">6</span> <span class="p">`</span><span class="n">times</span><span class="p">`</span> <span class="n">const</span> <span class="mi">8</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>The advantage of this embedding that calculating the value of our expression
+is very fast. Other than the value we cannot determine anything else regarding
+our expression. This becomes more problematic when we add variables to our
+language.</p>
+
+<p>We change our type to contain binding information and add two functions to
+represent the assignment and usage of variables.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+</pre></td><td class="code"><pre><code class="haskell"><span class="line"><span class="kr">type</span> <span class="kt">Exp</span> <span class="ow">=</span> <span class="p">([</span><span class="kt">String</span> <span class="err">⊨</span> <span class="kt">Int</span><span class="p">],</span> <span class="kt">Int</span><span class="p">)</span>
+</span><span class="line">
+</span><span class="line"><span class="nf">assign</span> <span class="ow">::</span> <span class="kt">String</span> <span class="ow">-&gt;</span> <span class="kt">Int</span> <span class="ow">-&gt;</span> <span class="kt">Exp</span>
+</span><span class="line"><span class="nf">var</span>    <span class="ow">::</span> <span class="kt">String</span>        <span class="ow">-&gt;</span> <span class="kt">Exp</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>And in our naivity we can write the expression $x + 6 * 8$ as follows:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="haskell"><span class="line"><span class="nf">val</span> <span class="ow">=</span> <span class="n">var</span> <span class="s">&quot;x&quot;</span> <span class="p">`</span><span class="n">plus</span><span class="p">`</span> <span class="p">(</span><span class="n">const</span> <span class="mi">6</span> <span class="p">`</span><span class="n">times</span><span class="p">`</span> <span class="n">const</span> <span class="mi">8</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Obviously, evaluating this creates havoc! What is the value of <code>x</code>? We should,
+of course, have introduced it first:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="haskell"><span class="line"><span class="nf">val</span> <span class="ow">=</span> <span class="kr">let</span> <span class="s">&quot;x&quot;</span> <span class="mi">4</span> <span class="p">(</span><span class="n">var</span> <span class="s">&quot;x&quot;</span> <span class="p">`</span><span class="n">plus</span><span class="p">`</span> <span class="p">(</span><span class="n">const</span> <span class="mi">6</span> <span class="p">`</span><span class="n">times</span><span class="p">`</span> <span class="n">const</span> <span class="mi">8</span><span class="p">))</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Now we have assigned a value to <code>x</code> and we can safely use it in our
+expression.</p>
+
+<p>Had we used a deep embedding we could have prevented the cataclysmic error by
+first checking whether each variable is assigned before it is used. We create
+a deep embedding of our expression by using a Haskell data type.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+</pre></td><td class="code"><pre><code class="haskell"><span class="line"><span class="kr">data</span> <span class="kt">Exp</span> <span class="kr">where</span>
+</span><span class="line">  <span class="kt">Plus</span>   <span class="ow">::</span> <span class="kt">Exp</span> <span class="ow">-&gt;</span> <span class="kt">Exp</span>    <span class="ow">-&gt;</span> <span class="kt">Exp</span> <span class="c1">-- plus</span>
+</span><span class="line">  <span class="kt">Times</span>  <span class="ow">::</span> <span class="kt">Exp</span> <span class="ow">-&gt;</span> <span class="kt">Exp</span>    <span class="ow">-&gt;</span> <span class="kt">Exp</span> <span class="c1">-- times</span>
+</span><span class="line">  <span class="kt">Const</span>  <span class="ow">::</span> <span class="kt">Int</span>           <span class="ow">-&gt;</span> <span class="kt">Exp</span> <span class="c1">-- const</span>
+</span><span class="line">  <span class="kt">Assign</span> <span class="ow">::</span> <span class="kt">String</span> <span class="ow">-&gt;</span> <span class="kt">Int</span> <span class="ow">-&gt;</span> <span class="kt">Exp</span> <span class="c1">-- assign</span>
+</span><span class="line">  <span class="kt">Var</span>    <span class="ow">::</span> <span class="kt">String</span>        <span class="ow">-&gt;</span> <span class="kt">Exp</span> <span class="c1">-- var</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Note that we do not specify <em>how</em> the bindings should be stored, only that
+such a thing exists. We now define a function that checks whether we use a
+variable before it is defined.<sup id="fnref:folds"><a href="#fn:folds" class="footnote">1</a></sup></p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+</pre></td><td class="code"><pre><code class="haskell"><span class="line"><span class="nf">useBeforeDefine</span> <span class="ow">::</span> <span class="kt">Exp</span> <span class="ow">-&gt;</span> <span class="kt">Bool</span>
+</span><span class="line"><span class="nf">useBeforeDefine</span> <span class="n">e</span> <span class="ow">=</span> <span class="n">f</span> <span class="kt">[]</span>
+</span><span class="line">  <span class="kr">where</span>
+</span><span class="line">  <span class="n">f</span> <span class="ow">::</span> <span class="p">[</span><span class="kt">String</span><span class="p">]</span> <span class="ow">-&gt;</span> <span class="kt">Exp</span> <span class="ow">-&gt;</span> <span class="kt">Bool</span>
+</span><span class="line">  <span class="n">f</span> <span class="p">(</span><span class="kt">Plus</span>  <span class="n">l</span> <span class="n">r</span><span class="p">)</span> <span class="n">env</span>      <span class="ow">=</span> <span class="n">useBeforeDefine</span> <span class="n">l</span> <span class="n">env</span> <span class="o">||</span> <span class="n">useBeforeDefine</span> <span class="n">r</span> <span class="n">env</span>
+</span><span class="line">  <span class="n">f</span> <span class="p">(</span><span class="kt">Times</span> <span class="n">l</span> <span class="n">r</span><span class="p">)</span> <span class="n">env</span>      <span class="ow">=</span> <span class="n">useBeforeDefine</span> <span class="n">l</span> <span class="n">env</span> <span class="o">||</span> <span class="n">useBeforeDefine</span> <span class="n">r</span> <span class="n">env</span>
+</span><span class="line">  <span class="n">f</span> <span class="p">(</span><span class="kt">Const</span> <span class="kr">_</span><span class="p">)</span>   <span class="kr">_</span>        <span class="ow">=</span> <span class="kt">False</span>
+</span><span class="line">  <span class="n">f</span> <span class="p">(</span><span class="kt">Assign</span> <span class="n">var</span> <span class="kr">_</span> <span class="n">e</span><span class="p">)</span> <span class="n">env</span> <span class="ow">=</span> <span class="n">useBeforeDefine</span> <span class="n">e</span> <span class="p">(</span><span class="n">var</span> <span class="kt">:</span> <span class="n">env</span><span class="p">)</span>
+</span><span class="line">  <span class="n">f</span> <span class="p">(</span><span class="kt">Var</span> <span class="n">var</span><span class="p">)</span>        <span class="n">env</span> <span class="ow">=</span> <span class="n">not</span> <span class="p">(</span><span class="n">var</span> <span class="p">`</span><span class="n">elem</span><span class="p">`</span> <span class="n">env</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>With the function above we can <em>check</em> whether an expression is well-formed.
+With our deep embedding we can even define transformations of our expression;
+e.g. differentiate with respect to a variable.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+</pre></td><td class="code"><pre><code class="haskell"><span class="line"><span class="nf">diff</span> <span class="ow">::</span> <span class="kt">Exp</span> <span class="ow">-&gt;</span> <span class="kt">String</span> <span class="ow">-&gt;</span> <span class="kt">Exp</span>
+</span><span class="line"><span class="nf">diff</span> <span class="p">(</span><span class="kt">Plus</span>  <span class="n">l</span> <span class="n">r</span><span class="p">)</span> <span class="n">dx</span>      <span class="ow">=</span> <span class="n">diff</span> <span class="n">l</span> <span class="n">dx</span> <span class="p">`</span><span class="kt">Plus</span><span class="p">`</span> <span class="n">diff</span> <span class="n">r</span> <span class="n">dx</span>
+</span><span class="line"><span class="nf">diff</span> <span class="p">(</span><span class="kt">Times</span> <span class="n">l</span> <span class="n">r</span><span class="p">)</span> <span class="n">dx</span>      <span class="ow">=</span> <span class="p">(</span><span class="n">diff</span> <span class="n">l</span> <span class="n">dx</span> <span class="p">`</span><span class="kt">Times</span><span class="p">`</span> <span class="n">r</span><span class="p">)</span> <span class="p">`</span><span class="kt">Plus</span><span class="p">`</span> <span class="p">(</span><span class="n">l</span> <span class="p">`</span><span class="kt">Times</span><span class="p">`</span> <span class="n">diff</span> <span class="n">r</span> <span class="n">dx</span><span class="p">)</span>
+</span><span class="line"><span class="nf">diff</span> <span class="p">(</span><span class="kt">Const</span> <span class="kr">_</span><span class="p">)</span>   <span class="kr">_</span>       <span class="ow">=</span> <span class="kt">Const</span> <span class="mi">0</span>
+</span><span class="line"><span class="nf">diff</span> <span class="p">(</span><span class="kt">Assign</span> <span class="n">var</span> <span class="n">x</span> <span class="n">e</span><span class="p">)</span> <span class="n">dx</span> <span class="ow">=</span> <span class="kt">Assign</span> <span class="n">var</span> <span class="n">x</span> <span class="p">(</span><span class="n">diff</span> <span class="n">e</span> <span class="n">dx</span><span class="p">)</span>
+</span><span class="line"><span class="nf">diff</span> <span class="p">(</span><span class="kt">Var</span> <span class="n">var</span><span class="p">)</span>        <span class="n">dx</span> <span class="o">|</span> <span class="n">var</span> <span class="o">==</span> <span class="n">dx</span> <span class="ow">=</span> <span class="kt">Const</span> <span class="mi">1</span>
+</span><span class="line">                         <span class="o">|</span> <span class="n">otherwise</span> <span class="ow">=</span> <span class="kt">Const</span> <span class="mi">0</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Deep embedding allows us to utilize the semantics of our model by defining
+multiple interpretations of our DSL. The downside is that just calculating the
+value of our expression has become slower due to the added overhead of the
+constructors, whereas the shallow embedding can be evaluated by only using
+<code>Int</code>s.</p>
+
+<p>In short:</p>
+
+<ul>
+  <li><strong>Shallow embedding</strong> should be used when you only need a single interpretation or
+when you are in a hurry.</li>
+  <li><strong>Deep embedding</strong> should be used in all other cases.</li>
+</ul>
+
+<p>More reading material on this subject:</p>
+
+<ul>
+  <li>This <a href="http://www.cse.chalmers.se/~josefs/DSLTutorial/tutorialSlides.html">presentation</a> by Josef Svenningsson.</li>
+  <li><a href="http://www.cse.chalmers.se/~josefs/publications/TFP12.pdf">Combining Deep and Shallow Embedding for EDSL</a> (Josef Svenningsson and Emil Axelsson, 2012)</li>
+  <li><a href="https://www4.in.tum.de/~nipkow/pubs/tphols04.html">Certifying Machine Code Safety: Shallow versus Deep Embedding</a> (Martin Wildmoser and Tobias Nipkow, 2004)</li>
+  <li><a href="http://cstheory.stackexchange.com/questions/1370/shallow-versus-deep-embeddings">Deep versus Shallow embeddings in Coq</a></li>
+</ul>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:folds">
+      <p>Most often you should use <a href="/2009/12/17/haskell-datatypes-and-folds/">folds</a> (<a href="/2010/01/03/haskell-datatypes-and-folds-part-ii/">2</a>) instead of this direct recursion. <a href="#fnref:folds" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+</div>
+
+
+    <footer>
+      <p class="meta">
+        
+  
+
+<span class="byline author vcard">Posted by <span class="fn"><a rel="author" href="https://plus.google.com/103782975895345685833">Alessandro Vermeulen</a></span></span>
+
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-07-13T23:06:00+00:00" pubdate data-updated="true">Jul 13<span>th</span>, 2013</time>
+        
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/programming/'>Programming</a>
+  
+</span>
+
+
+      </p>
+      
+        <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://alessandrovermeulen.me/2013/07/13/the-difference-between-shallow-and-deep-embedding/" data-via="" data-counturl="http://alessandrovermeulen.me/2013/07/13/the-difference-between-shallow-and-deep-embedding/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+</div>
+
+      
+      <p class="meta">
+        
+          <a class="basic-alignment left" href="/2013/07/08/combining-graphviz-dot-and-tikz-with-dot2tex/" title="Previous Post: Combining graphviz (dot) and TikZ with dot2tex">&laquo; Combining graphviz (dot) and TikZ with dot2tex</a>
+        
+        
+          <a class="basic-alignment right" href="/2014/07/15/notes-on-the-advanced-akka-course/" title="next Post: Notes on the Advanced Akka course">Notes on the Advanced Akka course &raquo;</a>
+        
+      </p>
+    </footer>
+  </article>
+  
+    <section>
+      <h1>Comments</h1>
+      <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+    </section>
+  
+  </div>
+  
+  <aside class="sidebar span3">
+    
+      <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts" class="unstyled">
+    
+      <li class="post">
+        <a href="/2015/08/31/finaglecon/">FinagleCon</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/12/04/orchestration-support-announced-on-dockercon/">Orchestration support announced on DockerCon</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/07/15/notes-on-the-advanced-akka-course/">Notes on the Advanced Akka course</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/07/13/the-difference-between-shallow-and-deep-embedding/">The difference between shallow and deep embedding</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/07/08/combining-graphviz-dot-and-tikz-with-dot2tex/">Combining graphviz (dot) and TikZ with dot2tex</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+<section class="tag-cloud">
+  <h1>Tags</h1>
+  <span class='rank-5'><a href='/tags/colour'>colour</a></span> <span class='rank-3'><a href='/tags/codeigniter'>codeigniter</a></span> <span class='rank-5'><a href='/tags/Haskell-platform'>Haskell platform</a></span> <span class='rank-4'><a href='/tags/Graphviz'>Graphviz</a></span> <span class='rank-5'><a href='/tags/cabal'>cabal</a></span> <span class='rank-3'><a href='/tags/lhs2tex-hl'>lhs2tex-hl</a></span> <span class='rank-5'><a href='/tags/os-x'>os x</a></span> <span class='rank-4'><a href='/tags/partial'>partial</a></span> <span class='rank-5'><a href='/tags/uuagc'>uuagc</a></span> <span class='rank-4'><a href='/tags/rss'>rss</a></span> <span class='rank-5'><a href='/tags/type-algebra'>type algebra</a></span> <span class='rank-4'><a href='/tags/css'>css</a></span> <span class='rank-5'><a href='/tags/orm'>orm</a></span> <span class='rank-4'><a href='/tags/xhtml'>xhtml</a></span> <span class='rank-5'><a href='/tags/ghc'>ghc</a></span> <span class='rank-5'><a href='/tags/Docker'>Docker</a></span> <span class='rank-5'><a href='/tags/delphi-2009'>delphi 2009</a></span> <span class='rank-5'><a href='/tags/syntax-highlighting'>syntax highlighting</a></span> <span class='rank-4'><a href='/tags/lhs2tex'>lhs2tex</a></span> <span class='rank-5'><a href='/tags/debian'>debian</a></span> <span class='rank-5'><a href='/tags/com'>com</a></span> <span class='rank-4'><a href='/tags/mvc'>mvc</a></span> <span class='rank-5'><a href='/tags/html5'>html5</a></span> <span class='rank-5'><a href='/tags/Finagle'>Finagle</a></span> <span class='rank-4'><a href='/tags/LaTeX'>LaTeX</a></span> <span class='rank-4'><a href='/tags/doctrine'>doctrine</a></span> <span class='rank-4'><a href='/tags/partials'>partials</a></span> <span class='rank-5'><a href='/tags/JavaScript'>JavaScript</a></span> <span class='rank-5'><a href='/tags/hackage'>hackage</a></span> <span class='rank-4'><a href='/tags/fold'>fold</a></span> <span class='rank-4'><a href='/tags/Scala'>Scala</a></span> <span class='rank-4'><a href='/tags/TikZ'>TikZ</a></span> <span class='rank-5'><a href='/tags/attribute-grammars'>attribute grammars</a></span> <span class='rank-5'><a href='/tags/layout'>layout</a></span> <span class='rank-1'><a href='/tags/Haskell'>Haskell</a></span> <span class='rank-5'><a href='/tags/applescript'>applescript</a></span> <span class='rank-5'><a href='/tags/lenny'>lenny</a></span> <span class='rank-5'><a href='/tags/Akka'>Akka</a></span> <span class='rank-5'><a href='/tags/Web'>Web</a></span> <span class='rank-5'><a href='/tags/web'>web</a></span> <span class='rank-4'><a href='/tags/php'>php</a></span> <span class='rank-4'><a href='/tags/textmate'>textmate</a></span> <span class='rank-3'><a href='/tags/open-source'>open source</a></span> <span class='rank-5'><a href='/tags/Software'>Software</a></span> 
+</section>
+<section>
+  <h1>About Me</h1>
+  <p>Alessandro Vermeulen is a Functional Programming enthousiast and Computer Sciences MSc
+     alumnus from Utrecht University. His thesis was on incremental evaluation of Haskell programs.</p>
+</section>
+<section>
+  <h1>Blogroll</h1>
+  <ul class="unstyled">
+    <li class="nav-header">Friends</li>
+    <li><a href="http://blog.timmybankers.nl">Tim Soethout</a></li>
+    <li><a href="https://thijsalkema.de/blog/">Thijs Alkemade</a></li>
+    <li><a href="http://www.norm2782.com/">Jurriën Stutterheim</a></li>
+  </ul>
+
+  <ul class="unstyled">
+    <li class="nav-header">Interesting Companies</li>
+    <li><a href="https://typesafe.com" rel="nofollow">Typesafe</a></li>
+    <li><a href="http://www.binksoftware.nl/" rel="nofollow">BINK software B.V.</a></li>
+  </ul>
+
+  <ul class="unstyled">
+    <li class="nav-header">Personal</li>
+    <li><a href="http://www.linkedin.com/in/alessandrovermeulen" rel="nofollow">LinkedIn</a></li>
+  </ul>
+</section>
+
+    
+  </aside>
+  
+</div>
+      </div>
+    </div>
+    <footer role="contentinfo" id="pagefooter"><p>
+  Copyright &copy; 2015 - Alessandro Vermeulen -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+<script src="http://hyphenator.googlecode.com/svn/tags/Version%203.2.0/Hyphenator.js?bm=true" type="text/javascript"></script>
+</footer>
+    
+
+<script type="text/javascript">
+      var disqus_shortname = 'alessandrovermeulen';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://alessandrovermeulen.me/2013/07/13/the-difference-between-shallow-and-deep-embedding/';
+        var disqus_url = 'http://alessandrovermeulen.me/2013/07/13/the-difference-between-shallow-and-deep-embedding/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+<!-- <script type="text/javascript">
+$(document).ready(function() {
+  $('#disqus_thread').disqus({
+    domain:     "alessandrovermeulen",
+    title:      document.title,
+    developer:  window.location.hostname == "localhost" ? 1 : 0,
+    show_count: true,
+    prettify:   true,
+    markdown:   true,
+    //iframe_css: "http://somewhere.com/stylesheets/disqus.css",
+    ready: function() {
+      // this is when your disqus comments finally load
+      console.log("Comment count: " + $.disqus.commentCount().toString());
+      console.log("Reaction count: " + $.disqus.reactionCount().toString());
+    },
+    added: function(comments) {
+      // do something with the newly added comment divs.
+    },
+    edit: function(textarea) {
+      // called when someone clicks the "reply" button.
+    }
+  });
+});
+</script> -->
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+  </section>
+
+  
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  
+    ga('create', 'UA-9190312-1', 'auto');
+    ga('send', 'pageview');
+  </script>
+
+
+  <script src="/javascripts/modernizr-2.0.js" type="text/javascript"></script>
+  <script src="/javascripts/jquery-1.10.2.min.js" type="text/javascript"></script>
+  <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+  <script src="/javascripts/photography.js" type="text/javascript"></script>
+  <!-- mathjax config similar to math.stackexchange -->
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      inlineMath: [ ['$', '$'] ],
+      displayMath: [ ['$$', '$$']],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    messageStyle: "none",
+    "HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"] }
+  });
+  </script>
+  <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML" type="text/javascript"></script>
+
+</body>
+</html>

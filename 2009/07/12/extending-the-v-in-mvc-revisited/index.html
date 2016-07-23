@@ -1,0 +1,501 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Extending the V in MVC - revisited - Alessandro Vermeulen</title>
+  <meta name="author" content="Alessandro Vermeulen">
+
+  
+  <meta name="description" content="This post is an revised version of ‘Extending the V in MVC on the web’ of November 9, 2008. When I first started working with the MVC method it was &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://alessandrovermeulen.me/2009/07/12/extending-the-v-in-mvc-revisited">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <!--<script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>-->
+  <link href="/atom.xml" rel="alternate" title="Alessandro Vermeulen" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<!-- <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css"> -->
+<!-- <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css"> -->
+<!-- <script src="http://cachedcommons.org/javascripts/jquery/jquery.disqus.js" type="text/javascript"></script> -->
+<link href='http://fonts.googleapis.com/css?family=Open+Sans|Droid+Serif' rel='stylesheet' type='text/css'>
+
+</head>
+
+<body   >
+
+  <section class="container">
+    <header role="banner"><hgroup>
+  <header id="pageheader">
+    <header role="banner" id="banner">
+      <h1><a href="/">Alessandro Vermeulen</a></h1>
+      
+        <p>Alessandro Vermeulen's blog about languages, programming, Computer Science, photography and the Web. <a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS"><i class="icon-rss"></i></a></p>
+      
+    </header>
+  </header>
+</hgroup>
+
+</header>
+    <nav role="navigation"><nav class="navbar">
+  <ul class="nav nav-pills">
+  <li><a href="/about">About</a></li>
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+
+  <ul class="pull-right subscription nav nav-pills" data-subscription="rss">
+  
+  </ul>
+
+  <form class="navbar-search pull-right" action="http://google.com/search" method="get">
+  <fieldset role="search" id="searchfieldset">
+    <input type="hidden" name="q" value="site:alessandrovermeulen.me" />
+
+    <div class="input-append">
+      <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+      <button type="submit" class="btn"><i class="icon-search"></i></button>
+    </div>
+  </fieldset>
+  </form>
+</nav>
+<!--
+<ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:alessandrovermeulen.me" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+
+ --></nav>
+    <!--[if lt IE 9]>
+    <div class="alert alert-block">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <h4>Warning!</h4>
+      Your version of Internet Explorer is seriously outdated. Please upgrade to a decent version of <a href="http://windows.microsoft.com/en-us/internet-explorer/download-ie">Internet Explorer</a> or <a href="http://www.google.com/chrome">Chrome</a> or <a href="http://www.mozilla.org/en-US/firefox/new/">Firefox</a>.
+    </div>
+    <![endif]-->
+    <div id="main">
+      <div id="content">
+        <div class="row-fluid">
+  <div class="span9">
+  <article class="hentry" role="article">
+    
+  <header>
+    
+      <h1 class="entry-title">Extending the v in MVC - Revisited</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-07-12T00:00:00+00:00" pubdate data-updated="true">Jul 12<span>th</span>, 2009</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>This post is an revised version of ‘Extending the V in MVC on the web’ of November 9, 2008.</p>
+
+<hr />
+
+<p>When I first started working with the MVC method it was with my own framework.
+After noticing that maintaining my own framework would be very time-comsuming I
+embarked on the search for a free, fast and widely supported PHP web framework.
+The one I found that time was ‘<a href="http://www.codeigniter.com">CodeIgniter</a>’.</p>
+
+<p>After working on different projects I noticed that most websites present the
+same data to the visitor in several different formats. Think of RSS/Atom for
+blog posts for use in an RSS reader together with the (x)html versions.</p>
+
+<p>While essentially providing the same data to the visitor the programmer of the
+website has to put sizable amount of work to add little extra functionality in
+the form of an RSS feed. Repeating a lod of code for input validation, data
+retrieval from the database and creating extra routes into the application. As
+you can imagine this could grow into a tedious job.</p>
+
+<p>I’ll be describing techniques known and in use today, but reinvented each time
+again as a (new) developer starts working on an web application. Here we’ll be
+giving them name and be describing them.</p>
+
+<!--more-->
+<h3>Theory</h3>
+<p>What are layouts? What are partials? The answers to these questions will be
+discussed in the following sections.</p>
+<h4>Layouts</h4>
+<p>What is a layout? We will be using the following definition of the word layout:
+“A layout is the representation of data in a specific format”. So the layout of
+a page can be either, xhtml, RSS, PDF, PPT or any other data format.</p>
+
+<p>Suppose you would find yourself in the situation where you need to write a blog.
+You could start with building the models that describe users, posts, comments
+and maybe even backtracks. Then you start writing the controllers and views and
+let someone else do the design for you. :)</p>
+
+<p>So, the designer has made some nice designs and you are converting those to
+(x)html, CSS and images for use in your views. In the same time you write your
+controllers, one for every aspect of your blog. Consider the controller that
+shows a list of your most recent posts.</p>
+
+<p>Blogs are essentially meant for publishing information, the messages the poster
+posts, to the world. People want to see a nice readable web page when they look
+at your blog. But it is hard to keep track of all the blogs one visits for new
+posts. That’s why people invented the syndicates. And look now, here you are,
+having two URLs providing the same information, the latest posts, and the only
+difference is that the information is that they present the data in another
+format. So why should the URLs be different? - Other than the extension that
+denotes in which format the page should be presented? - Right, they shouldn’t.
+Nor should you have to write any administrative code. The only code you should
+have to write is the code responsible for presenting the given data in a
+specific layout.</p>
+
+<p>With just a small amount of initial trouble, which we’ll see in the next
+chapter, it will save you a lot of time and administrative rut. Sounds good,
+doesn’t it?</p>
+
+<h4>Partials</h4>
+<p>Another aspect of this article is ‘partials’. Programming today is all about
+re-using code and rapid development and low-maintenance. OOP gives you the
+ability to re-use your previously written code you worked so hard on in a
+sensible matter. It also can help in reducing the draught of maintenance. The
+MVC paradigm is extending this and helps by further aiding rapid development.</p>
+
+<p>In the aspect of re-using code, partials are very important. Where OOP , Models
+and Controllers can save you time by re-using program code, partials can help
+you save time by offering a new way to re-use your html (or any other layout)
+code. Thus not only decreasing the maintenance needed for your application but
+simultaneously increasing consistency throughout your application without
+causing you any headaches.</p>
+
+<p>Where does the name ‘partial’ come from? The origins of this name are quite
+simple. A ‘partial’ is a small re-usable snippet of View code and is a View
+itself.</p>
+
+<p>Partials can be used for many things. For example, the header on all your blog
+pages could be the same, apart from variables as titles and needed stylesheets
+and javascript includes. As we have learned during the age of the static
+webpages, maintaining this would be an hell of a pain. So let’s not do that
+anymore and let’s use partials instead. Keep the code in one place and just use
+the partial if you need the header. Do no retype or copy any code.</p>
+
+<p>Of course, headers and footers are not the only things that we can store in
+partials. The menu, the login form, the code for a blog post and the lot can be
+placed in partials. Actually almost anything that will be used more than once
+should be placed in a partial.</p>
+
+<h3>An implementation in CodeIgniter</h3>
+<p>This part shows one way to implement layouts and partials in CodeIgniter. We
+assume you have at least version 1.6.3 of CodeIgniter and that you have a fair
+idea of what we are going to do. Proceeding is completely at your own expense
+and I am not accountable for any issues that may rise do to these adjustments</p>
+
+<h4>Adjustments</h4>
+<h5>The Controller class</h5>
+<p>The first thing we have to do is extending the main controller class provided by
+CodeIgniter. This enables us to do whatever we want without changing anything in
+the CodeIgniter code base. Place this function in the extending controller:</p>
+
+<p>[file lang=”php”]snippets/extendingthevinmvc/controller.php[/file]</p>
+<h5>The loader</h5>
+<p>Now put these functions inside class extending the CI Loader class:</p>
+
+<p>[file lang=”php”]snippets/extendingthevinmvc/loader.php[/file]</p>
+<h4>Usage</h4>
+<h5>Views</h5>
+<p>Now that we have extended the functionality of CodeIgniter with our own we can
+start to use layouts and partials. Consider the following url:</p>
+
+<blockquote>http://someurl/blog/category/5</blockquote>
+
+<p>It will give you a nice and cheesy overview formatted in xhtml. So let’s take a
+look at the view file.</p>
+
+<p>[file lang=”php” preserveformat=”on”]snippets/extendingthevinmvc/short/xhtml_blog_category.php[/file]</p>
+
+<p>And the code for the short summary looks like this:</p>
+
+<p>[file lang=”php”]snippets/extendingthevinmvc/short/xhtml_blog__shortsummary.php[/file]</p>
+
+<p>Now consider this url:</p>
+<blockquote>http://someurl/blog/category.rss/5</blockquote>
+<p>This url would give you the overview of the posts in category 5. Just as with
+the url above. But this time the information will be formatted in RSS. Notice
+that the only thing we had to do was to change the url. Create these two files:</p>
+
+<p><strong>APPPATH/views/rss/blog/summary.php</strong></p>
+
+<p>[file lang=”php”]snippets/extendingthevinmvc/short/rss_blog_summary.php[/file]</p>
+
+<p><strong>APPPATH/views/rss/blog/_shortsummary.php</strong></p>
+
+<p>[file lang=”php”]snippets/extendingthevinmvc/short/rss_blog__shortsummary.php[/file]</p>
+
+<p>Wow. Now we only had to write a few lines (15) for adding RSS feeds to our site.
+This is really all there is to it. Now go out there and have fun.</p>
+</div>
+
+
+    <footer>
+      <p class="meta">
+        
+  
+
+<span class="byline author vcard">Posted by <span class="fn"><a rel="author" href="https://plus.google.com/103782975895345685833">Alessandro Vermeulen</a></span></span>
+
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-07-12T00:00:00+00:00" pubdate data-updated="true">Jul 12<span>th</span>, 2009</time>
+        
+
+
+      </p>
+      
+        <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://alessandrovermeulen.me/2009/07/12/extending-the-v-in-mvc-revisited/" data-via="" data-counturl="http://alessandrovermeulen.me/2009/07/12/extending-the-v-in-mvc-revisited/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+</div>
+
+      
+      <p class="meta">
+        
+          <a class="basic-alignment left" href="/2009/06/19/adding-com-to-your-delphi-project/" title="Previous Post: Adding COM(+) to your Delphi project">&laquo; Adding COM(+) to your Delphi project</a>
+        
+        
+          <a class="basic-alignment right" href="/2009/09/08/setting-up-multiple-applications-with-codeigniter/" title="next Post: Setting up multiple applications with CodeIgniter">Setting up multiple applications with CodeIgniter &raquo;</a>
+        
+      </p>
+    </footer>
+  </article>
+  
+    <section>
+      <h1>Comments</h1>
+      <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+    </section>
+  
+  </div>
+  
+  <aside class="sidebar span3">
+    
+      <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts" class="unstyled">
+    
+      <li class="post">
+        <a href="/2015/08/31/finaglecon/">FinagleCon</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/12/04/orchestration-support-announced-on-dockercon/">Orchestration support announced on DockerCon</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/07/15/notes-on-the-advanced-akka-course/">Notes on the Advanced Akka course</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/07/13/the-difference-between-shallow-and-deep-embedding/">The difference between shallow and deep embedding</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/07/08/combining-graphviz-dot-and-tikz-with-dot2tex/">Combining graphviz (dot) and TikZ with dot2tex</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+<section class="tag-cloud">
+  <h1>Tags</h1>
+  <span class='rank-4'><a href='/tags/TikZ'>TikZ</a></span> <span class='rank-4'><a href='/tags/doctrine'>doctrine</a></span> <span class='rank-5'><a href='/tags/Haskell-platform'>Haskell platform</a></span> <span class='rank-5'><a href='/tags/ghc'>ghc</a></span> <span class='rank-5'><a href='/tags/web'>web</a></span> <span class='rank-4'><a href='/tags/Scala'>Scala</a></span> <span class='rank-5'><a href='/tags/orm'>orm</a></span> <span class='rank-4'><a href='/tags/partials'>partials</a></span> <span class='rank-5'><a href='/tags/Akka'>Akka</a></span> <span class='rank-3'><a href='/tags/codeigniter'>codeigniter</a></span> <span class='rank-5'><a href='/tags/lenny'>lenny</a></span> <span class='rank-4'><a href='/tags/partial'>partial</a></span> <span class='rank-5'><a href='/tags/hackage'>hackage</a></span> <span class='rank-5'><a href='/tags/Docker'>Docker</a></span> <span class='rank-4'><a href='/tags/lhs2tex'>lhs2tex</a></span> <span class='rank-5'><a href='/tags/os-x'>os x</a></span> <span class='rank-4'><a href='/tags/css'>css</a></span> <span class='rank-5'><a href='/tags/colour'>colour</a></span> <span class='rank-1'><a href='/tags/Haskell'>Haskell</a></span> <span class='rank-4'><a href='/tags/php'>php</a></span> <span class='rank-5'><a href='/tags/Finagle'>Finagle</a></span> <span class='rank-5'><a href='/tags/Software'>Software</a></span> <span class='rank-5'><a href='/tags/cabal'>cabal</a></span> <span class='rank-4'><a href='/tags/Graphviz'>Graphviz</a></span> <span class='rank-5'><a href='/tags/uuagc'>uuagc</a></span> <span class='rank-3'><a href='/tags/lhs2tex-hl'>lhs2tex-hl</a></span> <span class='rank-4'><a href='/tags/textmate'>textmate</a></span> <span class='rank-4'><a href='/tags/LaTeX'>LaTeX</a></span> <span class='rank-5'><a href='/tags/layout'>layout</a></span> <span class='rank-5'><a href='/tags/com'>com</a></span> <span class='rank-4'><a href='/tags/fold'>fold</a></span> <span class='rank-5'><a href='/tags/JavaScript'>JavaScript</a></span> <span class='rank-4'><a href='/tags/xhtml'>xhtml</a></span> <span class='rank-5'><a href='/tags/debian'>debian</a></span> <span class='rank-4'><a href='/tags/rss'>rss</a></span> <span class='rank-5'><a href='/tags/delphi-2009'>delphi 2009</a></span> <span class='rank-3'><a href='/tags/open-source'>open source</a></span> <span class='rank-5'><a href='/tags/attribute-grammars'>attribute grammars</a></span> <span class='rank-4'><a href='/tags/mvc'>mvc</a></span> <span class='rank-5'><a href='/tags/applescript'>applescript</a></span> <span class='rank-5'><a href='/tags/Web'>Web</a></span> <span class='rank-5'><a href='/tags/html5'>html5</a></span> <span class='rank-5'><a href='/tags/type-algebra'>type algebra</a></span> <span class='rank-5'><a href='/tags/syntax-highlighting'>syntax highlighting</a></span> 
+</section>
+<section>
+  <h1>About Me</h1>
+  <p>Alessandro Vermeulen is a Functional Programming enthousiast and Computer Sciences MSc
+     alumnus from Utrecht University. His thesis was on incremental evaluation of Haskell programs.</p>
+</section>
+<section>
+  <h1>Blogroll</h1>
+  <ul class="unstyled">
+    <li class="nav-header">Friends</li>
+    <li><a href="http://blog.timmybankers.nl">Tim Soethout</a></li>
+    <li><a href="https://thijsalkema.de/blog/">Thijs Alkemade</a></li>
+    <li><a href="http://www.norm2782.com/">Jurriën Stutterheim</a></li>
+  </ul>
+
+  <ul class="unstyled">
+    <li class="nav-header">Interesting Companies</li>
+    <li><a href="https://typesafe.com" rel="nofollow">Typesafe</a></li>
+    <li><a href="http://www.binksoftware.nl/" rel="nofollow">BINK software B.V.</a></li>
+  </ul>
+
+  <ul class="unstyled">
+    <li class="nav-header">Personal</li>
+    <li><a href="http://www.linkedin.com/in/alessandrovermeulen" rel="nofollow">LinkedIn</a></li>
+  </ul>
+</section>
+
+    
+  </aside>
+  
+</div>
+      </div>
+    </div>
+    <footer role="contentinfo" id="pagefooter"><p>
+  Copyright &copy; 2015 - Alessandro Vermeulen -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+<script src="http://hyphenator.googlecode.com/svn/tags/Version%203.2.0/Hyphenator.js?bm=true" type="text/javascript"></script>
+</footer>
+    
+
+<script type="text/javascript">
+      var disqus_shortname = 'alessandrovermeulen';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://alessandrovermeulen.me/2009/07/12/extending-the-v-in-mvc-revisited/';
+        var disqus_url = 'http://alessandrovermeulen.me/2009/07/12/extending-the-v-in-mvc-revisited/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+<!-- <script type="text/javascript">
+$(document).ready(function() {
+  $('#disqus_thread').disqus({
+    domain:     "alessandrovermeulen",
+    title:      document.title,
+    developer:  window.location.hostname == "localhost" ? 1 : 0,
+    show_count: true,
+    prettify:   true,
+    markdown:   true,
+    //iframe_css: "http://somewhere.com/stylesheets/disqus.css",
+    ready: function() {
+      // this is when your disqus comments finally load
+      console.log("Comment count: " + $.disqus.commentCount().toString());
+      console.log("Reaction count: " + $.disqus.reactionCount().toString());
+    },
+    added: function(comments) {
+      // do something with the newly added comment divs.
+    },
+    edit: function(textarea) {
+      // called when someone clicks the "reply" button.
+    }
+  });
+});
+</script> -->
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+  </section>
+
+  
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  
+    ga('create', 'UA-9190312-1', 'auto');
+    ga('send', 'pageview');
+  </script>
+
+
+  <script src="/javascripts/modernizr-2.0.js" type="text/javascript"></script>
+  <script src="/javascripts/jquery-1.10.2.min.js" type="text/javascript"></script>
+  <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+  <script src="/javascripts/photography.js" type="text/javascript"></script>
+  <!-- mathjax config similar to math.stackexchange -->
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      inlineMath: [ ['$', '$'] ],
+      displayMath: [ ['$$', '$$']],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    messageStyle: "none",
+    "HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"] }
+  });
+  </script>
+  <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML" type="text/javascript"></script>
+
+</body>
+</html>

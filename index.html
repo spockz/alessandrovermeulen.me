@@ -1,0 +1,1239 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Alessandro Vermeulen</title>
+  <meta name="author" content="Alessandro Vermeulen">
+
+  
+  <meta name="description" content="FinagleCon was held at TwitterHQ in San Francisco. It is refreshing to see a
+nice working atmosphere with free food and drinks. Now for the contents &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://alessandrovermeulen.me">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <!--<script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>-->
+  <link href="/atom.xml" rel="alternate" title="Alessandro Vermeulen" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<!-- <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css"> -->
+<!-- <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css"> -->
+<!-- <script src="http://cachedcommons.org/javascripts/jquery/jquery.disqus.js" type="text/javascript"></script> -->
+<link href='http://fonts.googleapis.com/css?family=Open+Sans|Droid+Serif' rel='stylesheet' type='text/css'>
+
+</head>
+
+<body   >
+
+  <section class="container">
+    <header role="banner"><hgroup>
+  <header id="pageheader">
+    <header role="banner" id="banner">
+      <h1><a href="/">Alessandro Vermeulen</a></h1>
+      
+        <p>Alessandro Vermeulen's blog about languages, programming, Computer Science, photography and the Web. <a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS"><i class="icon-rss"></i></a></p>
+      
+    </header>
+  </header>
+</hgroup>
+
+</header>
+    <nav role="navigation"><nav class="navbar">
+  <ul class="nav nav-pills">
+  <li><a href="/about">About</a></li>
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+
+  <ul class="pull-right subscription nav nav-pills" data-subscription="rss">
+  
+  </ul>
+
+  <form class="navbar-search pull-right" action="http://google.com/search" method="get">
+  <fieldset role="search" id="searchfieldset">
+    <input type="hidden" name="q" value="site:alessandrovermeulen.me" />
+
+    <div class="input-append">
+      <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+      <button type="submit" class="btn"><i class="icon-search"></i></button>
+    </div>
+  </fieldset>
+  </form>
+</nav>
+<!--
+<ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:alessandrovermeulen.me" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+
+ --></nav>
+    <!--[if lt IE 9]>
+    <div class="alert alert-block">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <h4>Warning!</h4>
+      Your version of Internet Explorer is seriously outdated. Please upgrade to a decent version of <a href="http://windows.microsoft.com/en-us/internet-explorer/download-ie">Internet Explorer</a> or <a href="http://www.google.com/chrome">Chrome</a> or <a href="http://www.mozilla.org/en-US/firefox/new/">Firefox</a>.
+    </div>
+    <![endif]-->
+    <div id="main">
+      <div id="content">
+        <div class="row-fluid">
+<div class="blog-index span9">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2015/08/31/finaglecon/">FinagleCon</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-08-31T17:57:00+00:00" pubdate data-updated="true">Aug 31<span>st</span>, 2015</time>
+        
+         | <a href="/2015/08/31/finaglecon/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>FinagleCon was held at TwitterHQ in San Francisco. It is refreshing to see a
+nice working atmosphere with free food and drinks. Now for the contents.</p>
+
+<p>Twitter’s RPC framework, Finagle, has been in production since <a href="http://vkostyukov.ru/slides/finch-101/?full#5">August
+2010</a> and has over 140
+contributors. In addition to Twitter, it has been adopted by many large
+companies such as SoundCloud. Initially written in Java with FP constructs
+(monads, maps, etc.) all over, it was soon after rewritten in Scala.</p>
+
+<p>Finagle is based on three core concepts: Simplicity, Composability, and
+Separation of Concerns. These concepts are shown through three primitive
+building blocks:
+<a href="https://twitter.github.io/util/docs/index.html#com.twitter.util.Future"><code>Future</code></a>,
+<a href="https://twitter.github.io/finagle/docs/index.html#com.twitter.finagle.Service"><code>Service</code></a>,
+and
+<a href="https://twitter.github.io/finagle/docs/index.html#com.twitter.finagle.Filter"><code>Filter</code></a>.</p>
+
+<ul>
+  <li><code>Future</code>s provide an easy interface to create asynchronous computation and
+to model sequential or asynchronous data-flows.</li>
+  <li><code>Service</code>s are functions that return futures, used to abstract away, possibly
+remote, service calls.</li>
+  <li><code>Filter</code>s are essentially decorators and are meant to contain modular blocks
+of re-usable, non-business logic. Example usages are <a href="https://twitter.github.io/finagle/docs/index.html#com.twitter.finagle.filter.LoggingFilter">LoggingFilter</a> and
+<a href="https://twitter.github.io/finagle/docs/index.html#com.twitter.finagle.service.RetryingFilter">RetryingFilter</a>.</li>
+</ul>
+
+<p>The use of Futures makes it easy to test asynchronous computations. Services and
+filters both can be created separately, each containing their specialized logic.
+This modularity makes it easy to test and reason about them separately. Services
+and filters are easily composed, just like functions do, which makes it
+convenient to test chains. Services and filters are meant to separate behaviour
+from domain logic.</p>
+
+<p>As amazing as Finagle is, there are some things one should be aware of. To
+create a really resilient application with Finagle one has to be an expert in
+its internals. Many configuration parameters influence each other, e.g. queue
+size and time-outs. With a properly tuned setup Finagle is properly fast and
+resilient (the defaults are good as well, mind you). As most data centres are
+heterogenous in their setup, faster machines are added to the pool, and other
+conditions change, one has to keep attention to the tuning continuously in order
+to maintain optimal performance.</p>
+
+<p>Some general advice, watch out for traffic amplification due to retries, keep
+your timeouts low so retry is useful, but not as low that you introduce spurious
+timeouts.</p>
+
+<p>For extra points, keep hammering your application until it breaks, find out why
+it breaks, fix it, and repeat.</p>
+
+<h2 id="the-future">The future</h2>
+
+<p>In addition to this heads up we were also given a nice insight in the upcoming
+things for Finagle.</p>
+
+<p>In order to make more informed decision, we will get a new Failure type which
+contains more information instead of ‘just’ a <code>Throwable</code>. In this new
+<code>Failure</code>, an added field indicates whether it is safe to <code>retry</code>.</p>
+
+<p>There are several issues with the current way of fine-tuning Finagle, as
+mentioned, you need to be an expert to use all the configuration parameters
+properly. Next to this the configuration is static and doesn’t take into account
+changing environments and behaviour of downstream services. Because the tuning
+of the parameters is tightly coupled with the implementation of Finagle it is
+also hard to change the implementation significantly without significant
+re-tuning.</p>
+
+<p>In order to battle the last two points, Finagle will introduce Service Level
+Objectives (SLO). The SLO is a higher-level goal that Finagle should strive to
+reach instead of low-level hardcoded parameters. What these SLO will be exactly
+is not yet known.</p>
+
+<h2 id="the-community">The community</h2>
+
+<p>The Finagle team will synchronize the internal Finagle repository with the
+Github repository every Monday. They will strive to publish a snapshot version
+of the change as well.</p>
+
+<p>For someone looking to write his own protocol to connect to his service,
+<code>finagle-serial</code> is a nice project to start with. It is small enough to grasp
+within a day but big enough to be non-trivial.</p>
+
+<p>It was found that the
+<a href="http://blog.ragozin.info/2012/03/secret-hotspot-option-improving-gc.html">ParGCCardsPerStrideChunk</a>
+garbage collection option, available from 7u40, can halve GC times on large
+heaps. It is recommended to try this parameter. Tuning seems to be hard to do
+and is generally done by copying a ‘known good set’ of parameters.</p>
+
+<p><a href="http://twitter.github.io/scrooge/">Scrooge</a> is a good utility to use for Thrift
+and Scala as it is aware of Scala features such as Traits and Objects and can
+generate relevant transformations for them.</p>
+
+<p>When you want to connect to multiple data-centres from a single data-centre one
+can use
+<a href="https://twitter.github.io/finagle/docs/index.html#com.twitter.finagle.client.LatencyCompensation$">LatencyCompensation</a>
+to include latency times.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2014/12/04/orchestration-support-announced-on-dockercon/">Orchestration Support Announced on DockerCon</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-12-04T21:46:00+00:00" pubdate data-updated="true">Dec 4<span>th</span>, 2014</time>
+        
+         | <a href="/2014/12/04/orchestration-support-announced-on-dockercon/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1 id="orchestration">Orchestration</h1>
+
+<p>The philosophy behind docker is that in order to be solved, a large problem has to be divided into its root problems. One can then proceed by solving every one of these problems step by step. Additionally all elements of the solution need to communicate through a common app.</p>
+
+<p>Docker has always been a tool with a single purpose: the creating, transport, and running of images. Until today there where several issues with docker that make using it somewhat trying at times. It lacked in capabilities for orchestration which is categorized by:</p>
+
+<ol>
+  <li>Installation of a docker host from scratch;</li>
+  <li>Clustering of multiple docker hosts to spread resource utilization over the cluster;</li>
+  <li>Managing inter-container dependencies at runtime.</li>
+</ol>
+
+<p>Today this changed as Docker Inc. announced a new set of tools.</p>
+
+<h2 id="provisioning-machine">Provisioning: Machine</h2>
+
+<p>Machine provides a one step installer for creating a new docker host on your local machine, a publicly hosted cloud, or a private cloud. It will automatically provision a new machine and set the environment variables such that any following docker command runs on the newly created host. This is very similar to what boot2docker provides.</p>
+
+<p>There are several engines for provisioning in different platforms such as:</p>
+
+<ul>
+  <li>VirtualBox</li>
+  <li>VMWare</li>
+  <li>AWS</li>
+  <li>Microsoft Hypervisor</li>
+  <li>etc. (todo link)</li>
+</ul>
+
+<p>More information can be found at <a href="https://github.com/docker/machine">github</a>.</p>
+
+<h2 id="clustering-swarm">Clustering: Swarm</h2>
+
+<p>Ideally you want to control a cluster of docker hosts with the same interface as you control a single host. In other words the interface needs to be transparent or standardized. With swarm you can.</p>
+
+<p>All existing commands on docker work with the swarm as well. Just point your docker binary to the swarm proxy and you are controlling the cluster instead of one single machine. Swarm is location/data center aware and also incorporates resource management. The default strategy is to use as little hosts as possible. The strategy places several lighter containers on the same node in order to reserve other nodes for heavier containers.</p>
+
+<p>The main features are:</p>
+
+<ol>
+  <li>Resource management</li>
+  <li>Scheduling honoring constraints</li>
+  <li>Health checks on the cluster and nodes</li>
+  <li>Supporting the entire docker interface</li>
+</ol>
+
+<p>Additionally Mesos can be used to provide the scheduling. Docker Inc. also announced that Mesos will be a first class citizen in Docker. The goal is to be able to run docker containers along side other Mesos jobs in the Mesos cluster.</p>
+
+<p>More information also on <a href="https://github.com/docker/swarm">github</a>.</p>
+
+<p>It appears that swarm is not supported yet by machine, sadly.</p>
+
+<h3 id="managing-inter-container-dependencies-composer">Managing inter-container dependencies: Composer</h3>
+
+<p>Setting up applications that require multiple containers to function correctly is difficult. Keeping them running is even harder. Docker proposes the <code>Docker Composer</code>.</p>
+
+<p>Traditionally it ran on one single machine and, until today, orchestration needed to be done manually or through external tools.</p>
+
+<h1 id="docker-hub">Docker Hub</h1>
+
+<p>Docker Inc. also announces an enterprise version of the Docker Hub. It is able to run wherever the enterprise needs it to run and comes with safe 1-click upgrades. Enterprises are adopting containers as development is up to 30 times faster with halve the error rate.</p>
+
+<p>Some fun facts:</p>
+
+<ul>
+  <li>100000 contributors to docker hub</li>
+  <li>157 TB of data transmitted each month</li>
+  <li>50 TB of data stored</li>
+</ul>
+
+<p>The timeline for 2015:</p>
+
+<ol>
+  <li>Increase performance of pulls</li>
+  <li>Increase transparancy by adding and improving on status pages</li>
+  <li>Engage in partnership with Microsoft. Most notably this will result being able to run Linux on Microsoft Azure.</li>
+</ol>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2014/07/15/notes-on-the-advanced-akka-course/">Notes on the Advanced Akka Course</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-15T12:00:00+00:00" pubdate data-updated="true">Jul 15<span>th</span>, 2014</time>
+        
+         | <a href="/2014/07/15/notes-on-the-advanced-akka-course/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>The Advanced Akka course is provided by Typesafe and is aimed at teaching advanced usages of Akka. The course covers the basics of Akka, Remoting, Clustering, Routers, CRDTs, Cluster Sharding and Akka Persistance. The following post starts with a general introduction to Akka and presents the takeaways from the course as we experienced them.</p>
+
+<h2 id="a-general-overview-of-akka">A general overview of Akka</h2>
+
+<p>The reader which is already familiar with Akka can skip this section.</p>
+
+<p>According to the Akka site this is Akka:</p>
+
+<blockquote>
+  <p>Akka is a toolkit and runtime for building highly 
+concurrent, distributed, and fault tolerant event-driven
+applications on the JVM.</p>
+</blockquote>
+
+<p>Akka achieves this by using Actors.</p>
+
+<blockquote>
+  <p>Actors are very lightweight concurrent entities. </p>
+</blockquote>
+
+<p>Each Actor has a corresponding mailbox stored separately from the Actor. The Actors together with their mailboxes reside in an ActorSystem. Additionally, the ActorSystem contains the Dispatcher which executes the handling of a message by an actor. Each Actor only handles a single message at a time.</p>
+
+<p>In Akka everything is remote by design and philosophy. In practice this means that each Actor is identified by its <code>ActorRef</code>. This is a reference to the actor which provides <em>Location Transparency</em>.</p>
+
+<p>Actors communicate with each other by sending messages to an another Actor through an <code>ActorRef</code>. This sending of the message takes virtually no time.</p>
+
+<p>In addition to <code>ActorRef</code> there exists also an <code>ActorSelection</code> which contains a path to one or more actors. Upon each sending of the message the path is traversed until the actor is found or when not. No message is send back when the actor is not found however.</p>
+
+<p>States: Started - Stopped - Terminated
+If an actor enters the <code>Stopped</code> state it first stops its child actors before entering the <code>Terminated</code> state.</p>
+
+<h3 id="best-practices">Best-practices</h3>
+
+<p>Import the <code>context.dispatcher</code> instead of the global Scala ExecutionContext. It is the ExecutionContext managed by Akka. Using the global context causes the Actors to be run in the global Thread pool.</p>
+
+<p>You should not use <code>PoisonPill</code> as it will be removed from future versions of Akka since it is not specific enough. Roll your own message to make sure the appropriate actions for graceful shutdown are done. Use <code>context.stop</code> to stop your actor.</p>
+
+<p>Place your business logic in a separate trait and mix it in to the actor. This increases testability as you can easily unit test the trait containing the business logic. Also, you should put the creation of any child actors inside a separate method so the creation can be overridden from tests.</p>
+
+<h2 id="remoting">Remoting</h2>
+<p>With the Remoting extension it is possible to communicate with other Actor Systems. This communication is often done through <code>ActorSelection</code>s instead of <code>ActorRef</code>.</p>
+
+<p>Remoting uses Java serialisation by default which is slow and fragile in light of changing definitions. It is possible and recommended to use another mechanism such as Google Protobuf.</p>
+
+<h2 id="clustering">Clustering</h2>
+<p>Akka has a simple perspective on cluster management with regards to split-brain scenarios. Nodes become dead when they are observed as dead and they cannot resurrect. The only way a node can come up again is if it registers itself again.</p>
+
+<p>When a net split happens the other nodes are marked as <em>unreachable</em>. When using a Singleton, this means that only the nodes that can reach the singleton will access it. The others will not decide on a new Singleton in order to prevent a split-brain scenario.</p>
+
+<p>Another measure against split-brain is contacting the seed nodes in order. The first seed node is required to be up.</p>
+
+<p>The seed nodes are tried in order.</p>
+
+<h2 id="fsm">FSM</h2>
+<p>There is an library for writing finite state machines called FSM. For larger actors it can be useful to use the FSM. Otherwise stick to pure <code>become</code> and <code>unbecome</code>.</p>
+
+<p>FSM also has an interval timer for scheduling messages. However, the use of <code>stay()</code> resets the interval timer therefore you could have issues with never executing what is at the end of the timer.</p>
+
+<h2 id="routers">Routers</h2>
+
+<p>There are two different kinds of routers: Pools and Groups. Pools are in charge of their own children and they are created and killed by the pool. Groups are configured with an <code>ActorSelection</code> that defines the actors to which the group should sent its messages. There are several implementations: Consistent Hash, Random, Round Robin, BroadCast, Scatter - Gather First, and Smallest Mailbox. The names are self-explanatory.</p>
+
+<h2 id="synchronisation-of-data-with-crdts">Synchronisation of data with CRDTs</h2>
+<p>Synchronising data between multiple nodes can be done by choosing your datatype so that If the timestamps and events are generated in one place no duplicate entries occur. Therefore merging a map from a different node in your map is easily done by copying entries you don’t already have to your own data.</p>
+
+<p>This can be implemented by letting each member node broadcast which data-points they have. Each node can then detect which information is lacking and request the specific data from the node that claimed to have the data. At some future point in time all nodes will be in sync. This is called <em>eventual consistency</em>.</p>
+
+<h2 id="singleton">Singleton</h2>
+<p>If you have a singleton cluster manager proxy it only starts when the cluster is formed. A cluster is formed if a member connects. The proxy will then pass on the buffered messages.</p>
+
+<h2 id="cluster-sharding">Cluster Sharding</h2>
+<p>Sharding is a way to split up a group of actors in a cluster. This can be useful if the group is too large to fit in the memory of a single machine. The Cluster Sharding feature takes care of the partitioning of the actors using a hash you have to define with a function <code>shardResolver</code>. The sharded actors can be messaged with an unique identifier using <code>ClusterSharding(system).shardRegion("Counter")</code> which proxies the message to the correct actor.
+<code>ClusterSharding.start</code> is what the Manager is to Singletons.</p>
+
+<p>It is recommended to put the sharding functions into a singleton object for easy re-use of your shards, containing the functions to start the sharding extension and proxy to the shard etc. It is also convenient to adds <code>tell</code> and <code>initialise</code> helper functions to respectively send a message and initialise the actor by its unique id.</p>
+
+<h2 id="akka-persistence">Akka Persistence</h2>
+
+<p>Akka persistence uses a Journal to store which messages were processed. One of the supported storage mechanisms is Cassandra. It is also possible to use a file-based journal which, of course, is not recommended.</p>
+
+<p>In the current version of Akka there are two approaches to persistence: command sourcing and event sourcing. Simply but, in command storing each message is first persisted and then offered to the actor to do as it pleases whereas in event sourcing only the results of actions are persisted. The latter is preferred and will be the only remaining method in following versions.</p>
+
+<p>Both methods support storing a snapshot of the current state and recovering from it.</p>
+
+<h3 id="command-sourcing">Command Sourcing</h3>
+<p>The main problem with command sourcing lies in that <em>all</em> messages are replayed. This includes requests for information from dead actors which wastes resources for nothing. Moreover, in case of errors, the last message that killed the actor is also replayed and probably killing the actor again in the proces.</p>
+
+<h3 id="event-sourcing">Event Sourcing</h3>
+
+<p>With event sourcing one only stores state changing events. Events are received by the <code>receiveRecover</code> method. <em>External</em> side-effects should be performed in the <code>receive</code> method. The code for the internal side-effect of the event should be the same in both the <code>receive</code> and <code>receiveRecover</code> methods. The actor or trait for this will be named <code>PersistentActor</code>. </p>
+
+<h3 id="actor-offloading">Actor offloading</h3>
+
+<p>One can use Akka Persistence to “pause” long living actors, e.g. actors that have seen no activity lately. This frees up memory. When the actor is needed again it can be safely restored from the persistence layer.</p>
+
+<h2 id="tidbits">Tidbits</h2>
+
+<p>Akka 3 is to be released “not super soon”. It will contain typed actors. The consequence of this is that the sender field will be removed from the actor. Therefore, for request-response, the <code>ActorRef</code> should be added to the request itself.</p>
+
+<h2 id="concluding">Concluding</h2>
+
+<p>The Advanced Akka course gives a lot of insights and concrete examples of how to use the advanced Akka features of clustering, sharding and persisting data across multiple nodes in order to create a system that really is highly available, resilient and scalable. It also touches on the bleeding edge functionalities, the ideas and concepts around it and what to expect next in this growing ecosystem.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2013/07/13/the-difference-between-shallow-and-deep-embedding/">The Difference Between Shallow and Deep Embedding</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-07-13T23:06:00+00:00" pubdate data-updated="true">Jul 13<span>th</span>, 2013</time>
+        
+         | <a href="/2013/07/13/the-difference-between-shallow-and-deep-embedding/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Deep and shallow embedding are terms associated with Domain Specific Languages
+(DSL). A DSL is  a language geared toward a specific domain. The <a href="http://www.graphviz.org/content/dot-language" target="_blank">dot language</a> is
+an example of such a DSL for describing Graphs. Conceptually, a shallow
+embedding captures the semantics of the data of the domain in a data type and
+provides a <em>fixed</em> interpretation of the data, whereas a deep embedding goes
+beyond this and captures the semantics of the operations on the domain enabling
+<em>variable</em> interpretations.</p>
+
+<p>We will illustrate this difference by embedding a simple expression language
+with summation, multiplication and constants in
+<a href="http://www.haskell.org">Haskell</a>. Haskell is especially well-suited for and
+often used as a host language for embedded DSLs.</p>
+
+<p>We express our language with the following interface. A type synonym <code>Exp</code> for
+normal <code>Int</code>s and three separate functions representing summation,
+multiplication, and constants.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+</pre></td><td class="code"><pre><code class="haskell"><span class="line"><span class="kr">type</span> <span class="kt">Exp</span> <span class="ow">=</span> <span class="kt">Int</span>
+</span><span class="line">
+</span><span class="line"><span class="nf">plus</span>  <span class="ow">::</span> <span class="kt">Exp</span> <span class="ow">-&gt;</span> <span class="kt">Exp</span> <span class="ow">-&gt;</span> <span class="kt">Exp</span>
+</span><span class="line"><span class="nf">times</span> <span class="ow">::</span> <span class="kt">Exp</span> <span class="ow">-&gt;</span> <span class="kt">Exp</span> <span class="ow">-&gt;</span> <span class="kt">Exp</span>
+</span><span class="line"><span class="nf">const</span> <span class="ow">::</span> <span class="kt">Int</span>        <span class="ow">-&gt;</span> <span class="kt">Exp</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>We embedded the <em>data</em> of the domain in Haskell and provided functions for
+construction of the  model and we can easily represent the calculation of an
+expression as $4 + 6 * 8$ with the following lines of Haskell:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="haskell"><span class="line"><span class="nf">val</span> <span class="ow">=</span> <span class="n">const</span> <span class="mi">4</span> <span class="p">`</span><span class="n">plus</span><span class="p">`</span> <span class="p">(</span><span class="n">const</span> <span class="mi">6</span> <span class="p">`</span><span class="n">times</span><span class="p">`</span> <span class="n">const</span> <span class="mi">8</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>The advantage of this embedding that calculating the value of our expression
+is very fast. Other than the value we cannot determine anything else regarding
+our expression. This becomes more problematic when we add variables to our
+language.</p>
+
+<p>We change our type to contain binding information and add two functions to
+represent the assignment and usage of variables.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+</pre></td><td class="code"><pre><code class="haskell"><span class="line"><span class="kr">type</span> <span class="kt">Exp</span> <span class="ow">=</span> <span class="p">([</span><span class="kt">String</span> <span class="err">⊨</span> <span class="kt">Int</span><span class="p">],</span> <span class="kt">Int</span><span class="p">)</span>
+</span><span class="line">
+</span><span class="line"><span class="nf">assign</span> <span class="ow">::</span> <span class="kt">String</span> <span class="ow">-&gt;</span> <span class="kt">Int</span> <span class="ow">-&gt;</span> <span class="kt">Exp</span>
+</span><span class="line"><span class="nf">var</span>    <span class="ow">::</span> <span class="kt">String</span>        <span class="ow">-&gt;</span> <span class="kt">Exp</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>And in our naivity we can write the expression $x + 6 * 8$ as follows:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="haskell"><span class="line"><span class="nf">val</span> <span class="ow">=</span> <span class="n">var</span> <span class="s">&quot;x&quot;</span> <span class="p">`</span><span class="n">plus</span><span class="p">`</span> <span class="p">(</span><span class="n">const</span> <span class="mi">6</span> <span class="p">`</span><span class="n">times</span><span class="p">`</span> <span class="n">const</span> <span class="mi">8</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Obviously, evaluating this creates havoc! What is the value of <code>x</code>? We should,
+of course, have introduced it first:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="haskell"><span class="line"><span class="nf">val</span> <span class="ow">=</span> <span class="kr">let</span> <span class="s">&quot;x&quot;</span> <span class="mi">4</span> <span class="p">(</span><span class="n">var</span> <span class="s">&quot;x&quot;</span> <span class="p">`</span><span class="n">plus</span><span class="p">`</span> <span class="p">(</span><span class="n">const</span> <span class="mi">6</span> <span class="p">`</span><span class="n">times</span><span class="p">`</span> <span class="n">const</span> <span class="mi">8</span><span class="p">))</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Now we have assigned a value to <code>x</code> and we can safely use it in our
+expression.</p>
+
+<p>Had we used a deep embedding we could have prevented the cataclysmic error by
+first checking whether each variable is assigned before it is used. We create
+a deep embedding of our expression by using a Haskell data type.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+</pre></td><td class="code"><pre><code class="haskell"><span class="line"><span class="kr">data</span> <span class="kt">Exp</span> <span class="kr">where</span>
+</span><span class="line">  <span class="kt">Plus</span>   <span class="ow">::</span> <span class="kt">Exp</span> <span class="ow">-&gt;</span> <span class="kt">Exp</span>    <span class="ow">-&gt;</span> <span class="kt">Exp</span> <span class="c1">-- plus</span>
+</span><span class="line">  <span class="kt">Times</span>  <span class="ow">::</span> <span class="kt">Exp</span> <span class="ow">-&gt;</span> <span class="kt">Exp</span>    <span class="ow">-&gt;</span> <span class="kt">Exp</span> <span class="c1">-- times</span>
+</span><span class="line">  <span class="kt">Const</span>  <span class="ow">::</span> <span class="kt">Int</span>           <span class="ow">-&gt;</span> <span class="kt">Exp</span> <span class="c1">-- const</span>
+</span><span class="line">  <span class="kt">Assign</span> <span class="ow">::</span> <span class="kt">String</span> <span class="ow">-&gt;</span> <span class="kt">Int</span> <span class="ow">-&gt;</span> <span class="kt">Exp</span> <span class="c1">-- assign</span>
+</span><span class="line">  <span class="kt">Var</span>    <span class="ow">::</span> <span class="kt">String</span>        <span class="ow">-&gt;</span> <span class="kt">Exp</span> <span class="c1">-- var</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Note that we do not specify <em>how</em> the bindings should be stored, only that
+such a thing exists. We now define a function that checks whether we use a
+variable before it is defined.<sup id="fnref:folds"><a href="#fn:folds" class="footnote">1</a></sup></p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+</pre></td><td class="code"><pre><code class="haskell"><span class="line"><span class="nf">useBeforeDefine</span> <span class="ow">::</span> <span class="kt">Exp</span> <span class="ow">-&gt;</span> <span class="kt">Bool</span>
+</span><span class="line"><span class="nf">useBeforeDefine</span> <span class="n">e</span> <span class="ow">=</span> <span class="n">f</span> <span class="kt">[]</span>
+</span><span class="line">  <span class="kr">where</span>
+</span><span class="line">  <span class="n">f</span> <span class="ow">::</span> <span class="p">[</span><span class="kt">String</span><span class="p">]</span> <span class="ow">-&gt;</span> <span class="kt">Exp</span> <span class="ow">-&gt;</span> <span class="kt">Bool</span>
+</span><span class="line">  <span class="n">f</span> <span class="p">(</span><span class="kt">Plus</span>  <span class="n">l</span> <span class="n">r</span><span class="p">)</span> <span class="n">env</span>      <span class="ow">=</span> <span class="n">useBeforeDefine</span> <span class="n">l</span> <span class="n">env</span> <span class="o">||</span> <span class="n">useBeforeDefine</span> <span class="n">r</span> <span class="n">env</span>
+</span><span class="line">  <span class="n">f</span> <span class="p">(</span><span class="kt">Times</span> <span class="n">l</span> <span class="n">r</span><span class="p">)</span> <span class="n">env</span>      <span class="ow">=</span> <span class="n">useBeforeDefine</span> <span class="n">l</span> <span class="n">env</span> <span class="o">||</span> <span class="n">useBeforeDefine</span> <span class="n">r</span> <span class="n">env</span>
+</span><span class="line">  <span class="n">f</span> <span class="p">(</span><span class="kt">Const</span> <span class="kr">_</span><span class="p">)</span>   <span class="kr">_</span>        <span class="ow">=</span> <span class="kt">False</span>
+</span><span class="line">  <span class="n">f</span> <span class="p">(</span><span class="kt">Assign</span> <span class="n">var</span> <span class="kr">_</span> <span class="n">e</span><span class="p">)</span> <span class="n">env</span> <span class="ow">=</span> <span class="n">useBeforeDefine</span> <span class="n">e</span> <span class="p">(</span><span class="n">var</span> <span class="kt">:</span> <span class="n">env</span><span class="p">)</span>
+</span><span class="line">  <span class="n">f</span> <span class="p">(</span><span class="kt">Var</span> <span class="n">var</span><span class="p">)</span>        <span class="n">env</span> <span class="ow">=</span> <span class="n">not</span> <span class="p">(</span><span class="n">var</span> <span class="p">`</span><span class="n">elem</span><span class="p">`</span> <span class="n">env</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>With the function above we can <em>check</em> whether an expression is well-formed.
+With our deep embedding we can even define transformations of our expression;
+e.g. differentiate with respect to a variable.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+</pre></td><td class="code"><pre><code class="haskell"><span class="line"><span class="nf">diff</span> <span class="ow">::</span> <span class="kt">Exp</span> <span class="ow">-&gt;</span> <span class="kt">String</span> <span class="ow">-&gt;</span> <span class="kt">Exp</span>
+</span><span class="line"><span class="nf">diff</span> <span class="p">(</span><span class="kt">Plus</span>  <span class="n">l</span> <span class="n">r</span><span class="p">)</span> <span class="n">dx</span>      <span class="ow">=</span> <span class="n">diff</span> <span class="n">l</span> <span class="n">dx</span> <span class="p">`</span><span class="kt">Plus</span><span class="p">`</span> <span class="n">diff</span> <span class="n">r</span> <span class="n">dx</span>
+</span><span class="line"><span class="nf">diff</span> <span class="p">(</span><span class="kt">Times</span> <span class="n">l</span> <span class="n">r</span><span class="p">)</span> <span class="n">dx</span>      <span class="ow">=</span> <span class="p">(</span><span class="n">diff</span> <span class="n">l</span> <span class="n">dx</span> <span class="p">`</span><span class="kt">Times</span><span class="p">`</span> <span class="n">r</span><span class="p">)</span> <span class="p">`</span><span class="kt">Plus</span><span class="p">`</span> <span class="p">(</span><span class="n">l</span> <span class="p">`</span><span class="kt">Times</span><span class="p">`</span> <span class="n">diff</span> <span class="n">r</span> <span class="n">dx</span><span class="p">)</span>
+</span><span class="line"><span class="nf">diff</span> <span class="p">(</span><span class="kt">Const</span> <span class="kr">_</span><span class="p">)</span>   <span class="kr">_</span>       <span class="ow">=</span> <span class="kt">Const</span> <span class="mi">0</span>
+</span><span class="line"><span class="nf">diff</span> <span class="p">(</span><span class="kt">Assign</span> <span class="n">var</span> <span class="n">x</span> <span class="n">e</span><span class="p">)</span> <span class="n">dx</span> <span class="ow">=</span> <span class="kt">Assign</span> <span class="n">var</span> <span class="n">x</span> <span class="p">(</span><span class="n">diff</span> <span class="n">e</span> <span class="n">dx</span><span class="p">)</span>
+</span><span class="line"><span class="nf">diff</span> <span class="p">(</span><span class="kt">Var</span> <span class="n">var</span><span class="p">)</span>        <span class="n">dx</span> <span class="o">|</span> <span class="n">var</span> <span class="o">==</span> <span class="n">dx</span> <span class="ow">=</span> <span class="kt">Const</span> <span class="mi">1</span>
+</span><span class="line">                         <span class="o">|</span> <span class="n">otherwise</span> <span class="ow">=</span> <span class="kt">Const</span> <span class="mi">0</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Deep embedding allows us to utilize the semantics of our model by defining
+multiple interpretations of our DSL. The downside is that just calculating the
+value of our expression has become slower due to the added overhead of the
+constructors, whereas the shallow embedding can be evaluated by only using
+<code>Int</code>s.</p>
+
+<p>In short:</p>
+
+<ul>
+  <li><strong>Shallow embedding</strong> should be used when you only need a single interpretation or
+when you are in a hurry.</li>
+  <li><strong>Deep embedding</strong> should be used in all other cases.</li>
+</ul>
+
+<p>More reading material on this subject:</p>
+
+<ul>
+  <li>This <a href="http://www.cse.chalmers.se/~josefs/DSLTutorial/tutorialSlides.html">presentation</a> by Josef Svenningsson.</li>
+  <li><a href="http://www.cse.chalmers.se/~josefs/publications/TFP12.pdf">Combining Deep and Shallow Embedding for EDSL</a> (Josef Svenningsson and Emil Axelsson, 2012)</li>
+  <li><a href="https://www4.in.tum.de/~nipkow/pubs/tphols04.html">Certifying Machine Code Safety: Shallow versus Deep Embedding</a> (Martin Wildmoser and Tobias Nipkow, 2004)</li>
+  <li><a href="http://cstheory.stackexchange.com/questions/1370/shallow-versus-deep-embeddings">Deep versus Shallow embeddings in Coq</a></li>
+</ul>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:folds">
+      <p>Most often you should use <a href="/2009/12/17/haskell-datatypes-and-folds/">folds</a> (<a href="/2010/01/03/haskell-datatypes-and-folds-part-ii/">2</a>) instead of this direct recursion. <a href="#fnref:folds" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2013/07/08/combining-graphviz-dot-and-tikz-with-dot2tex/">Combining Graphviz (Dot) and TikZ With Dot2tex</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-07-08T23:06:00+00:00" pubdate data-updated="true">Jul 8<span>th</span>, 2013</time>
+        
+         | <a href="/2013/07/08/combining-graphviz-dot-and-tikz-with-dot2tex/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>We all want to create good looking documents and good looking documents need
+good looking images. Because we want consistency and because we are lazy we
+want to do this as automatic as possible. That is why we use <span>L<span style="text-transform: uppercase; font-size: 70%; margin-left: -0.36em; vertical-align: 0.3em; line-height: 0; margin-right: -0.15em;">a</span>T<span style="text-transform: uppercase; margin-left: -0.1667em; vertical-align: -0.5ex; line-height: 0; margin-right: -0.125em;">e</span>X</span>,
+it creates beautifully typeset documents without much manual effort.</p>
+
+<p>Similarly, we use graphviz to generate our graphs for us. It’s automatic layout is the best in the
+field and the (<a href="2013/05/19/why-you-should-switch-to-declarative-programming/">declarative</a>) dot language is easy to understand and compact to write. We can either include the PDFs dot generated in our document by using <code>\includegraphics</code> or we could use the latex <a href="https://github.com/mprentice/GraphViz-sty">graphviz package</a>, remember that we are lazy. We can easily get
+the image in <a href="#example1">our first example</a> in our PDF.</p>
+
+<div class="bogus-wrapper"><notextile><figure id="example1">
+	<img src="http://farm8.staticflickr.com/7313/9243796534_60bb926e44_o.png" width="563" height="155" alt="Image with graphviz" />
+	<figcaption><strong>Figure 1.</strong> Example of an image generated by Graphviz/dot</figcaption>
+</figure></notextile></div>
+
+<p>There is a shadow side to using Graphviz/dot as well. There are two problems.
+Firstly, the image just looks a bit out of place around the nicely smoothed
+text in a PDF. Secondly, we lack the ability to use TeX code in our graph.
+This means we are limited to the formatting by dot and the graphs could
+therefore appear out of style with other figures in our document.</p>
+
+<p>No worries, with TikZ it is possible to create very fancy graphs and images in
+general but you have to all the positioning manually! Imagine inserting a node
+and having to reorder everything!</p>
+
+<p>Enter <a href="http://www.fauskes.net/code/dot2tex/">dot2tex</a> it brings all the love
+of graphviz/dot to TeX/TikZ. Using dot2tex has many advantages:</p>
+
+<ol>
+  <li>Lets you write your graphs in familiar dot syntax;</li>
+  <li>Let dot – or whichever layout engine you prefer – determine the placement of
+your nodes and arrows;</li>
+  <li>Style your nodes however you want by using TikZ styles;</li>
+  <li>Optionally, fine-tune the graph by adding extra tikz drawings.</li>
+</ol>
+
+<p>Rather than manually calling dot2tex for every dot file you have please use
+the <a href="http://www.ctan.org/pkg/dot2texi">dot2texi package</a>. This is the interface to dot2tex and when used as follows generates the image as displayed in <a href="#example2">Figure 2</a>.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+</pre></td><td class="code"><pre><code class="latex"><span class="line">  <span class="k">\begin</span><span class="nb">{</span>tikzpicture<span class="nb">}</span>[&gt;=latex&#39;,scale=0.5]
+</span><span class="line">    <span class="c">% set node style</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">\begin</span><span class="nb">{</span>dot2tex<span class="nb">}</span>[dot,tikz,codeonly,styleonly,options=-s -tmath]
+</span><span class="line">        digraph G  <span class="nb">{</span>
+</span><span class="line">            node [style=&quot;n&quot;];
+</span><span class="line">            p [label=&quot;+&quot;];
+</span><span class="line">            t [texlbl=&quot;<span class="k">\LaTeX</span>&quot;];
+</span><span class="line">            6
+</span><span class="line">            8
+</span><span class="line">            10-&gt; p;
+</span><span class="line">            6 -&gt; t;
+</span><span class="line">            8 -&gt; t;
+</span><span class="line">            t -&gt; p;
+</span><span class="line">            <span class="nb">{</span>rank=same; 10;6;8<span class="nb">}</span>
+</span><span class="line">        <span class="nb">}</span>
+</span><span class="line">    <span class="k">\end</span><span class="nb">{</span>dot2tex<span class="nb">}</span>.
+</span><span class="line">    <span class="k">\begin</span><span class="nb">{</span>pgfonlayer<span class="nb">}{</span>background<span class="nb">}</span>
+</span><span class="line">        <span class="k">\draw</span><span class="na">[rounded corners,fill=blue!20]</span> (6.north west) -- (8.north east) -- (t.south east)--cycle;
+</span><span class="line">    <span class="k">\end</span><span class="nb">{</span>pgfonlayer<span class="nb">}</span>
+</span><span class="line"><span class="k">\end</span><span class="nb">{</span>tikzpicture<span class="nb">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<div class="bogus-wrapper"><notextile><figure id="example2">
+	<img src="http://farm4.staticflickr.com/3804/9241070475_9d48236aa7_o.png" width="430" height="410" alt="Example of TeX typesetting + TikZ background" />
+	<figcaption><strong>Figure 2.</strong> Example of TeX typesetting + TikZ background</figcaption>
+</figure></notextile></div>
+
+<p>For more TikZ goodness check out the <a href="http://www.texample.net/tikz/examples/">example site</a>.</p>
+
+<p>Happy writing!</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2013/05/19/why-you-should-switch-to-declarative-programming/">Why You Should Switch to Declarative Programming</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-19T12:52:00+00:00" pubdate data-updated="true">May 19<span>th</span>, 2013</time>
+        
+         | <a href="/2013/05/19/why-you-should-switch-to-declarative-programming/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>We are reaching limits of what is feasible with imperative languages and we should move to declarative languages. </p>
+
+<p>When applications written in imperative languages grow, the code becomes convoluted. Why? Imperatively programmed applications contain statements such as <code>if X do Y else do Z</code>. As <code>Y</code> and <code>Z</code> contain <em>invisible</em> side-effects the correctness of the program relies on some implicit invariant. This invariant has to be maintained by the programmer or else the code will break. Thus each time a new feature is added to an application or a bug is fixed the code for the application gets more complex as keeping the invariant intact becomes harder. After a while the code becomes spaghetti-code and bugs are introduced as the programmer fails to maintain the invariant. This is going to happen despite the best intentions of the programmer to keep things clean. Why is this? </p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2013/05/19/why-you-should-switch-to-declarative-programming/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/04/14/software-and-building-architecture-compared/">Software and Building Architecture Compared</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-04-14T14:05:00+00:00" pubdate data-updated="true">Apr 14<span>th</span>, 2012</time>
+        
+         | <a href="/2012/04/14/software-and-building-architecture-compared/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>People tend to only understand what they can see. For most people it is
+difficult to grasp more abstract matters without somehow visualizing them.
+Software is an example of such an abstract matter. Let us visit the process of
+developing software through a comparison with developing a building.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2012/04/14/software-and-building-architecture-compared/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/02/29/JCU-App-installation-script/">JCU App Installation Script</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-29T18:17:00+00:00" pubdate data-updated="true">Feb 29<span>th</span>, 2012</time>
+        
+         | <a href="/2012/02/29/JCU-App-installation-script/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>With this script it should be possible to install and build the JCU app in a
+local directory. It does <em>not</em> build the UHC for you. If that is wanted the
+option could be build in of course!</p>
+
+<div><script src="https://gist.github.com/1902090.js?file="></script>
+<noscript><pre><code></code></pre></noscript></div>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/01/26/getting-rid-of-javascript-with-haskell/">Getting Rid of Programming JavaScript With Haskell</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-01-26T20:29:00+00:00" pubdate data-updated="true">Jan 26<span>th</span>, 2012</time>
+        
+         | <a href="/2012/01/26/getting-rid-of-javascript-with-haskell/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>For my Experimentation Project at Utrecht University I ported the “JCU”
+application to Haskell. The JCU application is used to give Dutch High school
+students the opportunity to taste Prolog.</p>
+
+<p>The project uses the Utrecht Haskell Compiler and its JavaScript backend. The UHC
+translates Haskell to Core and then translates this Core language to JavaScript.
+For more information on this see the blog of the creator of the 
+<a href="http://utrechthaskellcompiler.wordpress.com/2010/10/18/haskell-to-javascript-backend/">UHC JavaScript backend</a>.</p>
+
+<p>Please read my <a href="/downloads/report-on-getting-rid-of-js.pdf">report</a> on this
+project. The project is hosted on GitHub in the following repositories:</p>
+
+<ul>
+  <li><a href="https://github.com/spockz/JCU">JCU</a>,</li>
+  <li><a href="https://github.com/spockz/uhc-jscript">uhc-jscript</a>,</li>
+  <li><a href="https://github.com/spockz/NanoProlog">NanoProlog</a>, and</li>
+  <li><a href="http://hackage.haskell.org/package/uu-tc">UU-TC</a>.</li>
+</ul>
+
+<p><a href="http://www.flickr.com/photos/spockz/6767517435/" title="Incomplete proof in the HS JCU App by Alessandro Vermeulen, on Flickr"><img src="http://farm8.staticflickr.com/7025/6767517435_b075d1c686_z.jpg" width="640" height="414" alt="Incomplete proof in the HS JCU App" /></a>
+<a href="http://www.flickr.com/photos/spockz/6767517241/" title="Complete proof in the HS JCU App by Alessandro Vermeulen, on Flickr"><img src="http://farm8.staticflickr.com/7155/6767517241_eacd8ec0ed_z.jpg" width="640" height="414" alt="Complete proof in the HS JCU App" /></a></p>
+
+<p><strong>update 28-01-2012</strong>:
+The keyword <code>jscript</code> in the UHC has been changed to <code>js</code> in order to avoid 
+association with <a href="http://en.wikipedia.org/wiki/JScript">Microsoft’s JScript</a>.
+Also <code>new Object</code> syntax is now available in the <code>foreign import</code> directives.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="haskell"><span class="line"><span class="nf">foreign</span> <span class="kr">import</span> <span class="nn">js</span> <span class="s">&quot;new Object()&quot;</span>
+</span><span class="line">  <span class="n">newObject</span> <span class="ow">::</span> <span class="kt">IO</span> <span class="p">(</span><span class="kt">JSPtr</span> <span class="n">a</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/01/23/photos-of-the-dmn-seniorenwedstrijd-21-01-2012-available/">Photo&#8217;s of the DMN Seniorenwedstrijd 21-01-2012 Are Now Available</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-01-23T20:00:00+00:00" pubdate data-updated="true">Jan 23<span>rd</span>, 2012</time>
+        
+         | <a href="/2012/01/23/photos-of-the-dmn-seniorenwedstrijd-21-01-2012-available/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>The photo’s of the DMN Seniorenwedstrijd 21-01-2012 at Colijn Dance Masters are
+now available. You can order them <a href="http://oypo.nl/pixxer.asp?id=B1835D91132DA171">here</a>.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/blog/page/2/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+  </div>
+</div>
+<aside class="sidebar span3">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts" class="unstyled">
+    
+      <li class="post">
+        <a href="/2015/08/31/finaglecon/">FinagleCon</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/12/04/orchestration-support-announced-on-dockercon/">Orchestration support announced on DockerCon</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/07/15/notes-on-the-advanced-akka-course/">Notes on the Advanced Akka course</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/07/13/the-difference-between-shallow-and-deep-embedding/">The difference between shallow and deep embedding</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/07/08/combining-graphviz-dot-and-tikz-with-dot2tex/">Combining graphviz (dot) and TikZ with dot2tex</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+<section class="tag-cloud">
+  <h1>Tags</h1>
+  <span class='rank-5'><a href='/tags/applescript'>applescript</a></span> <span class='rank-5'><a href='/tags/layout'>layout</a></span> <span class='rank-5'><a href='/tags/html5'>html5</a></span> <span class='rank-5'><a href='/tags/hackage'>hackage</a></span> <span class='rank-5'><a href='/tags/type-algebra'>type algebra</a></span> <span class='rank-4'><a href='/tags/LaTeX'>LaTeX</a></span> <span class='rank-5'><a href='/tags/os-x'>os x</a></span> <span class='rank-4'><a href='/tags/mvc'>mvc</a></span> <span class='rank-4'><a href='/tags/css'>css</a></span> <span class='rank-5'><a href='/tags/web'>web</a></span> <span class='rank-5'><a href='/tags/Finagle'>Finagle</a></span> <span class='rank-4'><a href='/tags/Graphviz'>Graphviz</a></span> <span class='rank-3'><a href='/tags/open-source'>open source</a></span> <span class='rank-4'><a href='/tags/php'>php</a></span> <span class='rank-5'><a href='/tags/ghc'>ghc</a></span> <span class='rank-5'><a href='/tags/Docker'>Docker</a></span> <span class='rank-5'><a href='/tags/uuagc'>uuagc</a></span> <span class='rank-5'><a href='/tags/delphi-2009'>delphi 2009</a></span> <span class='rank-5'><a href='/tags/orm'>orm</a></span> <span class='rank-4'><a href='/tags/TikZ'>TikZ</a></span> <span class='rank-5'><a href='/tags/com'>com</a></span> <span class='rank-5'><a href='/tags/Web'>Web</a></span> <span class='rank-4'><a href='/tags/partials'>partials</a></span> <span class='rank-1'><a href='/tags/Haskell'>Haskell</a></span> <span class='rank-5'><a href='/tags/debian'>debian</a></span> <span class='rank-3'><a href='/tags/codeigniter'>codeigniter</a></span> <span class='rank-4'><a href='/tags/rss'>rss</a></span> <span class='rank-4'><a href='/tags/Scala'>Scala</a></span> <span class='rank-5'><a href='/tags/colour'>colour</a></span> <span class='rank-5'><a href='/tags/attribute-grammars'>attribute grammars</a></span> <span class='rank-4'><a href='/tags/xhtml'>xhtml</a></span> <span class='rank-4'><a href='/tags/doctrine'>doctrine</a></span> <span class='rank-5'><a href='/tags/Software'>Software</a></span> <span class='rank-5'><a href='/tags/cabal'>cabal</a></span> <span class='rank-5'><a href='/tags/lenny'>lenny</a></span> <span class='rank-5'><a href='/tags/Akka'>Akka</a></span> <span class='rank-4'><a href='/tags/partial'>partial</a></span> <span class='rank-3'><a href='/tags/lhs2tex-hl'>lhs2tex-hl</a></span> <span class='rank-4'><a href='/tags/fold'>fold</a></span> <span class='rank-5'><a href='/tags/JavaScript'>JavaScript</a></span> <span class='rank-5'><a href='/tags/syntax-highlighting'>syntax highlighting</a></span> <span class='rank-4'><a href='/tags/lhs2tex'>lhs2tex</a></span> <span class='rank-5'><a href='/tags/Haskell-platform'>Haskell platform</a></span> <span class='rank-4'><a href='/tags/textmate'>textmate</a></span> 
+</section>
+<section>
+  <h1>About Me</h1>
+  <p>Alessandro Vermeulen is a Functional Programming enthousiast and Computer Sciences MSc
+     alumnus from Utrecht University. His thesis was on incremental evaluation of Haskell programs.</p>
+</section>
+<section>
+  <h1>Blogroll</h1>
+  <ul class="unstyled">
+    <li class="nav-header">Friends</li>
+    <li><a href="http://blog.timmybankers.nl">Tim Soethout</a></li>
+    <li><a href="https://thijsalkema.de/blog/">Thijs Alkemade</a></li>
+    <li><a href="http://www.norm2782.com/">Jurriën Stutterheim</a></li>
+  </ul>
+
+  <ul class="unstyled">
+    <li class="nav-header">Interesting Companies</li>
+    <li><a href="https://typesafe.com" rel="nofollow">Typesafe</a></li>
+    <li><a href="http://www.binksoftware.nl/" rel="nofollow">BINK software B.V.</a></li>
+  </ul>
+
+  <ul class="unstyled">
+    <li class="nav-header">Personal</li>
+    <li><a href="http://www.linkedin.com/in/alessandrovermeulen" rel="nofollow">LinkedIn</a></li>
+  </ul>
+</section>
+
+  
+</aside>
+</div>
+      </div>
+    </div>
+    <footer role="contentinfo" id="pagefooter"><p>
+  Copyright &copy; 2015 - Alessandro Vermeulen -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+<script src="http://hyphenator.googlecode.com/svn/tags/Version%203.2.0/Hyphenator.js?bm=true" type="text/javascript"></script>
+</footer>
+    
+
+<script type="text/javascript">
+      var disqus_shortname = 'alessandrovermeulen';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+<!-- <script type="text/javascript">
+$(document).ready(function() {
+  $('#disqus_thread').disqus({
+    domain:     "alessandrovermeulen",
+    title:      document.title,
+    developer:  window.location.hostname == "localhost" ? 1 : 0,
+    show_count: true,
+    prettify:   true,
+    markdown:   true,
+    //iframe_css: "http://somewhere.com/stylesheets/disqus.css",
+    ready: function() {
+      // this is when your disqus comments finally load
+      console.log("Comment count: " + $.disqus.commentCount().toString());
+      console.log("Reaction count: " + $.disqus.reactionCount().toString());
+    },
+    added: function(comments) {
+      // do something with the newly added comment divs.
+    },
+    edit: function(textarea) {
+      // called when someone clicks the "reply" button.
+    }
+  });
+});
+</script> -->
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+  </section>
+
+  
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  
+    ga('create', 'UA-9190312-1', 'auto');
+    ga('send', 'pageview');
+  </script>
+
+
+  <script src="/javascripts/modernizr-2.0.js" type="text/javascript"></script>
+  <script src="/javascripts/jquery-1.10.2.min.js" type="text/javascript"></script>
+  <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+  <script src="/javascripts/photography.js" type="text/javascript"></script>
+  <!-- mathjax config similar to math.stackexchange -->
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      inlineMath: [ ['$', '$'] ],
+      displayMath: [ ['$$', '$$']],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    messageStyle: "none",
+    "HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"] }
+  });
+  </script>
+  <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML" type="text/javascript"></script>
+
+</body>
+</html>

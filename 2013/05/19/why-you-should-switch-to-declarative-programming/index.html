@@ -1,0 +1,475 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Why you should switch to declarative programming - Alessandro Vermeulen</title>
+  <meta name="author" content="Alessandro Vermeulen">
+
+  
+  <meta name="description" content="We are reaching limits of what is feasible with imperative languages and we should move to declarative languages. When applications written in &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://alessandrovermeulen.me/2013/05/19/why-you-should-switch-to-declarative-programming">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <!--<script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>-->
+  <link href="/atom.xml" rel="alternate" title="Alessandro Vermeulen" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<!-- <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css"> -->
+<!-- <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css"> -->
+<!-- <script src="http://cachedcommons.org/javascripts/jquery/jquery.disqus.js" type="text/javascript"></script> -->
+<link href='http://fonts.googleapis.com/css?family=Open+Sans|Droid+Serif' rel='stylesheet' type='text/css'>
+
+</head>
+
+<body   >
+
+  <section class="container">
+    <header role="banner"><hgroup>
+  <header id="pageheader">
+    <header role="banner" id="banner">
+      <h1><a href="/">Alessandro Vermeulen</a></h1>
+      
+        <p>Alessandro Vermeulen's blog about languages, programming, Computer Science, photography and the Web. <a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS"><i class="icon-rss"></i></a></p>
+      
+    </header>
+  </header>
+</hgroup>
+
+</header>
+    <nav role="navigation"><nav class="navbar">
+  <ul class="nav nav-pills">
+  <li><a href="/about">About</a></li>
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+
+  <ul class="pull-right subscription nav nav-pills" data-subscription="rss">
+  
+  </ul>
+
+  <form class="navbar-search pull-right" action="http://google.com/search" method="get">
+  <fieldset role="search" id="searchfieldset">
+    <input type="hidden" name="q" value="site:alessandrovermeulen.me" />
+
+    <div class="input-append">
+      <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+      <button type="submit" class="btn"><i class="icon-search"></i></button>
+    </div>
+  </fieldset>
+  </form>
+</nav>
+<!--
+<ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:alessandrovermeulen.me" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+
+ --></nav>
+    <!--[if lt IE 9]>
+    <div class="alert alert-block">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <h4>Warning!</h4>
+      Your version of Internet Explorer is seriously outdated. Please upgrade to a decent version of <a href="http://windows.microsoft.com/en-us/internet-explorer/download-ie">Internet Explorer</a> or <a href="http://www.google.com/chrome">Chrome</a> or <a href="http://www.mozilla.org/en-US/firefox/new/">Firefox</a>.
+    </div>
+    <![endif]-->
+    <div id="main">
+      <div id="content">
+        <div class="row-fluid">
+  <div class="span9">
+  <article class="hentry" role="article">
+    
+  <header>
+    
+      <h1 class="entry-title">Why You Should Switch to Declarative Programming</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-19T12:52:00+00:00" pubdate data-updated="true">May 19<span>th</span>, 2013</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>We are reaching limits of what is feasible with imperative languages and we should move to declarative languages. </p>
+
+<p>When applications written in imperative languages grow, the code becomes convoluted. Why? Imperatively programmed applications contain statements such as <code>if X do Y else do Z</code>. As <code>Y</code> and <code>Z</code> contain <em>invisible</em> side-effects the correctness of the program relies on some implicit invariant. This invariant has to be maintained by the programmer or else the code will break. Thus each time a new feature is added to an application or a bug is fixed the code for the application gets more complex as keeping the invariant intact becomes harder. After a while the code becomes spaghetti-code and bugs are introduced as the programmer fails to maintain the invariant. This is going to happen despite the best intentions of the programmer to keep things clean. Why is this? </p>
+
+<!-- more -->
+
+<p>An imperative language is a type of language that tells the computer what to do and in which order. However, most, if not all, applications are nothing but a translation of some business domain into a computer program. In order to get the imperative code the programmer has to translate the business model to a set of imperative instructions, the business logic. The imperative instructions bear little resemblance to the original description of the business model. When the business model changes the imperative counterpart could change entirely but what happens is that programmers make incremental updates to the code. This is done because either they do not see that a more drastic change is necessary or because they are under pressure to deliver results. Over time this leads to bugs and unmaintainable code. Summarized, bugs are introduced because there is a manual translation step between the business model and the program code.</p>
+
+<p>Imagine a system for calculating whether a person should receive a certain allowance. To receive the allowance a person has to meet several criteria such as <code>age &gt; 18 and income &lt; 2400</code>. We can denote this in the following way:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="ruby"><span class="line"><span class="k">def</span> <span class="nf">receives_allowance?</span><span class="p">(</span><span class="n">age</span><span class="p">,</span> <span class="n">income</span><span class="p">)</span>
+</span><span class="line">  <span class="n">age</span> <span class="o">&gt;</span> <span class="mi">18</span> <span class="o">&amp;&amp;</span> <span class="n">income</span> <span class="o">&lt;</span> <span class="mi">2400</span>
+</span><span class="line"><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>There are several remarks to be made for this code. Adding a criteria such as marital status would involve adding a parameter to the function and changing the boolean expression. We could already avoid having to change parameters when we had chosen a parameter of type Person that contains the information about a person. But what if we would introduce time as an aspect in our criteria? We need to change the function again. And what if the age criteria changed? If the programmer erroneously codes something like <code>age &gt; 18 &amp;&amp; age &lt; 18</code> into the condition we would only find the bug during testing, if we are lucky. Additionally when our criteria become more complex we would like to extract criteria to their own functions. In short, it is easy to make mistakes this way.</p>
+
+<p>A solution to this is to avoid the translation process by using a declarative language. A declarative language is a language that describes <em>what</em> is to be computed but not <em>how</em> it should be computed.<sup id="fnref:declarativereference"><a href="#fn:declarativereference" class="footnote">1</a></sup> In essence: it omits control-flow. By encoding and thereby recording the business model into a set of declarative statements it becomes easier to spot irregularities in the business logic as the business logic reads more like the description of the business model and all invariants are <em>visible</em>. In this manner the programmer no longer tells the computer how to perform a computation but rather what the computation should be. This makes it easier to maintain </p>
+
+<p>However, we take it even to an higher level entirely. By just using the declarative language, such as Haskell or Prolog, you are still using a general-purpose language and are thus lacking domain specific checks. It would be advantageous to devise a Domain Specific Language (DSL) instead. This would be a language specifically geared towards your business domain and can be done easily in a language such as Haskell. Creating a DSL has a great benefit: Because the business domain is written down in code the responsibility of translating the business domain into a program shifts from the programmer to the interpreter of the DSL. This has two benefits: the translation is consolidated in one single point (the interpreter) and can be verified or even proven to be correct. It could be checked that no contradicting statements are present. In this sense we can compare the validation to a spell-checker or JSLint but for our specific domain. Secondly the programmer cannot make mistakes in the translation of the business logic to imperative code.</p>
+
+<p>A simple DSL embedding the idea of the allowance could look like the text in the examples below. The interpreter / compiler is able to inspect the separate rules and check whether they would cause a tautology or contradiction.</p>
+
+<p>We will illustrate this with some examples. Consider the following text below, it is easy to read and it is clear what it means. Each line is a condition that has to hold, so we could read an “AND” at eacht line end. <small>(Whether Income is monthly or annually or weekly is not taken into account here but you get the picture.)</small></p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+</pre></td><td class="code"><pre><code class="ruby"><span class="line"><span class="n">A</span> <span class="n">person</span> <span class="n">is</span> <span class="n">an</span> <span class="n">adult</span> <span class="k">when</span> <span class="n">his</span> <span class="no">Age</span> <span class="n">is</span> <span class="no">GREATER</span> <span class="no">THAN</span> <span class="no">OR</span> <span class="no">EQUAL</span> <span class="no">TO</span> <span class="mi">18</span>
+</span><span class="line"><span class="n">A</span> <span class="n">person</span> <span class="n">is</span> <span class="n">allegeable</span> <span class="k">for</span> <span class="n">an</span> <span class="n">allowance</span> <span class="no">IF</span>
+</span><span class="line">  <span class="n">he</span> <span class="n">is</span> <span class="n">an</span> <span class="n">adult</span>
+</span><span class="line"><span class="n">A</span> <span class="n">person</span> <span class="n">is</span> <span class="n">allegeable</span> <span class="k">for</span> <span class="n">an</span> <span class="n">allowance</span> <span class="no">IF</span>
+</span><span class="line">  <span class="n">his</span> <span class="no">Income</span> <span class="n">is</span> <span class="no">NOT</span> <span class="no">GREATER</span> <span class="no">THAN</span> <span class="err">€</span><span class="mi">2400</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>When we would add a rule as shown below, we could get a warning or error from the interpreter telling us that we have two different conditions on a person’s age.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+</pre></td><td class="code"><pre><code class="ruby"><span class="line"><span class="n">A</span> <span class="n">person</span> <span class="n">is</span> <span class="n">an</span> <span class="n">adult</span> <span class="k">when</span> <span class="n">his</span> <span class="no">Age</span> <span class="n">is</span> <span class="no">GREATER</span> <span class="no">THAN</span> <span class="no">OR</span> <span class="no">EQUAL</span> <span class="no">TO</span> <span class="mi">18</span>
+</span><span class="line"><span class="n">A</span> <span class="n">person</span> <span class="n">is</span> <span class="n">allegeable</span> <span class="k">for</span> <span class="n">an</span> <span class="n">allowance</span> <span class="no">IF</span>
+</span><span class="line">  <span class="n">he</span> <span class="n">is</span> <span class="n">an</span> <span class="n">adult</span>
+</span><span class="line"><span class="n">A</span> <span class="n">person</span> <span class="n">is</span> <span class="n">allegeable</span> <span class="k">for</span> <span class="n">an</span> <span class="n">allowance</span> <span class="no">IF</span>
+</span><span class="line">  <span class="n">his</span> <span class="no">Income</span> <span class="n">is</span> <span class="no">NOT</span> <span class="no">GREATER</span> <span class="no">THAN</span> <span class="err">€</span><span class="mi">2400</span>
+</span><span class="line"><span class="n">A</span> <span class="n">person</span> <span class="n">is</span> <span class="n">allegeable</span> <span class="k">for</span> <span class="n">an</span> <span class="n">allowance</span> <span class="no">IF</span>
+</span><span class="line">  <span class="n">his</span> <span class="no">Age</span> <span class="n">is</span> <span class="no">GREATER</span> <span class="no">THAN</span> <span class="mi">21</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>And when we would add a rule as this it could warn us that no-one will ever get an allowance.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+</pre></td><td class="code"><pre><code class="ruby"><span class="line"><span class="n">A</span> <span class="n">person</span> <span class="n">is</span> <span class="n">an</span> <span class="n">adult</span> <span class="k">when</span> <span class="n">his</span> <span class="no">Age</span> <span class="n">is</span> <span class="no">GREATER</span> <span class="no">THAN</span> <span class="no">OR</span> <span class="no">EQUAL</span> <span class="no">TO</span> <span class="mi">18</span>
+</span><span class="line"><span class="n">A</span> <span class="n">person</span> <span class="n">is</span> <span class="n">allegeable</span> <span class="k">for</span> <span class="n">an</span> <span class="n">allowance</span> <span class="no">IF</span>
+</span><span class="line">  <span class="n">he</span> <span class="n">is</span> <span class="n">an</span> <span class="n">adult</span>
+</span><span class="line"><span class="n">A</span> <span class="n">person</span> <span class="n">is</span> <span class="n">allegeable</span> <span class="k">for</span> <span class="n">an</span> <span class="n">allowance</span> <span class="no">IF</span>
+</span><span class="line">  <span class="n">his</span> <span class="no">Income</span> <span class="n">is</span> <span class="no">NOT</span> <span class="no">GREATER</span> <span class="no">THAN</span> <span class="err">€</span><span class="mi">2400</span>
+</span><span class="line"><span class="n">A</span> <span class="n">person</span> <span class="n">is</span> <span class="n">allegeable</span> <span class="k">for</span> <span class="n">an</span> <span class="n">allowance</span> <span class="no">IF</span>
+</span><span class="line">  <span class="n">his</span> <span class="no">Age</span> <span class="n">is</span> <span class="no">LESS</span> <span class="no">THAN</span> <span class="mi">12</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Not only would the interpreter be able to spot these kinds of errors but it would also be easier for the writer of these rules to spot whether there is a mistake.
+The astute reader will have noticed than we have not included any control flow into our language making it a declarative language.</p>
+
+<p>Because the business-logic is now represented by the DSL it can be written by domain experts instead of the programmers of the application itself. The compiler can provide feedback when something is wrong in the DSL and there is less chance for errors in the implementation of the business logic. Additionally this frees the programmes for implementing better translations of the DSL or other projects saving time and other resources. </p>
+
+<p>To summarise 4 reasons why you should switch to declarative languages:</p>
+
+<ol>
+  <li>Direct translation of the business model into business logic </li>
+  <li>Better readability of the business logic</li>
+  <li>Better scalability for the program in terms of functionality</li>
+  <li>Less bugs</li>
+</ol>
+
+<p>And 3 reasons why you should use DSLs to boot:</p>
+
+<ol>
+  <li>Free up programmers to do important stuff</li>
+  <li>Let the domain-experts handle the business logic and have it machine-checked!</li>
+  <li>It is just awesome</li>
+</ol>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:declarativereference">
+      <p><a href="ftp://clip.dia.fi.upm.es/pub/papers/PARFORCE/second_review/D.WP3.1.M2.3.ps.Z">Lloyd, J.W., Practical Advantages of Declarative Programming</a> <a href="#fnref:declarativereference" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+</div>
+
+
+    <footer>
+      <p class="meta">
+        
+  
+
+<span class="byline author vcard">Posted by <span class="fn"><a rel="author" href="https://plus.google.com/103782975895345685833">Alessandro Vermeulen</a></span></span>
+
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-19T12:52:00+00:00" pubdate data-updated="true">May 19<span>th</span>, 2013</time>
+        
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/programming/'>Programming</a>
+  
+</span>
+
+
+      </p>
+      
+        <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://alessandrovermeulen.me/2013/05/19/why-you-should-switch-to-declarative-programming/" data-via="" data-counturl="http://alessandrovermeulen.me/2013/05/19/why-you-should-switch-to-declarative-programming/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+</div>
+
+      
+      <p class="meta">
+        
+          <a class="basic-alignment left" href="/2012/04/14/software-and-building-architecture-compared/" title="Previous Post: Software and Building Architecture Compared">&laquo; Software and Building Architecture Compared</a>
+        
+        
+          <a class="basic-alignment right" href="/2013/07/08/combining-graphviz-dot-and-tikz-with-dot2tex/" title="next Post: Combining graphviz (dot) and TikZ with dot2tex">Combining graphviz (dot) and TikZ with dot2tex &raquo;</a>
+        
+      </p>
+    </footer>
+  </article>
+  
+    <section>
+      <h1>Comments</h1>
+      <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+    </section>
+  
+  </div>
+  
+  <aside class="sidebar span3">
+    
+      <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts" class="unstyled">
+    
+      <li class="post">
+        <a href="/2015/08/31/finaglecon/">FinagleCon</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/12/04/orchestration-support-announced-on-dockercon/">Orchestration support announced on DockerCon</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/07/15/notes-on-the-advanced-akka-course/">Notes on the Advanced Akka course</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/07/13/the-difference-between-shallow-and-deep-embedding/">The difference between shallow and deep embedding</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/07/08/combining-graphviz-dot-and-tikz-with-dot2tex/">Combining graphviz (dot) and TikZ with dot2tex</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+<section class="tag-cloud">
+  <h1>Tags</h1>
+  <span class='rank-5'><a href='/tags/cabal'>cabal</a></span> <span class='rank-5'><a href='/tags/uuagc'>uuagc</a></span> <span class='rank-5'><a href='/tags/delphi-2009'>delphi 2009</a></span> <span class='rank-4'><a href='/tags/Graphviz'>Graphviz</a></span> <span class='rank-5'><a href='/tags/os-x'>os x</a></span> <span class='rank-4'><a href='/tags/partial'>partial</a></span> <span class='rank-4'><a href='/tags/Scala'>Scala</a></span> <span class='rank-4'><a href='/tags/php'>php</a></span> <span class='rank-5'><a href='/tags/attribute-grammars'>attribute grammars</a></span> <span class='rank-5'><a href='/tags/JavaScript'>JavaScript</a></span> <span class='rank-5'><a href='/tags/web'>web</a></span> <span class='rank-4'><a href='/tags/doctrine'>doctrine</a></span> <span class='rank-5'><a href='/tags/type-algebra'>type algebra</a></span> <span class='rank-5'><a href='/tags/colour'>colour</a></span> <span class='rank-4'><a href='/tags/LaTeX'>LaTeX</a></span> <span class='rank-4'><a href='/tags/rss'>rss</a></span> <span class='rank-5'><a href='/tags/lenny'>lenny</a></span> <span class='rank-3'><a href='/tags/open-source'>open source</a></span> <span class='rank-3'><a href='/tags/codeigniter'>codeigniter</a></span> <span class='rank-3'><a href='/tags/lhs2tex-hl'>lhs2tex-hl</a></span> <span class='rank-5'><a href='/tags/html5'>html5</a></span> <span class='rank-5'><a href='/tags/orm'>orm</a></span> <span class='rank-1'><a href='/tags/Haskell'>Haskell</a></span> <span class='rank-5'><a href='/tags/ghc'>ghc</a></span> <span class='rank-4'><a href='/tags/xhtml'>xhtml</a></span> <span class='rank-5'><a href='/tags/Akka'>Akka</a></span> <span class='rank-4'><a href='/tags/css'>css</a></span> <span class='rank-4'><a href='/tags/lhs2tex'>lhs2tex</a></span> <span class='rank-5'><a href='/tags/layout'>layout</a></span> <span class='rank-5'><a href='/tags/Haskell-platform'>Haskell platform</a></span> <span class='rank-4'><a href='/tags/mvc'>mvc</a></span> <span class='rank-4'><a href='/tags/fold'>fold</a></span> <span class='rank-5'><a href='/tags/Web'>Web</a></span> <span class='rank-4'><a href='/tags/partials'>partials</a></span> <span class='rank-5'><a href='/tags/Finagle'>Finagle</a></span> <span class='rank-4'><a href='/tags/TikZ'>TikZ</a></span> <span class='rank-5'><a href='/tags/syntax-highlighting'>syntax highlighting</a></span> <span class='rank-5'><a href='/tags/Docker'>Docker</a></span> <span class='rank-4'><a href='/tags/textmate'>textmate</a></span> <span class='rank-5'><a href='/tags/hackage'>hackage</a></span> <span class='rank-5'><a href='/tags/applescript'>applescript</a></span> <span class='rank-5'><a href='/tags/com'>com</a></span> <span class='rank-5'><a href='/tags/Software'>Software</a></span> <span class='rank-5'><a href='/tags/debian'>debian</a></span> 
+</section>
+<section>
+  <h1>About Me</h1>
+  <p>Alessandro Vermeulen is a Functional Programming enthousiast and Computer Sciences MSc
+     alumnus from Utrecht University. His thesis was on incremental evaluation of Haskell programs.</p>
+</section>
+<section>
+  <h1>Blogroll</h1>
+  <ul class="unstyled">
+    <li class="nav-header">Friends</li>
+    <li><a href="http://blog.timmybankers.nl">Tim Soethout</a></li>
+    <li><a href="https://thijsalkema.de/blog/">Thijs Alkemade</a></li>
+    <li><a href="http://www.norm2782.com/">Jurriën Stutterheim</a></li>
+  </ul>
+
+  <ul class="unstyled">
+    <li class="nav-header">Interesting Companies</li>
+    <li><a href="https://typesafe.com" rel="nofollow">Typesafe</a></li>
+    <li><a href="http://www.binksoftware.nl/" rel="nofollow">BINK software B.V.</a></li>
+  </ul>
+
+  <ul class="unstyled">
+    <li class="nav-header">Personal</li>
+    <li><a href="http://www.linkedin.com/in/alessandrovermeulen" rel="nofollow">LinkedIn</a></li>
+  </ul>
+</section>
+
+    
+  </aside>
+  
+</div>
+      </div>
+    </div>
+    <footer role="contentinfo" id="pagefooter"><p>
+  Copyright &copy; 2015 - Alessandro Vermeulen -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+<script src="http://hyphenator.googlecode.com/svn/tags/Version%203.2.0/Hyphenator.js?bm=true" type="text/javascript"></script>
+</footer>
+    
+
+<script type="text/javascript">
+      var disqus_shortname = 'alessandrovermeulen';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://alessandrovermeulen.me/2013/05/19/why-you-should-switch-to-declarative-programming/';
+        var disqus_url = 'http://alessandrovermeulen.me/2013/05/19/why-you-should-switch-to-declarative-programming/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+<!-- <script type="text/javascript">
+$(document).ready(function() {
+  $('#disqus_thread').disqus({
+    domain:     "alessandrovermeulen",
+    title:      document.title,
+    developer:  window.location.hostname == "localhost" ? 1 : 0,
+    show_count: true,
+    prettify:   true,
+    markdown:   true,
+    //iframe_css: "http://somewhere.com/stylesheets/disqus.css",
+    ready: function() {
+      // this is when your disqus comments finally load
+      console.log("Comment count: " + $.disqus.commentCount().toString());
+      console.log("Reaction count: " + $.disqus.reactionCount().toString());
+    },
+    added: function(comments) {
+      // do something with the newly added comment divs.
+    },
+    edit: function(textarea) {
+      // called when someone clicks the "reply" button.
+    }
+  });
+});
+</script> -->
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+  </section>
+
+  
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  
+    ga('create', 'UA-9190312-1', 'auto');
+    ga('send', 'pageview');
+  </script>
+
+
+  <script src="/javascripts/modernizr-2.0.js" type="text/javascript"></script>
+  <script src="/javascripts/jquery-1.10.2.min.js" type="text/javascript"></script>
+  <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+  <script src="/javascripts/photography.js" type="text/javascript"></script>
+  <!-- mathjax config similar to math.stackexchange -->
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      inlineMath: [ ['$', '$'] ],
+      displayMath: [ ['$$', '$$']],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    messageStyle: "none",
+    "HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"] }
+  });
+  </script>
+  <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML" type="text/javascript"></script>
+
+</body>
+</html>

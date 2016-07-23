@@ -1,0 +1,472 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Notes on the Advanced Akka course - Alessandro Vermeulen</title>
+  <meta name="author" content="Alessandro Vermeulen">
+
+  
+  <meta name="description" content="The Advanced Akka course is provided by Typesafe and is aimed at teaching advanced usages of Akka. The course covers the basics of Akka, Remoting, &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://alessandrovermeulen.me/2014/07/15/notes-on-the-advanced-akka-course">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <!--<script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>-->
+  <link href="/atom.xml" rel="alternate" title="Alessandro Vermeulen" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<!-- <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css"> -->
+<!-- <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css"> -->
+<!-- <script src="http://cachedcommons.org/javascripts/jquery/jquery.disqus.js" type="text/javascript"></script> -->
+<link href='http://fonts.googleapis.com/css?family=Open+Sans|Droid+Serif' rel='stylesheet' type='text/css'>
+
+</head>
+
+<body   >
+
+  <section class="container">
+    <header role="banner"><hgroup>
+  <header id="pageheader">
+    <header role="banner" id="banner">
+      <h1><a href="/">Alessandro Vermeulen</a></h1>
+      
+        <p>Alessandro Vermeulen's blog about languages, programming, Computer Science, photography and the Web. <a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS"><i class="icon-rss"></i></a></p>
+      
+    </header>
+  </header>
+</hgroup>
+
+</header>
+    <nav role="navigation"><nav class="navbar">
+  <ul class="nav nav-pills">
+  <li><a href="/about">About</a></li>
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+
+  <ul class="pull-right subscription nav nav-pills" data-subscription="rss">
+  
+  </ul>
+
+  <form class="navbar-search pull-right" action="http://google.com/search" method="get">
+  <fieldset role="search" id="searchfieldset">
+    <input type="hidden" name="q" value="site:alessandrovermeulen.me" />
+
+    <div class="input-append">
+      <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+      <button type="submit" class="btn"><i class="icon-search"></i></button>
+    </div>
+  </fieldset>
+  </form>
+</nav>
+<!--
+<ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:alessandrovermeulen.me" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+
+ --></nav>
+    <!--[if lt IE 9]>
+    <div class="alert alert-block">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <h4>Warning!</h4>
+      Your version of Internet Explorer is seriously outdated. Please upgrade to a decent version of <a href="http://windows.microsoft.com/en-us/internet-explorer/download-ie">Internet Explorer</a> or <a href="http://www.google.com/chrome">Chrome</a> or <a href="http://www.mozilla.org/en-US/firefox/new/">Firefox</a>.
+    </div>
+    <![endif]-->
+    <div id="main">
+      <div id="content">
+        <div class="row-fluid">
+  <div class="span9">
+  <article class="hentry" role="article">
+    
+  <header>
+    
+      <h1 class="entry-title">Notes on the Advanced Akka Course</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-15T12:00:00+00:00" pubdate data-updated="true">Jul 15<span>th</span>, 2014</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>The Advanced Akka course is provided by Typesafe and is aimed at teaching advanced usages of Akka. The course covers the basics of Akka, Remoting, Clustering, Routers, CRDTs, Cluster Sharding and Akka Persistance. The following post starts with a general introduction to Akka and presents the takeaways from the course as we experienced them.</p>
+
+<h2 id="a-general-overview-of-akka">A general overview of Akka</h2>
+
+<p>The reader which is already familiar with Akka can skip this section.</p>
+
+<p>According to the Akka site this is Akka:</p>
+
+<blockquote>
+  <p>Akka is a toolkit and runtime for building highly 
+concurrent, distributed, and fault tolerant event-driven
+applications on the JVM.</p>
+</blockquote>
+
+<p>Akka achieves this by using Actors.</p>
+
+<blockquote>
+  <p>Actors are very lightweight concurrent entities. </p>
+</blockquote>
+
+<p>Each Actor has a corresponding mailbox stored separately from the Actor. The Actors together with their mailboxes reside in an ActorSystem. Additionally, the ActorSystem contains the Dispatcher which executes the handling of a message by an actor. Each Actor only handles a single message at a time.</p>
+
+<p>In Akka everything is remote by design and philosophy. In practice this means that each Actor is identified by its <code>ActorRef</code>. This is a reference to the actor which provides <em>Location Transparency</em>.</p>
+
+<p>Actors communicate with each other by sending messages to an another Actor through an <code>ActorRef</code>. This sending of the message takes virtually no time.</p>
+
+<p>In addition to <code>ActorRef</code> there exists also an <code>ActorSelection</code> which contains a path to one or more actors. Upon each sending of the message the path is traversed until the actor is found or when not. No message is send back when the actor is not found however.</p>
+
+<p>States: Started - Stopped - Terminated
+If an actor enters the <code>Stopped</code> state it first stops its child actors before entering the <code>Terminated</code> state.</p>
+
+<h3 id="best-practices">Best-practices</h3>
+
+<p>Import the <code>context.dispatcher</code> instead of the global Scala ExecutionContext. It is the ExecutionContext managed by Akka. Using the global context causes the Actors to be run in the global Thread pool.</p>
+
+<p>You should not use <code>PoisonPill</code> as it will be removed from future versions of Akka since it is not specific enough. Roll your own message to make sure the appropriate actions for graceful shutdown are done. Use <code>context.stop</code> to stop your actor.</p>
+
+<p>Place your business logic in a separate trait and mix it in to the actor. This increases testability as you can easily unit test the trait containing the business logic. Also, you should put the creation of any child actors inside a separate method so the creation can be overridden from tests.</p>
+
+<h2 id="remoting">Remoting</h2>
+<p>With the Remoting extension it is possible to communicate with other Actor Systems. This communication is often done through <code>ActorSelection</code>s instead of <code>ActorRef</code>.</p>
+
+<p>Remoting uses Java serialisation by default which is slow and fragile in light of changing definitions. It is possible and recommended to use another mechanism such as Google Protobuf.</p>
+
+<h2 id="clustering">Clustering</h2>
+<p>Akka has a simple perspective on cluster management with regards to split-brain scenarios. Nodes become dead when they are observed as dead and they cannot resurrect. The only way a node can come up again is if it registers itself again.</p>
+
+<p>When a net split happens the other nodes are marked as <em>unreachable</em>. When using a Singleton, this means that only the nodes that can reach the singleton will access it. The others will not decide on a new Singleton in order to prevent a split-brain scenario.</p>
+
+<p>Another measure against split-brain is contacting the seed nodes in order. The first seed node is required to be up.</p>
+
+<p>The seed nodes are tried in order.</p>
+
+<h2 id="fsm">FSM</h2>
+<p>There is an library for writing finite state machines called FSM. For larger actors it can be useful to use the FSM. Otherwise stick to pure <code>become</code> and <code>unbecome</code>.</p>
+
+<p>FSM also has an interval timer for scheduling messages. However, the use of <code>stay()</code> resets the interval timer therefore you could have issues with never executing what is at the end of the timer.</p>
+
+<h2 id="routers">Routers</h2>
+
+<p>There are two different kinds of routers: Pools and Groups. Pools are in charge of their own children and they are created and killed by the pool. Groups are configured with an <code>ActorSelection</code> that defines the actors to which the group should sent its messages. There are several implementations: Consistent Hash, Random, Round Robin, BroadCast, Scatter - Gather First, and Smallest Mailbox. The names are self-explanatory.</p>
+
+<h2 id="synchronisation-of-data-with-crdts">Synchronisation of data with CRDTs</h2>
+<p>Synchronising data between multiple nodes can be done by choosing your datatype so that If the timestamps and events are generated in one place no duplicate entries occur. Therefore merging a map from a different node in your map is easily done by copying entries you don’t already have to your own data.</p>
+
+<p>This can be implemented by letting each member node broadcast which data-points they have. Each node can then detect which information is lacking and request the specific data from the node that claimed to have the data. At some future point in time all nodes will be in sync. This is called <em>eventual consistency</em>.</p>
+
+<h2 id="singleton">Singleton</h2>
+<p>If you have a singleton cluster manager proxy it only starts when the cluster is formed. A cluster is formed if a member connects. The proxy will then pass on the buffered messages.</p>
+
+<h2 id="cluster-sharding">Cluster Sharding</h2>
+<p>Sharding is a way to split up a group of actors in a cluster. This can be useful if the group is too large to fit in the memory of a single machine. The Cluster Sharding feature takes care of the partitioning of the actors using a hash you have to define with a function <code>shardResolver</code>. The sharded actors can be messaged with an unique identifier using <code>ClusterSharding(system).shardRegion("Counter")</code> which proxies the message to the correct actor.
+<code>ClusterSharding.start</code> is what the Manager is to Singletons.</p>
+
+<p>It is recommended to put the sharding functions into a singleton object for easy re-use of your shards, containing the functions to start the sharding extension and proxy to the shard etc. It is also convenient to adds <code>tell</code> and <code>initialise</code> helper functions to respectively send a message and initialise the actor by its unique id.</p>
+
+<h2 id="akka-persistence">Akka Persistence</h2>
+
+<p>Akka persistence uses a Journal to store which messages were processed. One of the supported storage mechanisms is Cassandra. It is also possible to use a file-based journal which, of course, is not recommended.</p>
+
+<p>In the current version of Akka there are two approaches to persistence: command sourcing and event sourcing. Simply but, in command storing each message is first persisted and then offered to the actor to do as it pleases whereas in event sourcing only the results of actions are persisted. The latter is preferred and will be the only remaining method in following versions.</p>
+
+<p>Both methods support storing a snapshot of the current state and recovering from it.</p>
+
+<h3 id="command-sourcing">Command Sourcing</h3>
+<p>The main problem with command sourcing lies in that <em>all</em> messages are replayed. This includes requests for information from dead actors which wastes resources for nothing. Moreover, in case of errors, the last message that killed the actor is also replayed and probably killing the actor again in the proces.</p>
+
+<h3 id="event-sourcing">Event Sourcing</h3>
+
+<p>With event sourcing one only stores state changing events. Events are received by the <code>receiveRecover</code> method. <em>External</em> side-effects should be performed in the <code>receive</code> method. The code for the internal side-effect of the event should be the same in both the <code>receive</code> and <code>receiveRecover</code> methods. The actor or trait for this will be named <code>PersistentActor</code>. </p>
+
+<h3 id="actor-offloading">Actor offloading</h3>
+
+<p>One can use Akka Persistence to “pause” long living actors, e.g. actors that have seen no activity lately. This frees up memory. When the actor is needed again it can be safely restored from the persistence layer.</p>
+
+<h2 id="tidbits">Tidbits</h2>
+
+<p>Akka 3 is to be released “not super soon”. It will contain typed actors. The consequence of this is that the sender field will be removed from the actor. Therefore, for request-response, the <code>ActorRef</code> should be added to the request itself.</p>
+
+<h2 id="concluding">Concluding</h2>
+
+<p>The Advanced Akka course gives a lot of insights and concrete examples of how to use the advanced Akka features of clustering, sharding and persisting data across multiple nodes in order to create a system that really is highly available, resilient and scalable. It also touches on the bleeding edge functionalities, the ideas and concepts around it and what to expect next in this growing ecosystem.</p>
+</div>
+
+
+    <footer>
+      <p class="meta">
+        
+  
+
+<span class="byline author vcard">Posted by <span class="fn"><a rel="author" href="https://plus.google.com/103782975895345685833">Alessandro Vermeulen</a></span></span>
+
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-15T12:00:00+00:00" pubdate data-updated="true">Jul 15<span>th</span>, 2014</time>
+        
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/programming/'>Programming</a>
+  
+</span>
+
+
+      </p>
+      
+        <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://alessandrovermeulen.me/2014/07/15/notes-on-the-advanced-akka-course/" data-via="" data-counturl="http://alessandrovermeulen.me/2014/07/15/notes-on-the-advanced-akka-course/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+</div>
+
+      
+      <p class="meta">
+        
+          <a class="basic-alignment left" href="/2013/07/13/the-difference-between-shallow-and-deep-embedding/" title="Previous Post: The difference between shallow and deep embedding">&laquo; The difference between shallow and deep embedding</a>
+        
+        
+          <a class="basic-alignment right" href="/2014/12/04/orchestration-support-announced-on-dockercon/" title="next Post: Orchestration support announced on DockerCon">Orchestration support announced on DockerCon &raquo;</a>
+        
+      </p>
+    </footer>
+  </article>
+  
+    <section>
+      <h1>Comments</h1>
+      <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+    </section>
+  
+  </div>
+  
+  <aside class="sidebar span3">
+    
+      <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts" class="unstyled">
+    
+      <li class="post">
+        <a href="/2015/08/31/finaglecon/">FinagleCon</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/12/04/orchestration-support-announced-on-dockercon/">Orchestration support announced on DockerCon</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/07/15/notes-on-the-advanced-akka-course/">Notes on the Advanced Akka course</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/07/13/the-difference-between-shallow-and-deep-embedding/">The difference between shallow and deep embedding</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/07/08/combining-graphviz-dot-and-tikz-with-dot2tex/">Combining graphviz (dot) and TikZ with dot2tex</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+<section class="tag-cloud">
+  <h1>Tags</h1>
+  <span class='rank-5'><a href='/tags/applescript'>applescript</a></span> <span class='rank-4'><a href='/tags/Scala'>Scala</a></span> <span class='rank-3'><a href='/tags/open-source'>open source</a></span> <span class='rank-4'><a href='/tags/mvc'>mvc</a></span> <span class='rank-4'><a href='/tags/Graphviz'>Graphviz</a></span> <span class='rank-5'><a href='/tags/Web'>Web</a></span> <span class='rank-4'><a href='/tags/lhs2tex'>lhs2tex</a></span> <span class='rank-1'><a href='/tags/Haskell'>Haskell</a></span> <span class='rank-4'><a href='/tags/TikZ'>TikZ</a></span> <span class='rank-4'><a href='/tags/partial'>partial</a></span> <span class='rank-5'><a href='/tags/com'>com</a></span> <span class='rank-5'><a href='/tags/uuagc'>uuagc</a></span> <span class='rank-4'><a href='/tags/rss'>rss</a></span> <span class='rank-5'><a href='/tags/cabal'>cabal</a></span> <span class='rank-4'><a href='/tags/css'>css</a></span> <span class='rank-5'><a href='/tags/Akka'>Akka</a></span> <span class='rank-5'><a href='/tags/attribute-grammars'>attribute grammars</a></span> <span class='rank-4'><a href='/tags/php'>php</a></span> <span class='rank-4'><a href='/tags/LaTeX'>LaTeX</a></span> <span class='rank-5'><a href='/tags/type-algebra'>type algebra</a></span> <span class='rank-4'><a href='/tags/fold'>fold</a></span> <span class='rank-5'><a href='/tags/html5'>html5</a></span> <span class='rank-4'><a href='/tags/doctrine'>doctrine</a></span> <span class='rank-4'><a href='/tags/xhtml'>xhtml</a></span> <span class='rank-5'><a href='/tags/colour'>colour</a></span> <span class='rank-3'><a href='/tags/codeigniter'>codeigniter</a></span> <span class='rank-5'><a href='/tags/Haskell-platform'>Haskell platform</a></span> <span class='rank-5'><a href='/tags/hackage'>hackage</a></span> <span class='rank-5'><a href='/tags/Finagle'>Finagle</a></span> <span class='rank-5'><a href='/tags/layout'>layout</a></span> <span class='rank-4'><a href='/tags/textmate'>textmate</a></span> <span class='rank-5'><a href='/tags/syntax-highlighting'>syntax highlighting</a></span> <span class='rank-5'><a href='/tags/web'>web</a></span> <span class='rank-5'><a href='/tags/debian'>debian</a></span> <span class='rank-5'><a href='/tags/ghc'>ghc</a></span> <span class='rank-5'><a href='/tags/delphi-2009'>delphi 2009</a></span> <span class='rank-3'><a href='/tags/lhs2tex-hl'>lhs2tex-hl</a></span> <span class='rank-5'><a href='/tags/Docker'>Docker</a></span> <span class='rank-5'><a href='/tags/orm'>orm</a></span> <span class='rank-5'><a href='/tags/Software'>Software</a></span> <span class='rank-5'><a href='/tags/JavaScript'>JavaScript</a></span> <span class='rank-4'><a href='/tags/partials'>partials</a></span> <span class='rank-5'><a href='/tags/os-x'>os x</a></span> <span class='rank-5'><a href='/tags/lenny'>lenny</a></span> 
+</section>
+<section>
+  <h1>About Me</h1>
+  <p>Alessandro Vermeulen is a Functional Programming enthousiast and Computer Sciences MSc
+     alumnus from Utrecht University. His thesis was on incremental evaluation of Haskell programs.</p>
+</section>
+<section>
+  <h1>Blogroll</h1>
+  <ul class="unstyled">
+    <li class="nav-header">Friends</li>
+    <li><a href="http://blog.timmybankers.nl">Tim Soethout</a></li>
+    <li><a href="https://thijsalkema.de/blog/">Thijs Alkemade</a></li>
+    <li><a href="http://www.norm2782.com/">Jurriën Stutterheim</a></li>
+  </ul>
+
+  <ul class="unstyled">
+    <li class="nav-header">Interesting Companies</li>
+    <li><a href="https://typesafe.com" rel="nofollow">Typesafe</a></li>
+    <li><a href="http://www.binksoftware.nl/" rel="nofollow">BINK software B.V.</a></li>
+  </ul>
+
+  <ul class="unstyled">
+    <li class="nav-header">Personal</li>
+    <li><a href="http://www.linkedin.com/in/alessandrovermeulen" rel="nofollow">LinkedIn</a></li>
+  </ul>
+</section>
+
+    
+  </aside>
+  
+</div>
+      </div>
+    </div>
+    <footer role="contentinfo" id="pagefooter"><p>
+  Copyright &copy; 2015 - Alessandro Vermeulen -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+<script src="http://hyphenator.googlecode.com/svn/tags/Version%203.2.0/Hyphenator.js?bm=true" type="text/javascript"></script>
+</footer>
+    
+
+<script type="text/javascript">
+      var disqus_shortname = 'alessandrovermeulen';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://alessandrovermeulen.me/2014/07/15/notes-on-the-advanced-akka-course/';
+        var disqus_url = 'http://alessandrovermeulen.me/2014/07/15/notes-on-the-advanced-akka-course/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+<!-- <script type="text/javascript">
+$(document).ready(function() {
+  $('#disqus_thread').disqus({
+    domain:     "alessandrovermeulen",
+    title:      document.title,
+    developer:  window.location.hostname == "localhost" ? 1 : 0,
+    show_count: true,
+    prettify:   true,
+    markdown:   true,
+    //iframe_css: "http://somewhere.com/stylesheets/disqus.css",
+    ready: function() {
+      // this is when your disqus comments finally load
+      console.log("Comment count: " + $.disqus.commentCount().toString());
+      console.log("Reaction count: " + $.disqus.reactionCount().toString());
+    },
+    added: function(comments) {
+      // do something with the newly added comment divs.
+    },
+    edit: function(textarea) {
+      // called when someone clicks the "reply" button.
+    }
+  });
+});
+</script> -->
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+  </section>
+
+  
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  
+    ga('create', 'UA-9190312-1', 'auto');
+    ga('send', 'pageview');
+  </script>
+
+
+  <script src="/javascripts/modernizr-2.0.js" type="text/javascript"></script>
+  <script src="/javascripts/jquery-1.10.2.min.js" type="text/javascript"></script>
+  <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+  <script src="/javascripts/photography.js" type="text/javascript"></script>
+  <!-- mathjax config similar to math.stackexchange -->
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      inlineMath: [ ['$', '$'] ],
+      displayMath: [ ['$$', '$$']],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    messageStyle: "none",
+    "HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"] }
+  });
+  </script>
+  <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML" type="text/javascript"></script>
+
+</body>
+</html>

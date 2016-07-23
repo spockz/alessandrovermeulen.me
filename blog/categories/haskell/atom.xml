@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Haskell | Alessandro Vermeulen]]></title>
+  <link href="http://alessandrovermeulen.me/blog/categories/haskell/atom.xml" rel="self"/>
+  <link href="http://alessandrovermeulen.me/"/>
+  <updated>2015-09-03T09:16:27+00:00</updated>
+  <id>http://alessandrovermeulen.me/</id>
+  <author>
+    <name><![CDATA[Alessandro Vermeulen]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[JCU App installation script]]></title>
+    <link href="http://alessandrovermeulen.me/2012/02/29/JCU-App-installation-script/"/>
+    <updated>2012-02-29T18:17:00+00:00</updated>
+    <id>http://alessandrovermeulen.me/2012/02/29/JCU-App-installation-script</id>
+    <content type="html"><![CDATA[<p>With this script it should be possible to install and build the JCU app in a
+local directory. It does <em>not</em> build the UHC for you. If that is wanted the
+option could be build in of course!</p>
+
+<p><div><script src='https://gist.github.com/1902090.js?file='></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+]]></content>
+  </entry>
+  
+</feed>

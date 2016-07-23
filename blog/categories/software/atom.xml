@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Software | Alessandro Vermeulen]]></title>
+  <link href="http://alessandrovermeulen.me/blog/categories/software/atom.xml" rel="self"/>
+  <link href="http://alessandrovermeulen.me/"/>
+  <updated>2015-09-03T09:16:27+00:00</updated>
+  <id>http://alessandrovermeulen.me/</id>
+  <author>
+    <name><![CDATA[Alessandro Vermeulen]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[FinagleCon]]></title>
+    <link href="http://alessandrovermeulen.me/2015/08/31/finaglecon/"/>
+    <updated>2015-08-31T17:57:00+00:00</updated>
+    <id>http://alessandrovermeulen.me/2015/08/31/finaglecon</id>
+    <content type="html"><![CDATA[<p>FinagleCon was held at TwitterHQ in San Francisco. It is refreshing to see a
+nice working atmosphere with free food and drinks. Now for the contents.</p>
+
+<p>Twitter’s RPC framework, Finagle, has been in production since <a href="http://vkostyukov.ru/slides/finch-101/?full#5">August
+2010</a> and has over 140
+contributors. In addition to Twitter, it has been adopted by many large
+companies such as SoundCloud. Initially written in Java with FP constructs
+(monads, maps, etc.) all over, it was soon after rewritten in Scala.</p>
+
+<p>Finagle is based on three core concepts: Simplicity, Composability, and
+Separation of Concerns. These concepts are shown through three primitive
+building blocks:
+<a href="https://twitter.github.io/util/docs/index.html#com.twitter.util.Future"><code>Future</code></a>,
+<a href="https://twitter.github.io/finagle/docs/index.html#com.twitter.finagle.Service"><code>Service</code></a>,
+and
+<a href="https://twitter.github.io/finagle/docs/index.html#com.twitter.finagle.Filter"><code>Filter</code></a>.</p>
+
+<ul>
+  <li><code>Future</code>s provide an easy interface to create asynchronous computation and
+to model sequential or asynchronous data-flows.</li>
+  <li><code>Service</code>s are functions that return futures, used to abstract away, possibly
+remote, service calls.</li>
+  <li><code>Filter</code>s are essentially decorators and are meant to contain modular blocks
+of re-usable, non-business logic. Example usages are <a href="https://twitter.github.io/finagle/docs/index.html#com.twitter.finagle.filter.LoggingFilter">LoggingFilter</a> and
+<a href="https://twitter.github.io/finagle/docs/index.html#com.twitter.finagle.service.RetryingFilter">RetryingFilter</a>.</li>
+</ul>
+
+<p>The use of Futures makes it easy to test asynchronous computations. Services and
+filters both can be created separately, each containing their specialized logic.
+This modularity makes it easy to test and reason about them separately. Services
+and filters are easily composed, just like functions do, which makes it
+convenient to test chains. Services and filters are meant to separate behaviour
+from domain logic.</p>
+
+<p>As amazing as Finagle is, there are some things one should be aware of. To
+create a really resilient application with Finagle one has to be an expert in
+its internals. Many configuration parameters influence each other, e.g. queue
+size and time-outs. With a properly tuned setup Finagle is properly fast and
+resilient (the defaults are good as well, mind you). As most data centres are
+heterogenous in their setup, faster machines are added to the pool, and other
+conditions change, one has to keep attention to the tuning continuously in order
+to maintain optimal performance.</p>
+
+<p>Some general advice, watch out for traffic amplification due to retries, keep
+your timeouts low so retry is useful, but not as low that you introduce spurious
+timeouts.</p>
+
+<p>For extra points, keep hammering your application until it breaks, find out why
+it breaks, fix it, and repeat.</p>
+
+<h2 id="the-future">The future</h2>
+
+<p>In addition to this heads up we were also given a nice insight in the upcoming
+things for Finagle.</p>
+
+<p>In order to make more informed decision, we will get a new Failure type which
+contains more information instead of ‘just’ a <code>Throwable</code>. In this new
+<code>Failure</code>, an added field indicates whether it is safe to <code>retry</code>.</p>
+
+<p>There are several issues with the current way of fine-tuning Finagle, as
+mentioned, you need to be an expert to use all the configuration parameters
+properly. Next to this the configuration is static and doesn’t take into account
+changing environments and behaviour of downstream services. Because the tuning
+of the parameters is tightly coupled with the implementation of Finagle it is
+also hard to change the implementation significantly without significant
+re-tuning.</p>
+
+<p>In order to battle the last two points, Finagle will introduce Service Level
+Objectives (SLO). The SLO is a higher-level goal that Finagle should strive to
+reach instead of low-level hardcoded parameters. What these SLO will be exactly
+is not yet known.</p>
+
+<h2 id="the-community">The community</h2>
+
+<p>The Finagle team will synchronize the internal Finagle repository with the
+Github repository every Monday. They will strive to publish a snapshot version
+of the change as well.</p>
+
+<p>For someone looking to write his own protocol to connect to his service,
+<code>finagle-serial</code> is a nice project to start with. It is small enough to grasp
+within a day but big enough to be non-trivial.</p>
+
+<p>It was found that the
+<a href="http://blog.ragozin.info/2012/03/secret-hotspot-option-improving-gc.html">ParGCCardsPerStrideChunk</a>
+garbage collection option, available from 7u40, can halve GC times on large
+heaps. It is recommended to try this parameter. Tuning seems to be hard to do
+and is generally done by copying a ‘known good set’ of parameters.</p>
+
+<p><a href="http://twitter.github.io/scrooge/">Scrooge</a> is a good utility to use for Thrift
+and Scala as it is aware of Scala features such as Traits and Objects and can
+generate relevant transformations for them.</p>
+
+<p>When you want to connect to multiple data-centres from a single data-centre one
+can use
+<a href="https://twitter.github.io/finagle/docs/index.html#com.twitter.finagle.client.LatencyCompensation$">LatencyCompensation</a>
+to include latency times.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Software and Building Architecture Compared]]></title>
+    <link href="http://alessandrovermeulen.me/2012/04/14/software-and-building-architecture-compared/"/>
+    <updated>2012-04-14T14:05:00+00:00</updated>
+    <id>http://alessandrovermeulen.me/2012/04/14/software-and-building-architecture-compared</id>
+    <content type="html"><![CDATA[<p>People tend to only understand what they can see. For most people it is
+difficult to grasp more abstract matters without somehow visualizing them.
+Software is an example of such an abstract matter. Let us visit the process of
+developing software through a comparison with developing a building.</p>
+
+<!-- more -->
+
+<p>Everyone knows that in order to build something you will have to think about it
+first. Just putting some sticks together as you did when you were playing
+outside does not work very well for a skyscraper. For any construction you will
+need an architecture to design it first. After your architect has designed the
+project is has to go through some checks as to whether you will have enough
+sunlight in the house, enough ventilation and perhaps most importantly that the
+structure will not come down on itself! Ideally you only start building when
+both the architect, the contractor and yourself are satisfied that the building
+meets all requirements. Our knowledge on the construction of buildings has been
+growing since we first exited our caves and thus we generally can found our
+decisions during each step of the process on this knowledge.</p>
+
+<p>Most people have not had the experience of just building some software that
+eventually crashes because they did not think it through, it is not something
+you do as a kid when playing outside. This makes things a bit more complicated
+to imagine, but the development of software is quite analogous to the
+development of some construction.</p>
+
+<p>Coming up with a program is even more complicated than building a construction.
+It comes with all the issues mentioned above when creating a building. It first
+has to be designed, then it has to be passed along to someone leading the
+developers to check for practicality and ideally usability. After that it can be
+passed to the developers for the writing proper. The issue at hand being,
+however, is that in the world of software wishes from the client and the
+environment change continuously during the project. This causes an oscillation
+between the stages mentioned above creating long delays before the final product
+is finished. To make matters worse, the final product will not be the perfect
+fit to the requirements due to the delays.</p>
+
+<p>Why does this happen, you wonder? There are several reasons. For starters the
+art of programming is still very young, learning from our mistakes. Even the
+Romans had some mishaps when building their famous aqueducts. This entails that
+we still lack the experience to found our design decisions on. Another reason is
+that demands and wishes change rapidly in our new hyper-dynamic society. When
+you set off on constructing a building you have a very good idea of why you want
+to do that, what it will take and what your usage of the building will be.
+Software projects are generally given less consideration.</p>
+
+<p>A very contributing factor to the complexity of creating a software product is
+the fact that most cases the software has to integrate ‘perfectly’ in the
+physical process of the client, where most do not fully grasp their own process,
+and that it has to communicate with other software products. These other
+products might not be designed with the new scenario in mind and thus either
+need adjustment or another way around it has to be found.</p>
+
+<p>So, this is why coming up with a software product is just as difficult as
+constructing a building, and is in most cases even harder. The next time someone
+asks why it takes so long to write (good) software you just ask how long it took
+to design his custom made house. :)</p>
+
+<!-- Writing a program is quite complicated. It consists of many steps, most of which
+are not even of a technical nature. It requires human interaction, figuring out
+requirements and prioritizing them, scheduling of your resources (your
+programmers), and continuous feedback to the client. Often you will have to deal
+with changing requirements, either because the client decides he wants something
+else, or because you discover edge cases when looking more closely at your
+original requirements. Only after you have 
+
+ 
+
+When people ask me what I do I answer them that I build software. These same
+people often cannot grasp why building software is so difficult. I would like to
+compare the development of a software product with the development of a
+building.
+
+Everyone knows that in order to build a house you first need to get the proper
+permissions. After you have received the permission you can start designing your
+house. In order to design you will need to know what kind of family will live in
+the building, will they have kids, or is it a house for elderly people? What is
+the environment the building will be build? Is it dry with soft ground or will
+it be in a wet climate on hard rocks?
+
+No grasp on the physical sense of software. Difficult to imagine/abstract. -->
+]]></content>
+  </entry>
+  
+</feed>
