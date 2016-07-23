@@ -1,22 +1,30 @@
 # Built with Jekyll 3.2.0
 
 # Setup
-title:               Ed.
-tagline:             'A Jekyll theme for minimal editions'
-description:         'Ed is a Jekyll theme designed for textual editors based on minimal computing principles, and focused on legibility and flexibility.'
-url:                 'http://elotroalex.github.io'
-baseurl:             '/ed'
+title:               Alessandro Vermeulen
+tagline:             'Functional Programming Evangelist'
+description:         "Alessandro Vermeulen's blog about languages, programming, Computer Science, photography and the Web."
+url:                 'http://alessandrovermeulen.me'
+baseurl:             ''
 
 # About/contact
 author:
-  name:              Alex Gil
-  url:               https://twitter.com/elotroalex
-  email:             colibri.alex@gmail.com
+  name:              Alessandro Vermeulen
+  url:               https://twitter.com/alevermeulen
+  email:             alessandro@alessandrovermeulen.me
 
 # Permalinks
 
 permalink: pretty
-permalink: /:title/
+# permalink: /:title/
+
+category_dir: blog/categories
+tag_dir: tags
+paginate: 10          # Posts per page on the blog index
+pagination_dir: blog  # Directory base for pagination URLs eg. /blog/page/2/
+recent_posts: 5       # Posts in the sidebar Recent Posts section
+excerpt_link: "Read on &rarr;"  # "Continue reading" link text at the bottom of excerpted articles
+
 
 # Set encoding to UTF-8
 encoding: utf-8
@@ -44,4 +52,10 @@ version:             0.0.6
 # Exclusions from the final site
 exclude: [optional, vendor]
 
+gems:
+  - jekyll-gist
+  - jekyll-paginate
 
+# Disqus Comments
+disqus_short_name: alessandrovermeulen
+disqus_show_comment_count: true
