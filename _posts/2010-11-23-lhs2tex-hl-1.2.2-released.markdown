@@ -1,0 +1,18 @@
+--- 
+layout: post
+title: lhs2TeX-hl 1.2.2 released
+tags: 
+- lhs2tex-hl
+- open source
+comments: true
+---
+Changelog:
+<ol>
+  <li>Classes are written to the format file;</li>
+  <li>There should be less "ambiguous operator" errors now;</li>
+  <li>Removed the Agda dependency as it didn't do anything with Agda at all.</li>
+</ol>
+
+<a href="http://hackage.haskell.org/package/lhs2TeX-hl">Hackage</a>, <a href="https://github.com/spockz/lhs2texhl">GitHub</a>.
+
+
