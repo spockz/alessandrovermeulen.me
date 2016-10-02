@@ -1,8 +1,8 @@
---- 
+---
 layout: post
 title: "Haskell Datatypes and Folds: Part I"
-tags: 
-- Haskell
+tags:
+- haskell
 - fold
 comments: true
 ---

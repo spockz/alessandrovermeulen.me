@@ -5,9 +5,9 @@ date: 2013-07-08 23:06
 comments: true
 categories: Programming
 tags:
-  - LaTeX
-  - TikZ
-  - Graphviz
+  - latex
+  - tikz
+  - graphviz
 ---
 
 We all want to create good looking documents and good looking documents need

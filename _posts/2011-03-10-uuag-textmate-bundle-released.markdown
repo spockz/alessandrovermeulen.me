@@ -1,11 +1,11 @@
---- 
+---
 layout: post
 title: UUAG TextMate Bundle released
-tags: 
-- Haskell
+tags:
+- haskell
 - uuagc
 - textmate
-- attribute grammars
+- attribute-grammars
 comments: true
 ---
 I'm proud to announce the release of the <a title="GitHub repository of the

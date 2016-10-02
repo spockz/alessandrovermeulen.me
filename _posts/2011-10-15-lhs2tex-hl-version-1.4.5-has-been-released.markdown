@@ -1,8 +1,8 @@
---- 
+---
 layout: post
 title: lhs2TeX-hl version 1.4.5 has been released!
-tags: 
-- Haskell
+tags:
+- haskell
 - lhs2tex-hl
 comments: true
 ---
@@ -20,4 +20,3 @@ I've just released a new version of <a href="http://alessandrovermeulen.me/proje
 </ol>
 
 Please let me know what you think.
-

@@ -5,9 +5,9 @@ date: 2013-07-13 23:06
 comments: true
 categories: Programming
 tags:
-  - LaTeX
-  - TikZ
-  - Graphviz
+  - latex
+  - tikz
+  - graphviz
 ---
 
 Deep and shallow embedding are terms associated with Domain Specific Languages

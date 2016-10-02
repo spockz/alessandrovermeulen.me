@@ -29,13 +29,13 @@ excerpt_link: "Read on &rarr;"  # "Continue reading" link text at the bottom of 
 # Set encoding to UTF-8
 encoding: utf-8
 
-# Collections for texts
-collections:
-  texts:
-    output: true
 
 # Markdown specs
 markdown: kramdown
+highlighter: rouge
+kramdown:
+  input: GFM
+  hard_wrap: false
 
 kramdown:
   auto_ids:       true
@@ -55,7 +55,51 @@ exclude: [optional, vendor]
 gems:
   - jekyll-gist
   - jekyll-paginate
+  - jekyll-sitemap
+  - jekyll-feed
+  - jekyll-seo-tag
+
+paginate: 5
+paginate_path: '/blog/page/:num/'
+timezone: Europe/Amsterdam
 
 # Disqus Comments
 disqus_short_name: alessandrovermeulen
 disqus_show_comment_count: true
+
+# Collections for texts
+collections:
+  texts:
+    output: true
+  my_categories:
+    output: true
+    permalink: /category/:name/
+  my_tags:
+    output: true
+    permalink: /tags/:name/
+
+defaults:
+  -
+    scope:
+      path: ""
+      type: pages
+    values:
+      layout: page
+  -
+    scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
+  -
+    scope:
+      path: ""
+      type: my_categories
+    values:
+      layout: blog_by_category
+  -
+    scope:
+      path: ""
+      type: my_tags
+    values:
+      layout: blog_by_tag

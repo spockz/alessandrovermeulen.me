@@ -1,0 +1,4 @@
+---
+slug: cabal
+name: Cabal
+---

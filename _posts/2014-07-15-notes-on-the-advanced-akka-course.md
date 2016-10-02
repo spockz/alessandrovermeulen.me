@@ -3,10 +3,10 @@ layout: post
 title: "Notes on the Advanced Akka course"
 date: 2014-07-15 12:00
 comments: true
-categories: Programming
+category: programming
 tags:
-  - Scala
-  - Akka
+  - scala
+  - akka
 ---
 The Advanced Akka course is provided by Typesafe and is aimed at teaching advanced usages of Akka. The course covers the basics of Akka, Remoting, Clustering, Routers, CRDTs, Cluster Sharding and Akka Persistance. The following post starts with a general introduction to Akka and presents the takeaways from the course as we experienced them.
 
@@ -16,13 +16,13 @@ The reader which is already familiar with Akka can skip this section.
 
 According to the Akka site this is Akka:
 
-> Akka is a toolkit and runtime for building highly 
+> Akka is a toolkit and runtime for building highly
 > concurrent, distributed, and fault tolerant event-driven
 > applications on the JVM.
 
 Akka achieves this by using Actors.
 
-> Actors are very lightweight concurrent entities. 
+> Actors are very lightweight concurrent entities.
 
 Each Actor has a corresponding mailbox stored separately from the Actor. The Actors together with their mailboxes reside in an ActorSystem. Additionally, the ActorSystem contains the Dispatcher which executes the handling of a message by an actor. Each Actor only handles a single message at a time.
 
@@ -94,7 +94,7 @@ The main problem with command sourcing lies in that *all* messages are replayed.
 
 ### Event Sourcing
 
-With event sourcing one only stores state changing events. Events are received by the `receiveRecover` method. *External* side-effects should be performed in the `receive` method. The code for the internal side-effect of the event should be the same in both the `receive` and `receiveRecover` methods. The actor or trait for this will be named `PersistentActor`. 
+With event sourcing one only stores state changing events. Events are received by the `receiveRecover` method. *External* side-effects should be performed in the `receive` method. The code for the internal side-effect of the event should be the same in both the `receive` and `receiveRecover` methods. The actor or trait for this will be named `PersistentActor`.
 
 ### Actor offloading
 

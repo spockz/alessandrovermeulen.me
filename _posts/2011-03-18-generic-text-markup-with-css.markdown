@@ -4,8 +4,8 @@ title: Generic Text Markup with CSS
 tags:
 - xhtml
 - css
-- LaTeX
-- open source
+- latex
+- open-source
 comments: true
 ---
 Most of you are familiar with CSS reset scripts to reset CSS behaviour to

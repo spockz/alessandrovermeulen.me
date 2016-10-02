@@ -1,8 +1,8 @@
---- 
+---
 layout: post
 title: Adding COM(+) to your Delphi project
-tags: 
-- delphi 2009
+tags:
+- delphi-2009
 - com
 comments: true
 ---

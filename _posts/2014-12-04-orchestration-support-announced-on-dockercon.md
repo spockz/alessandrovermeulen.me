@@ -5,7 +5,7 @@ date: 2014-12-04 21:46
 comments: true
 categories: Programming
 tags:
-  - Docker
+  - docker
 ---
 # Orchestration
 
@@ -74,4 +74,3 @@ The timeline for 2015:
 1. Increase performance of pulls
 2. Increase transparancy by adding and improving on status pages
 3. Engage in partnership with Microsoft. Most notably this will result being able to run Linux on Microsoft Azure.
-

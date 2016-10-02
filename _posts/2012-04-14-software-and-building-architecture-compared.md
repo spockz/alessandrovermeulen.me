@@ -4,10 +4,6 @@ layout: post
 title: "Software and Building Architecture Compared"
 date: 2012-04-14 14:05
 comments: true
-categories:
-  - Software
-tags: 
-  - Software
 ---
 
 People tend to only understand what they can see. For most people it is
@@ -74,9 +70,9 @@ requirements and prioritizing them, scheduling of your resources (your
 programmers), and continuous feedback to the client. Often you will have to deal
 with changing requirements, either because the client decides he wants something
 else, or because you discover edge cases when looking more closely at your
-original requirements. Only after you have 
+original requirements. Only after you have
 
- 
+
 
 When people ask me what I do I answer them that I build software. These same
 people often cannot grasp why building software is so difficult. I would like to

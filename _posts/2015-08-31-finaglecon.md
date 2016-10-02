@@ -3,12 +3,10 @@ layout: post
 title: "FinagleCon"
 date: 2015-08-31 17:57
 comments: true
-categories:
-  - Programming
-  - Software
+category: programming
 tags:
-  - Scala
-  - Finagle
+  - scala
+  - finagle
 ---
 
 FinagleCon was held at TwitterHQ in San Francisco. It is refreshing to see a

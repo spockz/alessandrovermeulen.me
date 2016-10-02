@@ -18,6 +18,7 @@ Among his hobbies are Volleyball and
 
 ## Practical information
 ### My Public Key
+
 {% gist 1415728 %}
 
 ### Curriculum Vitae

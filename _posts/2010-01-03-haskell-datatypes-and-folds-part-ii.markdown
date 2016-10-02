@@ -1,8 +1,8 @@
---- 
+---
 layout: post
 title: "Datatypes and Folds: Part II"
-tags: 
-- Haskell
+tags:
+- haskell
 - fold
 - type algebra
 comments: true
@@ -28,7 +28,7 @@ Recall that in our previous folds and algebras we choose to replace our self-rec
 type MaybeTreeAlgebra a m r = (  ( m -&gt; r -&gt; r -&gt; r -- Node
                                  , m -&gt; r           -- Leaf
                                  )
-                              ,  ( a -&gt; m           -- Just 
+                              ,  ( a -&gt; m           -- Just
                                  , m                -- Nothing
                                  )               
                               )
@@ -46,7 +46,7 @@ Now we are going to construct the fold function. We will be doing this in exactl
 <li>look at the result.</li>
 </ol>
 
-Following these steps again gives us the fold on our datatype. Please convince yourself that this is the case by defining <code>foldMaybeTree</code> yourself. 
+Following these steps again gives us the fold on our datatype. Please convince yourself that this is the case by defining <code>foldMaybeTree</code> yourself.
 
 If we do it exactly as described above it will provide us with the following fold. Notice that we gave meaningful names to every replacement function stating the datatype they are intended for. Except for the top level function which we called <code>f</code>. This is because writing out the whole name for that function everywhere would be to much of a hassle and if you use <code>f</code> for this way it will be quite clear in time.
 
@@ -59,7 +59,7 @@ foldMaybeTree' ((node, leaf), (just, nothing)) = f
         maybe (Nothing) = nothing
 [/haskell]
 
-Notice that we are using a datatype here that is already defined in the prelude. It would be wise to check whether someone didn't already provide a fold function for our little datatype <code>Maybe a</code>. Because that's we essentially did, we inlined the fold for <code>Maybe a</code> inside our fold for <code>MaybeTree a</code>. Obviously this isn't a problem if you are sure that your datatype will stay `contained in' in your datatype. 
+Notice that we are using a datatype here that is already defined in the prelude. It would be wise to check whether someone didn't already provide a fold function for our little datatype <code>Maybe a</code>. Because that's we essentially did, we inlined the fold for <code>Maybe a</code> inside our fold for <code>MaybeTree a</code>. Obviously this isn't a problem if you are sure that your datatype will stay `contained in' in your datatype.
 
 So we see that it is prudent to check for already existing folds if we use already existing datatypes. And it turns out that there already is a fold for <code>Maybe a</code>, namely <code>maybe</code>.
 

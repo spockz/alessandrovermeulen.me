@@ -1,8 +1,8 @@
---- 
+---
 layout: post
 title: lhs2TeX-hl released
-tags: 
-- Haskell
+tags:
+- haskell
 - lhs2tex
 - syntax highlighting
 - colour

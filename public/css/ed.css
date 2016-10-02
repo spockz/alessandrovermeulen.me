@@ -820,3 +820,15 @@ nav ul li.previous:before {
 nav ul li.next:before {
     content: '» '; /*copy and paste a bullet from HTML in browser into CSS (not using ASCII codes) */
 }
+
+p, li {
+  text-align: justify;
+}
+
+figure img {
+  margin: 0 auto;
+}
+
+figure figcaption {
+  text-align: center;
+}

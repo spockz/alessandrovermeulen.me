@@ -4,8 +4,8 @@ layout: post
 title: "JCU App installation script"
 date: 2012-02-29 18:17
 comments: true
-categories: 
-  - Haskell
+categories:
+  - haskell
 ---
 
 With this script it should be possible to install and build the JCU app in a

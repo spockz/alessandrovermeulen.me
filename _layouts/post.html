@@ -6,7 +6,7 @@ layout: default
   <h1 class="post-title">{{ page.title }}</h1>
   {{ content }}
 
-  {% if page.previous.url || page.next.url %}
+  {% if page.previous.url or page.next.url %}
   <nav class="meta">
     <h2>Keep reading</h2>
     <ul>
@@ -19,6 +19,34 @@ layout: default
     </ul>
   </nav>
   {% endif %}
+
+
+
+
+  <section>
+    {% assign category = site.my_categories | where: "slug", page.category %}
+    {% assign category = category[0] %}
+    {% if category %}
+      {% capture category_content %}<a class="label" href="{{ category.url }}" style="background-color:{{ category.color }}">{{ category.name }}</a>{% endcapture %}
+    {% endif %}
+
+    {% if page.tags.size > 0 %}
+      {% capture tags_content %} with <span class="icon-price-tag{% if page.tags.size > 1 %}s{% endif %}"></span>: {% endcapture %}
+      {% for post_tag in page.tags %}
+        {% assign tag = site.my_tags | where: "slug", post_tag %}
+        {% if tag %}
+          {% assign tag = tag[0] %}
+          {% capture tags_content_temp %}{{ tags_content }}<a href="{{ tag.url }}">{{ tag.name }}</a>{% if forloop.last == false %}, {% endif %}{% endcapture %}
+          {% assign tags_content = tags_content_temp %}
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+
+    <p class="m-t-3 text-muted font-italic">
+      <small>Posted{% if category_content %} in </small>{{ category_content }}<small>{% endif %}{{ tags_content }}</small>
+    </p>
+  </section>
+
 
   {% if site.disqus_short_name and page.comments == true %}
     <section>

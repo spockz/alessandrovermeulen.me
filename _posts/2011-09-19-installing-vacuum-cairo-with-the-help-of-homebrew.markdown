@@ -1,8 +1,8 @@
---- 
+---
 layout: post
 title: Installing vacuum-cairo with the help of HomeBrew
-tags: 
-- Haskell
+tags:
+- haskell
 - ghc
 - cabal
 comments: true

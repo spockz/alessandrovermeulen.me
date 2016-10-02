@@ -1,7 +1,7 @@
 --- 
 layout: post
 title: Extending the V in MVC
-tags: 
+tags:
 - mvc
 - codeigniter
 - partials

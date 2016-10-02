@@ -1,8 +1,8 @@
---- 
+---
 layout: post
 title: Caching hackage
-tags: 
-- Haskell
+tags:
+- haskell
 - hackage
 comments: true
 ---
@@ -158,7 +158,7 @@ sub vcl_fetch {
     if (beresp.http.Authorization &amp;&amp; !beresp.http.Cache-Control ~ "public") {
         return(pass);
     }
-    
+
 }
 
 sub vcl_deliver {

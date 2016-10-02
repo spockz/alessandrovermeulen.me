@@ -1,8 +1,8 @@
---- 
+---
 layout: post
 title: Applescript script to emulate the behaviour of the `start' command in the windows CMD prompt
-tags: 
-- os x
+tags:
+- os-x
 - applescript
 comments: true
 ---

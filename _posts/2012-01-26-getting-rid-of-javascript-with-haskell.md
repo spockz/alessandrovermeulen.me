@@ -3,10 +3,9 @@ layout: post
 title: "Getting rid of programming JavaScript with Haskell"
 date: 2012-01-26 20:29
 comments: true
-tags: 
-  - Haskell
-  - JavaScript
-  - Web
+tags:
+  - haskell
+  - javascript
 ---
 
 For my Experimentation Project at Utrecht University I ported the "JCU"
@@ -15,7 +14,7 @@ students the opportunity to taste Prolog.
 
 The project uses the Utrecht Haskell Compiler and its JavaScript backend. The UHC
 translates Haskell to Core and then translates this Core language to JavaScript.
-For more information on this see the blog of the creator of the 
+For more information on this see the blog of the creator of the
 [UHC JavaScript backend](http://utrechthaskellcompiler.wordpress.com/2010/10/18/haskell-to-javascript-backend/).
 
 Please read my [report](/downloads/report-on-getting-rid-of-js.pdf) on this
@@ -30,7 +29,7 @@ project. The project is hosted on GitHub in the following repositories:
 <a href="http://www.flickr.com/photos/spockz/6767517241/" title="Complete proof in the HS JCU App by Alessandro Vermeulen, on Flickr"><img src="http://farm8.staticflickr.com/7155/6767517241_eacd8ec0ed_z.jpg" width="640" height="414" alt="Complete proof in the HS JCU App"></a>
 
 **update 28-01-2012**:
-The keyword `jscript` in the UHC has been changed to `js` in order to avoid 
+The keyword `jscript` in the UHC has been changed to `js` in order to avoid
 association with [Microsoft's JScript](http://en.wikipedia.org/wiki/JScript).
 Also `new Object` syntax is now available in the `foreign import` directives.
 

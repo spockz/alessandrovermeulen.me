@@ -1,9 +1,9 @@
---- 
+---
 layout: post
 title: Debian Lenny and the Haskell Platform
-tags: 
-- Haskell
-- Haskell platform
+tags:
+- haskell
+- haskell-platform
 - debian
 - lenny
 comments: true
@@ -44,7 +44,7 @@ Index: haskell-platform-2009.2.0.2/scripts/install.sh
 @@ -34,13 +34,23 @@ install_pkg () {
    fi
  }
- 
+
 +# Is this exact version of the package already installed?
 +is_pkg_installed () {
 +  PKG_VER=$1
@@ -67,7 +67,7 @@ Index: haskell-platform-2009.2.0.2/scripts/install.sh
 +    cd ..
 +  fi
  done
- 
+
  echo
 [/bash]
 
