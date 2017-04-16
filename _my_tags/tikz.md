@@ -1,4 +1,0 @@
----
-slug: tikz
-name: TikZ
----

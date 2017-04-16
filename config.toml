@@ -1,0 +1,43 @@
+contentDir = "content"
+layoutDir = "layouts"
+publishDir = "public"
+buildDrafts = false
+baseURL = "https://alessandrovermeulen.me/"
+canonifyURLs = true
+
+title = "Alessandro Vermeulen"
+theme = "cactus-plus"
+
+googleAnalytics = "your_google_analytics_code"
+hasCJKLanguage = true
+pygmentsuseclasses = true
+
+PygmentsCodeFences = true
+
+[permalinks]
+post  = "/:year/:month/:day/:title/"
+
+[taxonomies]
+  category = "categories"
+  tag = "tags"
+
+[params]
+  enableRSS = true
+  description = "Alessandro Vermeulen's blog about languages, programming, Computer Science, photography and the Web."
+  author = "Alessandro Vermeulen"
+  name = "Alessandro Vermeulen"
+  email = "info@alessandrovermeulen.me"
+  bio = "Functional Programming Evangelist"
+  customCSS = ["css/zenburn.css"]
+
+[[menu.main]]
+    name = "about hugo"
+    pre = "<i class='fa fa-heart'></i>"
+    weight = -110
+    identifier = "about"
+    url = "/about/"
+[[menu.main]]
+    name = "getting started"
+    pre = "<i class='fa fa-road'></i>"
+    weight = -100
+    url = "/getting-started/"

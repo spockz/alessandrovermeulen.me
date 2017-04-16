@@ -1,4 +1,0 @@
----
-slug: akka
-name: Akka
----

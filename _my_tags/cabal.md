@@ -1,4 +1,0 @@
----
-slug: cabal
-name: Cabal
----

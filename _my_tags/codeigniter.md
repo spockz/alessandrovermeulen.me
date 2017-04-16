@@ -1,4 +1,0 @@
----
-slug: codeigniter
-name: CodeIgniter
----

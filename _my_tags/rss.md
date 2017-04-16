@@ -1,4 +1,0 @@
----
-slug: rss
-name: RSS
----

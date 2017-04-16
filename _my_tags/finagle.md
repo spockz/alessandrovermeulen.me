@@ -1,4 +1,0 @@
----
-slug: finagle
-name: Finagle
----
