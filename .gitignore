@@ -2,7 +2,7 @@
 _gh_pages
 _site
 .ruby-version
-
+public
 
 # Numerous always-ignore extensions
 *.diff

@@ -8,10 +8,9 @@ canonifyURLs = true
 title = "Alessandro Vermeulen"
 theme = "cactus-plus"
 
-googleAnalytics = "your_google_analytics_code"
-hasCJKLanguage = true
+googleAnalytics = "UA-9190312-1"
+hasCJKLanguage = false
 pygmentsuseclasses = true
-
 PygmentsCodeFences = true
 
 [permalinks]
