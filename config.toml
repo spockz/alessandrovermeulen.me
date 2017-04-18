@@ -13,6 +13,9 @@ hasCJKLanguage = false
 pygmentsuseclasses = true
 PygmentsCodeFences = true
 
+rssuri = "atom.xml"
+
+
 [permalinks]
 post  = "/:year/:month/:day/:title/"
 
