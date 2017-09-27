@@ -66,7 +66,7 @@ baseName = "atom"
 	readMore = ""
 	copyright = "(C) Alessandro Vermeulen"
 	# Sharing options and author information in posts
-	aboutAuthor = "Functional Programming and Reactive Systems Evangelist"
+	aboutAuthor = "Functional Programming and Reactive Systems Evangelist."
 	tweet = ""
 	share = ""
 	# 404 page
