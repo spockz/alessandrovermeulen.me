@@ -1,45 +1,90 @@
-contentDir = "content"
-layoutDir = "layouts"
-publishDir = "public"
-buildDrafts = false
-baseURL = "https://alessandrovermeulen.me/"
-canonifyURLs = true
-
+# Site settings
+baseurl = "https://alessandrovermeulen.me/"
+# HTML Language Code Reference, such as en, zh-cn
+languageCode = "en"
 title = "Alessandro Vermeulen"
-theme = "cactus-plus"
-
+theme = "hugo-theme-cactus-plus"
+# Enter your tracking code to enable Google Analytics
 googleAnalytics = "UA-9190312-1"
 hasCJKLanguage = false
 pygmentsuseclasses = true
 PygmentsCodeFences = true
+canonifyURLs = true
 
-rssuri = "atom.xml"
+[outputs]
+home = [ "HTML", "RSS" ]
 
-
-[permalinks]
-post  = "/:year/:month/:day/:title/"
-
-[taxonomies]
-  category = "categories"
-  tag = "tags"
+[outputFormats]
+[outputFormats.RSS]
+mediatype = "application/rss"
+baseName = "atom"
 
 [params]
-  enableRSS = true
-  description = "Alessandro Vermeulen's blog about languages, programming, Computer Science, photography and the Web."
-  author = "Alessandro Vermeulen"
-  name = "Alessandro Vermeulen"
-  email = "info@alessandrovermeulen.me"
-  bio = "Functional Programming Evangelist"
-  customCSS = ["css/zenburn.css"]
+	name = "Alessandro Vermeulen"
+	description = "Alessandro Vermeulen's blog about languages, programming, Computer Science, photography and the Web."
+	bio = "Functional Programming and Reactive Systems Evangelist"
+	# Enter optionally your twitter account
+	twitter = "alevermeulen"
+	enableRSS = true
 
-[[menu.main]]
-    name = "about hugo"
-    pre = "<i class='fa fa-heart'></i>"
-    weight = -110
-    identifier = "about"
-    url = "/about/"
-[[menu.main]]
-    name = "getting started"
-    pre = "<i class='fa fa-road'></i>"
-    weight = -100
-    url = "/getting-started/"
+	# Disqus comment
+	disqusShortname = "your_disqus_short_name"
+	# Disable disqus comments by set `enableDisqus = "false"`
+	enableDisqus = false
+
+	# Duoshuo comment
+	duoshuoShortname = "your_duoshuo_short_name"
+	# Disable duoshuo comments by set `enableDuoshuo = "false"`
+	enableDuoshuo = false
+
+	enableGithubIssuesTips = false
+
+	# Enable googleAnalytics
+	enableGoogleAnalytics = true
+
+	# Enable baiduAnalytics
+	enableBaiduAnalytics = false
+	# Baidu Tongji Code
+	baiduAnalytics = 'your_baidu_tongji_code'
+
+	# Add custom assets with their paths relative to the static folder
+	customCSS = ["css/zenburn.css"]
+	customJS  = []
+
+	# The variables below are optionally too and can be used to
+	# translate or customize each string of the theme.
+
+	# Navigation links
+	home = ""
+	about = ""
+	archive = ""
+	subscribe = ""
+	tags = ""
+	# Pagination links
+	olderPosts = ""
+	newerPosts = ""
+	readMore = ""
+	copyright = "(C) Alessandro Vermeulen"
+	# Sharing options and author information in posts
+	aboutAuthor = "Functional Programming and Reactive Systems Evangelist"
+	tweet = ""
+	share = ""
+	# 404 page
+	title404 = ""
+	subtitle404 = ""
+
+	# Choose a font for the social icons in the footer. Either "mono-social" or "font-awesome"
+	iconFont = "font-awesome"
+  # The social icons can be styled differently if you use mono as font - circle, rounded, or empty
+  socialIconStyle = ""
+
+
+# Add additional social link entries underneath
+[social]
+	#facebook-square = "your_facebook_link"
+  twitter-square = "alevermeulen"
+  github-square = "spockz"
+
+[permalinks]
+  post  = "/:year/:month/:day/:title/"
+
