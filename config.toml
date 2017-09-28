@@ -51,6 +51,8 @@ baseName = "atom"
 	customCSS = ["css/zenburn.css"]
 	customJS  = []
 
+
+
 	# The variables below are optionally too and can be used to
 	# translate or customize each string of the theme.
 
@@ -88,3 +90,5 @@ baseName = "atom"
 [permalinks]
   post  = "/:year/:month/:day/:title/"
 
+[params.links]
+  "References" = "/reading-list"
