@@ -1,6 +1,7 @@
 ---
 layout: page
 title: About
+date: 2017-04-16
 ---
 
 Alessandro Vermeulen is a Computer Sciences (Masters) graduate from Utrecht
