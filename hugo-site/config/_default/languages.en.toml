@@ -1,0 +1,23 @@
+# Reuse established author information without guessing changes since the archived biography.
+locale = 'en'
+weight = 1
+title = 'Alessandro Vermeulen'
+
+[params]
+displayName = 'EN'
+isoCode = 'en'
+dateFormat = '2 January 2006'
+description = 'Writing about programming languages, functional programming, and software systems.'
+
+[params.author]
+name = 'Alessandro Vermeulen'
+headline = 'Programming languages, functional programming, and software systems.'
+
+[[params.author.links]]
+github = 'https://github.com/spockz'
+
+[[params.author.links]]
+linkedin = 'https://www.linkedin.com/in/alessandrovermeulen'
+
+[[params.author.links]]
+rss = '/atom.xml'

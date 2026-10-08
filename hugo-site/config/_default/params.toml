@@ -1,0 +1,59 @@
+# Retain Blowfish's visual style with only the interactions that benefit reading technical articles.
+colorScheme = 'blowfish'
+defaultAppearance = 'light'
+autoSwitchAppearance = true
+enableSearch = false
+enableCodeCopy = true
+enableStyledScrollbar = false
+disableImageZoom = true
+disableImageOptimization = false
+disableImageOptimizationMD = false
+mainSections = ['posts']
+smartTOC = false
+
+[header]
+layout = 'basic'
+mobileMenuStyle = 'dropdown'
+
+[footer]
+showMenu = false
+showCopyright = true
+showThemeAttribution = true
+showAppearanceSwitcher = true
+showScrollToTop = false
+
+[homepage]
+layout = 'profile'
+showRecent = true
+showRecentItems = 5
+showMoreLink = true
+showMoreLinkDest = '/posts/'
+cardView = false
+layoutBackgroundBlur = false
+
+[article]
+showDate = true
+showAuthor = false
+showHero = false
+showBreadcrumbs = false
+showPagination = true
+showReadingTime = true
+showReadingProgress = false
+showTableOfContents = true
+showTaxonomies = true
+showWordCount = false
+showZenMode = false
+showViews = false
+showLikes = false
+
+[list]
+showHero = false
+showSummary = true
+showCards = false
+cardView = false
+groupByYear = true
+showViews = false
+showLikes = false
+
+[sitemap]
+excludedKinds = []

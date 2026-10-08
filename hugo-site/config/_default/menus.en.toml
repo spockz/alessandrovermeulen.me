@@ -1,0 +1,20 @@
+# Expose the archive and author page without adding client-side navigation dependencies.
+[[main]]
+name = 'Writing'
+pageRef = 'posts'
+weight = 10
+
+[[main]]
+name = 'Projects'
+pageRef = 'projects'
+weight = 15
+
+[[main]]
+name = 'Tags'
+pageRef = 'tags'
+weight = 20
+
+[[main]]
+name = 'About'
+pageRef = 'about'
+weight = 30

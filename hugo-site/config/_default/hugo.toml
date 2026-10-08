@@ -1,0 +1,44 @@
+# Keep the replacement separate during migration while retaining the public site's identity and feed address.
+baseURL = 'https://alessandrovermeulen.me/'
+title = 'Alessandro Vermeulen'
+defaultContentLanguage = 'en'
+timeZone = 'Europe/Amsterdam'
+enableRobotsTXT = true
+summaryLength = 30
+publishDir = '.cache/build'
+
+[pagination]
+pagerSize = 10
+
+[taxonomies]
+tag = 'tags'
+category = 'categories'
+
+[permalinks.taxonomy]
+categories = '/category/'
+
+[permalinks.term]
+categories = '/category/:slug/'
+
+[outputs]
+home = ['HTML', 'RSS']
+section = ['HTML']
+taxonomy = ['HTML']
+term = ['HTML']
+
+[outputFormats.RSS]
+baseName = 'atom'
+mediaType = 'application/atom+xml'
+
+[mediaTypes.'application/atom+xml']
+suffixes = ['xml']
+
+[services.rss]
+limit = -1
+
+[markup.goldmark.extensions.footnote]
+backlinkHTML = 'back'
+
+[module.hugoVersion]
+min = '0.166.0'
+extended = true

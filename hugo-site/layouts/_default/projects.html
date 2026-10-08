@@ -1,0 +1,14 @@
+{{/* Give project cards the available site width while keeping the theme's shared shell and card shortcodes. */}}
+{{ define "main" }}
+  {{ .Scratch.Set "scope" "single" }}
+  <article class="project-showcase">
+    <header class="mt-5 mb-6">
+      <h1 class="mt-0 text-4xl font-extrabold text-neutral-900 dark:text-neutral">
+        {{ .Title }}
+      </h1>
+    </header>
+    <div class="article-content prose dark:prose-invert mb-20">
+      {{ .Content }}
+    </div>
+  </article>
+{{ end }}

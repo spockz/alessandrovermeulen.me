@@ -1,0 +1,82 @@
+{
+  "upstreamRevision": "9dfd3a08500b7896045f907433cf7b4b02434fad",
+  "generatorScope": "Costs captured from pinned Typst raw_cost; controlled single-line Swift cases, not full Typst optimizer output.",
+  "cases": [
+    {
+      "id": "exact-fit",
+      "utf16Length": 1,
+      "lineWidthPoints": 10.0,
+      "fontSizePoints": 10.0,
+      "justified": true,
+      "minRatio": -1.0,
+      "metric": {
+        "naturalWidthPoints": 10.0,
+        "stretchPoints": 0.0,
+        "shrinkPoints": 0.0,
+        "justifiableCount": 0,
+        "endsWithDash": false
+      },
+      "expectedEnds": [
+        1
+      ],
+      "expectedTotalCost": 10201.0
+    },
+    {
+      "id": "stretch-ratio-one",
+      "utf16Length": 1,
+      "lineWidthPoints": 10.0,
+      "fontSizePoints": 10.0,
+      "justified": true,
+      "minRatio": -1.0,
+      "metric": {
+        "naturalWidthPoints": 8.0,
+        "stretchPoints": 2.0,
+        "shrinkPoints": 0.0,
+        "justifiableCount": 1,
+        "endsWithDash": false
+      },
+      "expectedEnds": [
+        1
+      ],
+      "expectedTotalCost": 40401.0
+    },
+    {
+      "id": "shrink-ratio-half",
+      "utf16Length": 1,
+      "lineWidthPoints": 10.0,
+      "fontSizePoints": 10.0,
+      "justified": true,
+      "minRatio": -1.0,
+      "metric": {
+        "naturalWidthPoints": 11.0,
+        "stretchPoints": 0.0,
+        "shrinkPoints": 2.0,
+        "justifiableCount": 1,
+        "endsWithDash": false
+      },
+      "expectedEnds": [
+        1
+      ],
+      "expectedTotalCost": 12882.25
+    },
+    {
+      "id": "hard-overfull",
+      "utf16Length": 1,
+      "lineWidthPoints": 10.0,
+      "fontSizePoints": 10.0,
+      "justified": true,
+      "minRatio": -1.0,
+      "metric": {
+        "naturalWidthPoints": 12.0,
+        "stretchPoints": 0.0,
+        "shrinkPoints": 1.0,
+        "justifiableCount": 1,
+        "endsWithDash": false
+      },
+      "expectedEnds": [
+        1
+      ],
+      "expectedTotalCost": 1000202010201.0
+    }
+  ]
+}

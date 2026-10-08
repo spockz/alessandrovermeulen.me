@@ -1,0 +1,46 @@
+{{/* Keep typography opt-in and render Markdown in the page so headings retain their table-of-contents entries. */}}
+{{- $mode := .Get "mode" | default "both" -}}
+{{- $lang := .Get "lang" | default "en-GB" -}}
+{{- if not (in (slice "pretty" "hyphenate" "both" "planned" "compare") $mode) -}}
+  {{- errorf "Invalid typography mode %q at %s" $mode .Position -}}
+{{- end -}}
+{{- if and (gt (len .Params) 0) (not .IsNamedParams) -}}
+  {{- errorf "Typography requires named parameters at %s" .Position -}}
+{{- end -}}
+{{- $id := printf "typography-%s-%d" .Page.File.UniqueID .Ordinal -}}
+{{ if eq $mode "compare" }}
+<div class="typography-comparison">
+<input class="typography-choice typography-mode-pretty" type="radio" name="{{ $id }}" id="{{ $id }}-pretty" aria-describedby="{{ $id }}-hint">
+<input class="typography-choice typography-mode-hyphenate" type="radio" name="{{ $id }}" id="{{ $id }}-hyphenate" aria-describedby="{{ $id }}-hint">
+<input class="typography-choice typography-mode-both" type="radio" name="{{ $id }}" id="{{ $id }}-both" aria-describedby="{{ $id }}-hint">
+<input class="typography-choice typography-mode-planned" type="radio" name="{{ $id }}" id="{{ $id }}-planned" aria-describedby="{{ $id }}-hint" checked>
+<div class="typography-toolbar not-prose">
+  <p class="typography-title">Paragraph layout</p>
+  <div class="typography-options">
+    <label class="typography-label-pretty" for="{{ $id }}-pretty">Pretty only</label>
+    <label class="typography-label-hyphenate" for="{{ $id }}-hyphenate">Hyphens only</label>
+    <label class="typography-label-both" for="{{ $id }}-both">Both</label>
+    <label class="typography-label-planned" for="{{ $id }}-planned">Planned</label>
+  </div>
+  <div class="typography-size-row">
+    <label for="{{ $id }}-size">Text size</label>
+    <select class="typography-size" id="{{ $id }}-size">
+      <option value="">Default</option><option value="18">Larger</option><option value="20">Largest</option>
+    </select>
+  </div>
+  <p id="{{ $id }}-hint" class="typography-hint">Justified text in all four modes. Planned selects precomputed lines for the current column width and adjusts spaces. Larger text uses native wrapping.</p>
+  <p class="typography-status" role="status">Responsive wrapping until font and geometry are checked.</p>
+</div>
+<div class="typography-prose" lang="{{ $lang }}" data-hyphenate-lang="{{ $lang }}" data-plan-lines="responsive">
+
+{{ .Inner }}
+
+</div>
+</div>
+{{ else }}
+<div class="typography-prose typography-{{ $mode }}" lang="{{ $lang }}"{{ if ne $mode "pretty" }} data-hyphenate-lang="{{ $lang }}"{{ end }}{{ if eq $mode "planned" }} data-plan-lines="responsive"{{ end }}>
+
+{{ .Inner }}
+
+</div>
+{{ end }}

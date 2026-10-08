@@ -1,0 +1,366 @@
+/* Keep blog typography, native fallback, and comparison controls inside the theme's local CSS bundle. */
+@font-face {
+  font-family: "Article Sans";
+  src: url("/fonts/article-sans-v3052-latin.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Article Sans";
+  src: url("/fonts/article-sans-v3052-bold-latin.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Article Sans";
+  src: url("/fonts/article-sans-v3052-italic-latin.woff2") format("woff2");
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Article Sans";
+  src: url("/fonts/article-sans-v3052-bold-italic-latin.woff2") format("woff2");
+  font-style: italic;
+  font-weight: 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Article Mono";
+  src: url("/fonts/article-mono-v2042-latin.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+.article-content,
+.typography-summary {
+  max-width: 36rem;
+  font-family: "Article Sans", sans-serif;
+  font-size: 1rem;
+  font-kerning: normal;
+  font-variant-ligatures: normal;
+  font-optical-sizing: none;
+  overflow-wrap: anywhere;
+}
+
+.typography-summary {
+  width: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+.typography-summary > p {
+  margin: 0;
+}
+
+.project-showcase .article-content {
+  max-width: none;
+}
+
+.typography-prose a {
+  font-weight: inherit;
+}
+
+.typography-prose :is(code, kbd, samp):not(pre *) {
+  font-family: "Article Mono", monospace;
+  font-size: 0.875em;
+  font-weight: 400;
+  font-style: normal;
+  font-kerning: normal;
+  font-variant-ligatures: normal;
+  padding-inline: 5px;
+  word-spacing: 0;
+}
+
+.typography-prose :is(strong, b, th, dt):not(pre *) {
+  font-weight: 700;
+}
+
+.typography-prose :is(em, i, cite, blockquote):not(pre *) {
+  font-style: italic;
+}
+
+.typography-prose blockquote {
+  font-weight: 400;
+}
+
+.typography-prose blockquote p::before,
+.typography-prose blockquote p::after {
+  content: none;
+}
+
+.typography-prose small:not(pre *) {
+  font-size: 0.8em;
+}
+
+.typography-prose :is(sup, sub):not(pre *) {
+  font-size: 0.75em;
+}
+
+.typography-prose :is(figcaption, .footnotes) {
+  font-size: 0.875em;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.typography-prose table {
+  display: table;
+  font-size: 0.875em;
+  table-layout: fixed;
+  width: 100%;
+}
+
+.planned-prose-block {
+  display: block;
+}
+
+.planned-prose-block + br {
+  display: none;
+}
+
+.typography-prose
+  :is(p, li, blockquote, figcaption, td, th, dt, dd, .planned-prose-block):not(
+    pre *
+  ) {
+  text-align: justify;
+  word-spacing: normal;
+  -webkit-hyphens: manual;
+  hyphens: manual;
+  text-wrap: pretty;
+}
+
+.typography-prose .not-prose p {
+  text-align: start;
+}
+
+.planned-break,
+.planned-hyphen {
+  display: none;
+}
+
+.planned-hyphen::after {
+  content: "-";
+}
+
+.planned-break::after {
+  content: "";
+  display: block;
+}
+
+.planned-break,
+.planned-hyphen {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.typography-prose.planned-layout .planned-paragraph {
+  text-align: start;
+  text-wrap: nowrap;
+  white-space: nowrap;
+  -webkit-hyphens: none;
+  hyphens: none;
+}
+
+.planned-layout .planned-paragraph [data-plan-atom] {
+  white-space: pre;
+}
+
+.planned-layout .planned-paragraph [data-plan-atom] .planned-line {
+  word-spacing: 0;
+}
+
+.planned-layout .planned-paragraph img {
+  display: inline-block;
+  max-width: none;
+  margin-block: 0;
+}
+
+.planned-layout .planned-paragraph .planned-line {
+  word-spacing: var(--plan-spacing);
+}
+
+.planned-layout .planned-paragraph .planned-gap {
+  font-size: 0;
+  white-space: pre;
+}
+
+.planned-layout .planned-paragraph .planned-gap > br {
+  display: none;
+}
+
+.planned-layout .planned-paragraph .planned-break {
+  display: contents;
+}
+
+.planned-layout .planned-paragraph .planned-hyphen {
+  display: inline;
+}
+
+.typography-pretty
+  :is(p, li, blockquote, figcaption, td, th, dt, dd, .planned-prose-block),
+.typography-mode-pretty:checked
+  ~ .typography-prose
+  :is(p, li, blockquote, figcaption, td, th, dt, dd, .planned-prose-block) {
+  -webkit-hyphens: none;
+  hyphens: none;
+}
+
+.typography-hyphenate
+  :is(p, li, blockquote, figcaption, td, th, dt, dd, .planned-prose-block),
+.typography-mode-hyphenate:checked
+  ~ .typography-prose
+  :is(p, li, blockquote, figcaption, td, th, dt, dd, .planned-prose-block) {
+  text-wrap: wrap;
+}
+
+.typography-choice {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.typography-toolbar {
+  margin-block: 1.5rem 2rem;
+  padding: 1rem;
+  border: 1px solid rgba(var(--color-neutral-400), 0.4);
+  border-radius: 0.65rem;
+}
+
+.typography-title {
+  margin: 0 0 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.typography-options {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.35rem;
+}
+
+.typography-options label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.75rem;
+  padding: 0.4rem;
+  border: 1px solid transparent;
+  border-radius: 0.4rem;
+  cursor: pointer;
+  text-align: center;
+  font-size: 0.875rem;
+  line-height: 1.3;
+}
+
+.typography-options label:hover {
+  background: rgba(var(--color-neutral-400), 0.12);
+}
+
+.typography-mode-pretty:checked ~ .typography-toolbar .typography-label-pretty,
+.typography-mode-hyphenate:checked
+  ~ .typography-toolbar
+  .typography-label-hyphenate,
+.typography-mode-both:checked ~ .typography-toolbar .typography-label-both,
+.typography-mode-planned:checked
+  ~ .typography-toolbar
+  .typography-label-planned {
+  border-color: rgba(var(--color-primary-500), 0.5);
+  background: rgba(var(--color-primary-500), 0.12);
+  font-weight: 600;
+}
+
+.typography-mode-pretty:focus-visible
+  ~ .typography-toolbar
+  .typography-label-pretty,
+.typography-mode-hyphenate:focus-visible
+  ~ .typography-toolbar
+  .typography-label-hyphenate,
+.typography-mode-both:focus-visible
+  ~ .typography-toolbar
+  .typography-label-both,
+.typography-mode-planned:focus-visible
+  ~ .typography-toolbar
+  .typography-label-planned {
+  outline: 2px solid rgb(var(--color-primary-500));
+  outline-offset: 2px;
+}
+
+.typography-hint {
+  margin: 0.75rem 0 0;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  opacity: 0.75;
+}
+
+.typography-size-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 0.75rem;
+  font-size: 0.875rem;
+}
+
+.typography-size {
+  color: inherit;
+  background: transparent;
+  border: 1px solid rgba(var(--color-neutral-400), 0.4);
+  border-radius: 0.35rem;
+  padding: 0.25rem 0.5rem;
+}
+
+.typography-status {
+  margin: 0.5rem 0 0;
+  font-size: 0.8rem;
+}
+
+@media (max-width: 480px) {
+  .typography-options {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media print {
+  .typography-toolbar,
+  .typography-choice {
+    display: none;
+  }
+
+  .typography-prose.planned-layout .planned-paragraph {
+    text-align: justify;
+    white-space: normal;
+    hyphens: manual;
+    -webkit-hyphens: manual;
+  }
+
+  .planned-layout .planned-paragraph [data-plan-atom] {
+    white-space: normal;
+  }
+
+  .planned-layout .planned-paragraph .planned-line {
+    word-spacing: normal;
+  }
+
+  .planned-layout .planned-paragraph .planned-gap {
+    display: inline;
+    font-size: inherit;
+    white-space: normal;
+  }
+
+  .planned-layout .planned-paragraph .planned-gap > br {
+    display: revert;
+  }
+
+  .planned-layout .planned-paragraph :is(.planned-break, .planned-hyphen) {
+    display: none;
+  }
+}

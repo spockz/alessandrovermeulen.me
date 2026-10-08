@@ -1,0 +1,3 @@
+# Import an upstream theme so small site customizations remain separate from theme maintenance.
+[[imports]]
+path = 'github.com/nunocoracao/blowfish/v3'

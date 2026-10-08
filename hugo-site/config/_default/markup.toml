@@ -1,0 +1,11 @@
+# Render trusted archived HTML while keeping syntax highlighting entirely in the generated page.
+[goldmark.renderer]
+unsafe = true
+
+[highlight]
+noClasses = false
+
+[tableOfContents]
+startLevel = 2
+endLevel = 3
+ordered = false
