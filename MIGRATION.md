@@ -6,7 +6,7 @@ The one-time migration is complete. The original Jekyll sources and Python impor
 
 `migration.json` records historical source filenames, current content paths, canonical URLs, draft status, recovered or unresolved references, the source archive commit and the original downloads' SHA-256 hashes. Its old source paths describe provenance rather than files expected in the current checkout. Release validation compares the published downloads against those frozen hashes. The six source files from the four old Gist embeds are rendered as local fenced code blocks; no embed scripts remain in migrated content.
 
-The migration contains 36 posts, one About page, and all three downloads (`cv.pdf`, `report.pdf`, and `report-on-getting-rid-of-js.pdf`). Of the posts, 34 are published and two remain drafts. Post dates without an explicit front matter date come from the filename. Explicit Jekyll dates take precedence; all dates use `Europe/Amsterdam`. Jekyll `published: false` posts remain in Hugo with `draft: true`.
+The initial migration contained 36 posts, one About page, and three downloads. The outdated `cv.pdf` has since been removed in favour of LinkedIn; `report.pdf` and `report-on-getting-rid-of-js.pdf` remain available. Of the posts, 34 are published and two remain drafts. Post dates without an explicit front matter date come from the filename. Explicit Jekyll dates take precedence; all dates use `Europe/Amsterdam`. Jekyll `published: false` posts remain in Hugo with `draft: true`.
 
 ## URL behavior
 
@@ -16,7 +16,7 @@ The temporary `/posts/<filename-slug>/` paths forward directly to those canonica
 
 Internal article links are rewritten directly to the pinned canonical paths, including the Graphviz article's malformed relative link. Hugo includes only the canonical published URLs in `/sitemap.xml` and `/atom.xml`, and advertises the sitemap in `/robots.txt`. New posts default to `/posts/<slug>/`, without a publication date; dates describing the subject can remain in the filename or slug. Writing remains at `/posts/`. The build checks verify the captured URL contract, direct alias targets, draft exclusions and canonical sitemap/feed entries.
 
-The historical About page remains unchanged in substance and displays a notice that it is preserved from the 2016 site and may be outdated. Its claims about current employment at ING, hobbies, and referee activity need an author review before being presented as current biography. Its photography link now points to `/category/photography/`.
+The historical biography on About displays a notice that it is preserved from the 2016 site and may be outdated. Its claims about current employment at ING, hobbies, and referee activity need an author review before being presented as current biography. Its photography link now points to `/category/photography/`. The public key and CV sections have been removed; LinkedIn provides current professional information.
 
 The declarative programming article's FTP citation uses a raw HTML anchor to retain its original address; the theme's Markdown link renderer otherwise replaces the FTP URL with an invalid anchor. The FTP endpoint has not been checked for availability.
 

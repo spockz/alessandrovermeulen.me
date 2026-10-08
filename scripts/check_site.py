@@ -537,11 +537,14 @@ def check_downloads(public: Path, manifest: dict):
     require(
         set(downloads)
         == {
-            "downloads/cv.pdf",
             "downloads/report.pdf",
             "downloads/report-on-getting-rid-of-js.pdf",
         },
-        "Migration contract must include all three original download hashes",
+        "Migration contract must include both retained download hashes",
+    )
+    require(
+        not (public / "downloads/cv.pdf").exists(),
+        "Retired CV must not be published",
     )
     for route, expected_digest in downloads.items():
         require(

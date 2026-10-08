@@ -53,7 +53,7 @@ This uses `PREVIEW_BASE_URL` by default; override `BROWSER_BASE_URL` to check an
 
 The migration procedure, source-to-post mappings, and missing archive assets are recorded in [MIGRATION.md](MIGRATION.md) and `migration.json`. The biography needs an author update before its 2016 information can be presented as current.
 
-The one-time importer and original sources are preserved at Git commit `1c746d6`. They are no longer part of the active checkout. The retained migration manifest records the original filenames, exact public URLs, recovered references and SHA-256 hashes of the three downloads. Builds and checks require only the current Hugo sources.
+The one-time importer and original sources are preserved at Git commit `1c746d6`. They are no longer part of the active checkout. The retained migration manifest records the original filenames, exact public URLs, recovered references and SHA-256 hashes of the two retained reports. The old CV download has been retired; About links to LinkedIn for current professional information. Builds and checks require only the current Hugo sources.
 
 New posts can use `hugo new content posts/example.md`. The archetype creates a draft; set `draft = false` to publish it. The checker verifies the imported archive and also includes new published posts in its feed and sitemap checks.
 

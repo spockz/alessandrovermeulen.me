@@ -20,10 +20,10 @@ class DownloadIntegrityTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             public = Path(directory)
             shutil.copytree(self.site / "static/downloads", public / "downloads")
-            with (public / "downloads/cv.pdf").open("ab") as output:
+            with (public / "downloads/report.pdf").open("ab") as output:
                 output.write(b"changed")
             with self.assertRaisesRegex(
-                AssertionError, "Download changed: downloads/cv.pdf"
+                AssertionError, "Download changed: downloads/report.pdf"
             ):
                 check_downloads(public, self.manifest)
 
@@ -38,10 +38,18 @@ class DownloadIntegrityTest(unittest.TestCase):
     def test_incomplete_hash_contract_is_rejected(self):
         manifest = {"downloads": dict(self.manifest["downloads"])}
         del manifest["downloads"]["downloads/report.pdf"]
-        with self.assertRaisesRegex(
-            AssertionError, "all three original download hashes"
-        ):
+        with self.assertRaisesRegex(AssertionError, "both retained download hashes"):
             check_downloads(self.site / "static", manifest)
+
+    def test_retired_cv_is_not_published(self):
+        with tempfile.TemporaryDirectory() as directory:
+            public = Path(directory)
+            shutil.copytree(self.site / "static/downloads", public / "downloads")
+            (public / "downloads/cv.pdf").write_bytes(b"retired CV")
+            with self.assertRaisesRegex(
+                AssertionError, "Retired CV must not be published"
+            ):
+                check_downloads(public, self.manifest)
 
 
 if __name__ == "__main__":
