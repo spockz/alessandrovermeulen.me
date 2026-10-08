@@ -1,6 +1,0 @@
-# Build products and downloaded module caches are reproducible from the committed sources.
-/public/
-/resources/
-/.cache/
-/.hugo_build.lock
-/scripts/__pycache__/

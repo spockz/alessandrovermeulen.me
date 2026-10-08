@@ -1,4 +1,0 @@
----
-slug: ghc
-name: GHC
----

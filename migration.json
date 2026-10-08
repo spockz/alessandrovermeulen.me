@@ -1,0 +1,374 @@
+{
+  "routes": [
+    {
+      "source": "_posts/2009-04-16-extending-the-v-in-mvc.markdown",
+      "destination": "content/posts/extending-the-v-in-mvc.md",
+      "canonical_url": "/2009/04/16/extending-the-v-in-mvc/",
+      "draft": false,
+      "aliases": ["/posts/extending-the-v-in-mvc/"]
+    },
+    {
+      "source": "_posts/2009-04-17-doctrine-meets-codeigniter.markdown",
+      "destination": "content/posts/doctrine-meets-codeigniter.md",
+      "canonical_url": "/2009/04/17/doctrine-meets-codeigniter/",
+      "draft": false,
+      "aliases": ["/posts/doctrine-meets-codeigniter/"]
+    },
+    {
+      "source": "_posts/2009-05-22-setting-up-codeigniter.markdown",
+      "destination": "content/posts/setting-up-codeigniter.md",
+      "canonical_url": "/2009/05/22/setting-up-codeigniter---basics/",
+      "draft": false,
+      "aliases": [
+        "/posts/setting-up-codeigniter/",
+        "/2009/05/22/setting-up-codeigniter/"
+      ]
+    },
+    {
+      "source": "_posts/2009-06-19-adding-com-to-your-delphi-project.markdown",
+      "destination": "content/posts/adding-com-to-your-delphi-project.md",
+      "canonical_url": "/2009/06/19/adding-com--to-your-delphi-project/",
+      "draft": false,
+      "aliases": [
+        "/posts/adding-com-to-your-delphi-project/",
+        "/2009/06/19/adding-com-to-your-delphi-project/"
+      ]
+    },
+    {
+      "source": "_posts/2009-07-12-extending-the-v-in-mvc-revisited.markdown",
+      "destination": "content/posts/extending-the-v-in-mvc-revisited.md",
+      "canonical_url": "/2009/07/12/extending-the-v-in-mvc---revisited/",
+      "draft": false,
+      "aliases": [
+        "/posts/extending-the-v-in-mvc-revisited/",
+        "/2009/07/12/extending-the-v-in-mvc-revisited/"
+      ]
+    },
+    {
+      "source": "_posts/2009-09-08-setting-up-multiple-applications-with-codeigniter.markdown",
+      "destination": "content/posts/setting-up-multiple-applications-with-codeigniter.md",
+      "canonical_url": "/2009/09/08/setting-up-multiple-applications-with-codeigniter/",
+      "draft": false,
+      "aliases": ["/posts/setting-up-multiple-applications-with-codeigniter/"]
+    },
+    {
+      "source": "_posts/2009-12-17-haskell-datatypes-and-folds.markdown",
+      "destination": "content/posts/haskell-datatypes-and-folds.md",
+      "canonical_url": "/2009/12/17/haskell-datatypes-and-folds-part-i/",
+      "draft": false,
+      "aliases": [
+        "/posts/haskell-datatypes-and-folds/",
+        "/2009/12/17/haskell-datatypes-and-folds/"
+      ]
+    },
+    {
+      "source": "_posts/2010-01-01-doctrine-unable-to-parse-string-unable-to-parse-line-0.markdown",
+      "destination": "content/posts/doctrine-unable-to-parse-string-unable-to-parse-line-0.md",
+      "canonical_url": "/2010/01/01/doctrine-unable-to-parse-string-unable-to-parse-line-0-/",
+      "draft": false,
+      "aliases": [
+        "/posts/doctrine-unable-to-parse-string-unable-to-parse-line-0/",
+        "/2010/01/01/doctrine-unable-to-parse-string-unable-to-parse-line-0/"
+      ]
+    },
+    {
+      "source": "_posts/2010-01-03-haskell-datatypes-and-folds-part-ii.markdown",
+      "destination": "content/posts/haskell-datatypes-and-folds-part-ii.md",
+      "canonical_url": "/2010/01/03/datatypes-and-folds-part-ii/",
+      "draft": false,
+      "aliases": [
+        "/posts/haskell-datatypes-and-folds-part-ii/",
+        "/2010/01/03/haskell-datatypes-and-folds-part-ii/"
+      ]
+    },
+    {
+      "source": "_posts/2010-02-10-debian-lenny-and-the-haskell-platform.markdown",
+      "destination": "content/posts/debian-lenny-and-the-haskell-platform.md",
+      "canonical_url": "/2010/02/10/debian-lenny-and-the-haskell-platform/",
+      "draft": false,
+      "aliases": ["/posts/debian-lenny-and-the-haskell-platform/"]
+    },
+    {
+      "source": "_posts/2010-04-28-moving-to-doctrine-1.2.x.markdown",
+      "destination": "content/posts/moving-to-doctrine-1.2.x.md",
+      "canonical_url": "/2010/04/28/moving-to-doctrine-1.2.x/",
+      "draft": false,
+      "aliases": ["/posts/moving-to-doctrine-1.2.x/"]
+    },
+    {
+      "source": "_posts/2010-09-10-how-to-setup-afp-on-debian-lenny.markdown",
+      "destination": "content/posts/how-to-setup-afp-on-debian-lenny.md",
+      "canonical_url": "/2010/09/10/how-to-setup-afp-on-debian-lenny/",
+      "draft": false,
+      "aliases": ["/posts/how-to-setup-afp-on-debian-lenny/"]
+    },
+    {
+      "source": "_posts/2010-10-23-lhs2tex-hl-released.markdown",
+      "destination": "content/posts/lhs2tex-hl-released.md",
+      "canonical_url": "/2010/10/23/lhs2tex-hl-released/",
+      "draft": false,
+      "aliases": ["/posts/lhs2tex-hl-released/"]
+    },
+    {
+      "source": "_posts/2010-11-01-lhs2tex-hl-0.1.1.1-released.markdown",
+      "destination": "content/posts/lhs2tex-hl-0.1.1.1-released.md",
+      "canonical_url": "/2010/11/01/lhs2tex-hl-0.1.1.1-released/",
+      "draft": false,
+      "aliases": ["/posts/lhs2tex-hl-0.1.1.1-released/"]
+    },
+    {
+      "source": "_posts/2010-11-23-lhs2tex-hl-1.2.2-released.markdown",
+      "destination": "content/posts/lhs2tex-hl-1.2.2-released.md",
+      "canonical_url": "/2010/11/23/lhs2tex-hl-1.2.2-released/",
+      "draft": false,
+      "aliases": ["/posts/lhs2tex-hl-1.2.2-released/"]
+    },
+    {
+      "source": "_posts/2011-01-22-a-note-on-the-versionless-html.markdown",
+      "destination": "content/posts/a-note-on-the-versionless-html.md",
+      "canonical_url": "/2011/01/22/a-note-on-the-versionless-html/",
+      "draft": false,
+      "aliases": ["/posts/a-note-on-the-versionless-html/"]
+    },
+    {
+      "source": "_posts/2011-03-10-uuag-textmate-bundle-released.markdown",
+      "destination": "content/posts/uuag-textmate-bundle-released.md",
+      "canonical_url": "/2011/03/10/uuag-textmate-bundle-released/",
+      "draft": false,
+      "aliases": ["/posts/uuag-textmate-bundle-released/"]
+    },
+    {
+      "source": "_posts/2011-03-18-generic-text-markup-with-css.markdown",
+      "destination": "content/posts/generic-text-markup-with-css.md",
+      "canonical_url": "/2011/03/18/generic-text-markup-with-css/",
+      "draft": false,
+      "aliases": ["/posts/generic-text-markup-with-css/"]
+    },
+    {
+      "source": "_posts/2011-03-26-haskell-code-completion-for-textmate.markdown",
+      "destination": "content/posts/haskell-code-completion-for-textmate.md",
+      "canonical_url": "/2011/03/26/haskell-code-completion-for-textmate/",
+      "draft": false,
+      "aliases": ["/posts/haskell-code-completion-for-textmate/"]
+    },
+    {
+      "source": "_posts/2011-07-01-applescript-start-command-windows.markdown",
+      "destination": "content/posts/applescript-start-command-windows.md",
+      "canonical_url": "/2011/07/01/applescript-script-to-emulate-the-behaviour-of-the-start-command-in-the-windows-cmd-prompt/",
+      "draft": false,
+      "aliases": [
+        "/posts/applescript-start-command-windows/",
+        "/2011/07/01/applescript-start-command-windows/"
+      ]
+    },
+    {
+      "source": "_posts/2011-09-19-installing-vacuum-cairo-with-the-help-of-homebrew.markdown",
+      "destination": "content/posts/installing-vacuum-cairo-with-the-help-of-homebrew.md",
+      "canonical_url": "/2011/09/19/installing-vacuum-cairo-with-the-help-of-homebrew/",
+      "draft": false,
+      "aliases": ["/posts/installing-vacuum-cairo-with-the-help-of-homebrew/"]
+    },
+    {
+      "source": "_posts/2011-10-15-lhs2tex-hl-version-1.4.5-has-been-released.markdown",
+      "destination": "content/posts/lhs2tex-hl-version-1.4.5-has-been-released.md",
+      "canonical_url": "/2011/10/15/lhs2tex-hl-version-1.4.5-has-been-released/",
+      "draft": false,
+      "aliases": ["/posts/lhs2tex-hl-version-1.4.5-has-been-released/"]
+    },
+    {
+      "source": "_posts/2011-11-13-caching-hackage.markdown",
+      "destination": "content/posts/caching-hackage.md",
+      "canonical_url": "/2011/11/13/caching-hackage/",
+      "draft": false,
+      "aliases": ["/posts/caching-hackage/"]
+    },
+    {
+      "source": "_posts/2011-12-01-a-transition-to-static-site-generation.markdown",
+      "destination": "content/posts/a-transition-to-static-site-generation.md",
+      "canonical_url": "/2011/12/14/a-transition-to-static-site-generation/",
+      "draft": false,
+      "aliases": ["/posts/a-transition-to-static-site-generation/"]
+    },
+    {
+      "source": "_posts/2012-01-07-creating-nice-looking-documents-with-lhs2TeX.markdown",
+      "destination": "content/posts/creating-nice-looking-documents-with-lhs2tex.md",
+      "canonical_url": "/2012/01/07/creating-nice-looking-documents-with-lhs2tex/",
+      "draft": true,
+      "aliases": ["/posts/creating-nice-looking-documents-with-lhs2tex/"]
+    },
+    {
+      "source": "_posts/2012-01-23-photos-of-the-dmn-seniorenwedstrijd-21-01-2012-available.md",
+      "destination": "content/posts/photos-of-the-dmn-seniorenwedstrijd-21-01-2012-available.md",
+      "canonical_url": "/2012/01/23/photos-of-the-dmn-seniorenwedstrijd-21-01-2012-are-now-available/",
+      "draft": false,
+      "aliases": [
+        "/posts/photos-of-the-dmn-seniorenwedstrijd-21-01-2012-available/",
+        "/2012/01/23/photos-of-the-dmn-seniorenwedstrijd-21-01-2012-available/"
+      ]
+    },
+    {
+      "source": "_posts/2012-01-26-getting-rid-of-javascript-with-haskell.md",
+      "destination": "content/posts/getting-rid-of-javascript-with-haskell.md",
+      "canonical_url": "/2012/01/26/getting-rid-of-programming-javascript-with-haskell/",
+      "draft": false,
+      "aliases": [
+        "/posts/getting-rid-of-javascript-with-haskell/",
+        "/2012/01/26/getting-rid-of-javascript-with-haskell/"
+      ]
+    },
+    {
+      "source": "_posts/2012-01-28-the-acta-debacle.md",
+      "destination": "content/posts/the-acta-debacle.md",
+      "canonical_url": "/2012/01/07/the-acta-debacle/",
+      "draft": true,
+      "aliases": ["/posts/the-acta-debacle/"]
+    },
+    {
+      "source": "_posts/2012-02-29-JCU-App-installation-script.md",
+      "destination": "content/posts/jcu-app-installation-script.md",
+      "canonical_url": "/2012/02/29/jcu-app-installation-script/",
+      "draft": false,
+      "aliases": ["/posts/jcu-app-installation-script/"]
+    },
+    {
+      "source": "_posts/2012-04-14-software-and-building-architecture-compared.md",
+      "destination": "content/posts/software-and-building-architecture-compared.md",
+      "canonical_url": "/2012/04/14/software-and-building-architecture-compared/",
+      "draft": false,
+      "aliases": ["/posts/software-and-building-architecture-compared/"]
+    },
+    {
+      "source": "_posts/2013-05-19-why-you-should-switch-to-declarative-programming.markdown",
+      "destination": "content/posts/why-you-should-switch-to-declarative-programming.md",
+      "canonical_url": "/2013/05/19/why-you-should-switch-to-declarative-programming/",
+      "draft": false,
+      "aliases": ["/posts/why-you-should-switch-to-declarative-programming/"]
+    },
+    {
+      "source": "_posts/2013-07-08-combining-graphviz-dot-and-tikz-with-dot2tex.md",
+      "destination": "content/posts/combining-graphviz-dot-and-tikz-with-dot2tex.md",
+      "canonical_url": "/2013/07/08/combining-graphviz-dot-and-tikz-with-dot2tex/",
+      "draft": false,
+      "aliases": ["/posts/combining-graphviz-dot-and-tikz-with-dot2tex/"]
+    },
+    {
+      "source": "_posts/2013-07-13-the-difference-between-shallow-and-deep-embedding.md",
+      "destination": "content/posts/the-difference-between-shallow-and-deep-embedding.md",
+      "canonical_url": "/2013/07/13/the-difference-between-shallow-and-deep-embedding/",
+      "draft": false,
+      "aliases": ["/posts/the-difference-between-shallow-and-deep-embedding/"]
+    },
+    {
+      "source": "_posts/2014-07-15-notes-on-the-advanced-akka-course.md",
+      "destination": "content/posts/notes-on-the-advanced-akka-course.md",
+      "canonical_url": "/2014/07/15/notes-on-the-advanced-akka-course/",
+      "draft": false,
+      "aliases": ["/posts/notes-on-the-advanced-akka-course/"]
+    },
+    {
+      "source": "_posts/2014-12-04-orchestration-support-announced-on-dockercon.md",
+      "destination": "content/posts/orchestration-support-announced-on-dockercon.md",
+      "canonical_url": "/2014/12/04/orchestration-support-announced-on-dockercon/",
+      "draft": false,
+      "aliases": ["/posts/orchestration-support-announced-on-dockercon/"]
+    },
+    {
+      "source": "_posts/2015-08-31-finaglecon.md",
+      "destination": "content/posts/finaglecon.md",
+      "canonical_url": "/2015/08/31/finaglecon/",
+      "draft": false,
+      "aliases": ["/posts/finaglecon/"]
+    },
+    {
+      "source": "about.md",
+      "destination": "content/about.md",
+      "canonical_url": "/about/",
+      "draft": false
+    }
+  ],
+  "unresolved_references": [
+    {
+      "source": "_posts/2009-04-17-doctrine-meets-codeigniter.markdown",
+      "path": "http://alessandrovermeulen.me/wp-content/2009/09/README.html",
+      "status": "http-404",
+      "resolution": "unavailable notice shown; broken hyperlink removed"
+    },
+    {
+      "source": "_posts/2010-09-10-how-to-setup-afp-on-debian-lenny.markdown",
+      "path": "http://alessandrovermeulen.me/wp-content/2010/09/Screen-shot-2010-09-10-at-12.24.28.png",
+      "status": "http-404",
+      "resolution": "unavailable notice replaces broken image"
+    },
+    {
+      "source": "_posts/2010-09-10-how-to-setup-afp-on-debian-lenny.markdown",
+      "path": "http://alessandrovermeulen.me/wp-content/2010/09/Screen-shot-2010-09-10-at-12.24.28-300x225.png",
+      "status": "http-404",
+      "resolution": "unavailable notice replaces broken image"
+    },
+    {
+      "source": "_posts/2010-10-23-lhs2tex-hl-released.markdown",
+      "path": "http://alessandrovermeulen.me/wp-content/2010/10/Screen-shot-2010-10-23-at-18.41.00.png",
+      "status": "http-404",
+      "resolution": "unavailable notice replaces broken image"
+    },
+    {
+      "source": "_posts/2010-10-23-lhs2tex-hl-released.markdown",
+      "path": "http://alessandrovermeulen.me/wp-content/2010/10/Screen-shot-2010-10-23-at-18.41.00-300x255.png",
+      "status": "http-404",
+      "resolution": "unavailable notice replaces broken image"
+    }
+  ],
+  "recovered_references": [
+    {
+      "source": "_posts/2012-01-26-getting-rid-of-javascript-with-haskell.md",
+      "path": "http://farm8.staticflickr.com/7025/6767517435_b075d1c686_z.jpg",
+      "destination": "static/images/archive/6767517435_b075d1c686_z.jpg",
+      "recovery_url": "https://farm8.staticflickr.com/7025/6767517435_b075d1c686_z.jpg",
+      "http_status": 200,
+      "content_type": "image/jpeg",
+      "dimensions": "639x413",
+      "verified_image_content": true
+    },
+    {
+      "source": "_posts/2012-01-26-getting-rid-of-javascript-with-haskell.md",
+      "path": "http://farm8.staticflickr.com/7155/6767517241_eacd8ec0ed_z.jpg",
+      "destination": "static/images/archive/6767517241_eacd8ec0ed_z.jpg",
+      "recovery_url": "https://farm8.staticflickr.com/7155/6767517241_eacd8ec0ed_z.jpg",
+      "http_status": 200,
+      "content_type": "image/jpeg",
+      "dimensions": "639x413",
+      "verified_image_content": true
+    },
+    {
+      "source": "_posts/2013-07-08-combining-graphviz-dot-and-tikz-with-dot2tex.md",
+      "path": "http://farm8.staticflickr.com/7313/9243796534_60bb926e44_o.png",
+      "destination": "static/images/archive/9243796534_60bb926e44_o.png",
+      "recovery_url": "https://web.archive.org/web/20160528095748id_/http://farm8.staticflickr.com/7313/9243796534_60bb926e44_o.png",
+      "recovery_http_status": 200,
+      "recovery_content_type": "image/png",
+      "original_host_http_status": 429,
+      "dimensions": "563x155",
+      "verified_image_content": true
+    },
+    {
+      "source": "_posts/2013-07-08-combining-graphviz-dot-and-tikz-with-dot2tex.md",
+      "path": "http://farm4.staticflickr.com/3804/9241070475_9d48236aa7_o.png",
+      "destination": "static/images/archive/9241070475_9d48236aa7_o.png",
+      "recovery_url": "https://web.archive.org/web/20160528051606id_/http://farm4.staticflickr.com/3804/9241070475_9d48236aa7_o.png",
+      "recovery_http_status": 200,
+      "recovery_content_type": "image/png",
+      "original_host_http_status": 429,
+      "dimensions": "430x410",
+      "verified_image_content": true
+    }
+  ],
+  "source_archive": {
+    "commit": "1c746d648f220b32143943f8a66fb7b0676f64d7",
+    "site_directory": "hugo-site"
+  },
+  "downloads": {
+    "downloads/cv.pdf": "c09d034054dc1efb4399bb45ccd4dcf4328af0e2e7a0f71c201629e2bbd17255",
+    "downloads/report-on-getting-rid-of-js.pdf": "e0c29616bf051b4eba2584358371841ffabb3ae49dd9b6a3a9dd0992da740382",
+    "downloads/report.pdf": "e6d86f6b66c89041941f43d33a7b728fd5789da2e4fd0821f2c613cad00079dc"
+  }
+}

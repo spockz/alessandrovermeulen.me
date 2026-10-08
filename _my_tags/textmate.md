@@ -1,4 +1,0 @@
----
-slug: textmate
-name: TextMate
----

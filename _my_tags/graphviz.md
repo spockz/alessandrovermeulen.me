@@ -1,4 +1,0 @@
----
-slug: graphviz
-name: Graphviz
----

@@ -1,6 +1,6 @@
-# Build the staged Hugo replacement with its typography transform, excluding the archived root site from deployment.
+# Publish the Hugo site with its typography transform and release validation from the repository root.
 [build]
-base = "hugo-site"
+base = "."
 command = "make release"
 publish = "public"
 

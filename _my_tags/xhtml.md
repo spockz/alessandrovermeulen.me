@@ -1,4 +1,0 @@
----
-slug: xhtml
-name: XHTML
----

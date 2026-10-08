@@ -1,4 +1,0 @@
----
-slug: hackage
-name: Hackage
----

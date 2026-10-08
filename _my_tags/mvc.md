@@ -1,4 +1,0 @@
----
-slug: mvc
-name: MVC
----
