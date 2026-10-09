@@ -1,4 +1,4 @@
-# Protect generated post URLs, retained downloads, and the narrow allowance for live project status images.
+# Protect post URLs, downloads, and the narrow allowances for configured analytics and project status assets.
 import csv
 import io
 import json
@@ -142,6 +142,32 @@ class ProjectStatusBadgeReferenceTest(unittest.TestCase):
                 else:
                     with self.assertRaisesRegex(AssertionError, "External loading"):
                         check_references(public, pages, frozenset({badge}))
+
+
+class AnalyticsReferenceTest(unittest.TestCase):
+    def test_only_the_configured_script_allows_external_loading(self):
+        public = Path("/site/public")
+        script = "https://cloud.umami.is/script.js"
+        cases = [
+            (f'<script defer src="{script}"></script>', True),
+            (f'<img src="{script}">', False),
+            (f'<link rel="preload" as="script" href="{script}">', False),
+            ('<script defer src="https://cloud.umami.is/other.js"></script>', False),
+            (
+                '<script defer src="https://unrelated.example/script.js"></script>',
+                False,
+            ),
+        ]
+        for html, allowed in cases:
+            with self.subTest(html=html):
+                pages = {public / "about/index.html": Page(html)}
+                if allowed:
+                    check_references(public, pages, allowed_scripts=frozenset({script}))
+                else:
+                    with self.assertRaisesRegex(AssertionError, "External loading"):
+                        check_references(
+                            public, pages, allowed_scripts=frozenset({script})
+                        )
 
 
 class DownloadIntegrityTest(unittest.TestCase):

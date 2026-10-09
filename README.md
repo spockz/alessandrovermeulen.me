@@ -4,7 +4,7 @@
 
 This repository contains the Hugo site using Blowfish v3.8.0. The site lives at the repository root on `hugo-blowfish`. The old Jekyll site and previous Cactus Plus site remain in Git history and on the `master` and `hugo` branches.
 
-The design uses a text profile, recent writing, tags, syntax highlighting, light/dark appearance, and a small mobile menu. Article prose and article-list summaries use pinned local regular, bold, italic and bold italic faces, with a second local font for inline code inside typography scopes; navigation retains system fonts. Search, image zoom, reading progress, and analytics are disabled. There is no browser framework or production Node dependency.
+The design uses a text profile, recent writing, tags, syntax highlighting, light/dark appearance, and a small mobile menu. Article prose and article-list summaries use pinned local regular, bold, italic and bold italic faces, with a second local font for inline code inside typography scopes; navigation retains system fonts. Search, image zoom, and reading progress are disabled. Published pages load deferred Umami analytics. There is no browser framework or production Node dependency.
 
 ## Development
 
@@ -49,6 +49,7 @@ This uses `PREVIEW_BASE_URL` by default; override `BROWSER_BASE_URL` to check an
 - `content/projects/index.md`: curated project cards, grouped under AI-adjacent, Service mesh-adjacent and Utilities headings. Edit the descriptions and shortcode order here; contributions, forks and roadmap features are labelled explicitly. Contribution cards describe the specific work and link to published upstream documentation. The page uses Blowfish's feature grid and card styling, with a small local layout to use the available site width and a feature override for language and CI labels. It makes no GitHub API requests during builds or visits; configured CI badges load GitHub's status SVGs lazily.
 - `config/_default/languages.en.toml`: site description, author headline, and social links.
 - `config/_default/params.toml`: appearance and theme features.
+- `layouts/partials/analytics/umami.html`: the deferred Umami Cloud script, using the website ID and domain in `params.toml`. Blowfish includes it on production builds; local `make serve` previews omit analytics. `make check` verifies the script appears exactly once on every rendered page and lists it separately from local transfer budgets.
 - `config/_default/menus.en.toml`: navigation.
 - `static/`: original downloads, recovered images, and favicon.
 - `layouts/rss.xml`: the original `/atom.xml` subscription endpoint. Every rendered page advertises this shared blog feed in its head; redirect pages are excluded.

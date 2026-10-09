@@ -10,17 +10,19 @@ Transfer sizes updated on 9 October 2026 using Hugo 0.166.0 extended and Blowfis
 
 | Page                           | Total gzip bytes |   HTML | Shared CSS | Shared JavaScript | Layout guard | Article fonts | Favicon |
 | ------------------------------ | ---------------: | -----: | ---------: | ----------------: | -----------: | ------------: | ------: |
-| Home                           |           70,442 | 24,255 |     22,997 |             2,405 |        5,428 |        15,083 |     274 |
-| Projects                       |           64,591 |  8,921 |     22,997 |             2,405 |            0 |        29,994 |     274 |
-| Writing                        |           94,996 | 48,809 |     22,997 |             2,405 |        5,428 |        15,083 |     274 |
-| Shallow/deep embedding article |          137,213 | 50,049 |     22,997 |             2,405 |        5,428 |        56,060 |     274 |
-| FinagleCon comparison          |          130,303 | 57,734 |     22,997 |             2,405 |        5,428 |        41,465 |     274 |
+| Home                           |           70,497 | 24,310 |     22,997 |             2,405 |        5,428 |        15,083 |     274 |
+| Projects                       |           64,649 |  8,979 |     22,997 |             2,405 |            0 |        29,994 |     274 |
+| Writing                        |           95,058 | 48,871 |     22,997 |             2,405 |        5,428 |        15,083 |     274 |
+| Shallow/deep embedding article |          137,283 | 50,119 |     22,997 |             2,405 |        5,428 |        56,060 |     274 |
+| FinagleCon comparison          |          130,359 | 57,790 |     22,997 |             2,405 |        5,428 |        41,465 |     274 |
 
 Article pages use a local 15,060-byte regular prose WOFF2 and load matching bold (14,888 bytes), italic (14,572 bytes) or bold italic (14,544 bytes) faces when used. Inline code in typography scopes requests an 11,448-byte monospace WOFF2. Article summaries also use the regular prose font; the home profile and navigation retain system fonts. There are two shared JavaScript files for appearance, navigation, and code copying. Blog posts and pages containing article summaries additionally load a 5,428-byte gzipped geometry guard. The optimizer runs only in Go during build/preview; there is no browser optimizer or Go WebAssembly runtime. CSS and JavaScript filenames include content fingerprints, and font filenames are versioned, so they can be cached across article visits. Each representative page's local transfer estimate excludes the two deferred external CI badges on Projects, which are listed separately in the report.
 
 The Projects page uses Blowfish's feature grid and card styling and loads the regular and bold article fonts. Each project has a distinct inline SVG emblem generated from the shared local style catalog. Language pills beside titles and unconfigured CI labels are local HTML. The two configured workflows use GitHub's live status SVGs with lazy loading and reserved space. Builds make no GitHub requests, and the labels add no JavaScript. WebKit checks cover emblem sizing, distinct symbols, clipping, overflow, and title pills, and CI status aligned right in the source-link row at phone, tablet, and desktop widths in light and dark modes.
 
 The automated budgets for these five representative pages are under 100,000 gzip bytes of HTML/CSS/JavaScript and under 200,000 gzip bytes in total. Font and stylesheet image dependencies are checked and counted. Image-bearing archive articles have different totals; these numbers do not cover every article.
+
+Published pages also load the deferred Umami Cloud script. This external script is listed separately in each page's report; its bytes and runtime requests are excluded from the local transfer estimates and budgets.
 
 Responsive plans for plain paragraphs added approximately 35 KB compressed versus the original single-width prototype. Adding lists and paragraphs containing code added approximately 21 KB more, including the 11.4 KB font. Mixed formatting adds approximately 17 KB to FinagleCon and 46 KB to the shallow/deep article compared with that earlier implementation, mostly matching font faces and newly eligible text plans. The build covers every integer content width from 240 through 576 pixels, plus table prose down to 80 pixels, sharing line metrics and repeated sequences rather than duplicating article text. The browser selects stored sequences and measures spacing; resizing runs no line-breaking search.
 

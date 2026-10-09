@@ -22,6 +22,7 @@ import tomllib
 class Reference:
     url: str
     asset: bool
+    tag: str
 
 
 @dataclass(frozen=True)
@@ -52,6 +53,7 @@ class Page(HTMLParser):
         self.canonical: str | None = None
         self.redirect: str | None = None
         self.feed_links: list[dict[str, str | None]] = []
+        self.scripts: list[dict[str, str | None]] = []
         self.used_fonts: set[str] = set()
         self.has_article_text = False
         self.article_typography = False
@@ -216,6 +218,8 @@ class Page(HTMLParser):
             self.redirect = attrs.get("content", "").split("url=", 1)[-1]
         if tag == "link" and attrs.get("rel") == "canonical":
             self.canonical = attrs.get("href")
+        if tag == "script" and attrs.get("src"):
+            self.scripts.append(attrs)
         if (
             tag == "link"
             and "alternate" in attrs.get("rel", "").split()
@@ -230,11 +234,11 @@ class Page(HTMLParser):
                     tag == "link"
                     and attrs.get("rel") in {"stylesheet", "icon", "preload"}
                 )
-                self.references.append(Reference(url=value, asset=asset))
+                self.references.append(Reference(url=value, asset=asset, tag=tag))
         if attrs.get("srcset"):
             for candidate in attrs["srcset"].split(","):
                 self.references.append(
-                    Reference(url=candidate.strip().split()[0], asset=True)
+                    Reference(url=candidate.strip().split()[0], asset=True, tag=tag)
                 )
 
     def handle_endtag(self, tag: str):
@@ -470,6 +474,7 @@ def check_references(
     public: Path,
     pages: dict[Path, Page],
     allowed_status_badges: frozenset[str] = frozenset(),
+    allowed_scripts: frozenset[str] = frozenset(),
 ):
     for filename, page in pages.items():
         relative = filename.relative_to(public).as_posix()
@@ -485,7 +490,8 @@ def check_references(
                     not reference.asset
                     or (
                         route == "/projects/" and reference.url in allowed_status_badges
-                    ),
+                    )
+                    or (reference.tag == "script" and reference.url in allowed_scripts),
                     f"External loading dependency: {filename}: {reference.url}",
                 )
                 continue
@@ -572,7 +578,16 @@ def page_weight(public: Path, route: str, pages: dict[Path, Page]) -> dict:
         "route": route,
         "gzip_bytes": compressed,
         "files": files,
-        "deferred_external_assets": [image["src"] for image in page.project_ci_images],
+        "deferred_external_assets": sorted(
+            {image["src"] for image in page.project_ci_images}
+            | {
+                script["src"]
+                for script in page.scripts
+                if "defer" in script
+                and urlsplit(script["src"]).hostname
+                not in {None, "alessandrovermeulen.me"}
+            }
+        ),
     }
 
 
@@ -660,9 +675,26 @@ def main():
     post_routes = check_routes(site, public, manifest)
     check_feed(public, post_routes)
     status_badges = check_project_badges(site, pages[public / "projects/index.html"])
-    check_references(public, pages, status_badges)
+    analytics = tomllib.loads((site / "config/_default/params.toml").read_text())[
+        "umamiAnalytics"
+    ]
+    analytics_source = f"https://{analytics['domain']}/script.js"
+    check_references(public, pages, status_badges, frozenset({analytics_source}))
     for filename, page in pages.items():
         if page.redirect is None:
+            analytics_scripts = [
+                script
+                for script in page.scripts
+                if script.get("src") == analytics_source
+            ]
+            require(
+                len(analytics_scripts) == 1
+                and "defer" in analytics_scripts[0]
+                and "async" not in analytics_scripts[0]
+                and analytics_scripts[0].get("data-website-id")
+                == analytics["websiteid"],
+                f"Page must include the configured deferred Umami script exactly once: {filename}",
+            )
             require(
                 len(page.feed_links) == 1
                 and page.feed_links[0].get("type") == "application/atom+xml"

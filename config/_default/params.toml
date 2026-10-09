@@ -57,3 +57,7 @@ showLikes = false
 
 [sitemap]
 excludedKinds = []
+
+[umamiAnalytics]
+websiteid = 'eb0386d2-f523-4d52-96b0-bf551ac47df6'
+domain = 'cloud.umami.is'
