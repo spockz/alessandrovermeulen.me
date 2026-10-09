@@ -52,6 +52,7 @@ This uses `PREVIEW_BASE_URL` by default; override `BROWSER_BASE_URL` to check an
 - `config/_default/menus.en.toml`: navigation.
 - `static/`: original downloads, recovered images, and favicon.
 - `layouts/rss.xml`: the original `/atom.xml` subscription endpoint. Every rendered page advertises this shared blog feed in its head; redirect pages are excluded.
+- `layouts/partials/extend-footer.html`: GitHub, LinkedIn, and RSS icons on every page, reusing the home profile's author links and the theme's icons. Footer links have 44-pixel touch targets. Update their destinations in `config/_default/languages.en.toml` to change both locations together.
 
 The migration procedure, source-to-post mappings, and missing archive assets are recorded in [MIGRATION.md](MIGRATION.md) and `migration.json`.
 

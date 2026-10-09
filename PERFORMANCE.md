@@ -10,11 +10,11 @@ Transfer sizes updated on 9 October 2026 using Hugo 0.166.0 extended and Blowfis
 
 | Page                           | Total gzip bytes |   HTML | Shared CSS | Shared JavaScript | Layout guard | Article fonts | Favicon |
 | ------------------------------ | ---------------: | -----: | ---------: | ----------------: | -----------: | ------------: | ------: |
-| Home                           |           69,021 | 22,869 |     22,962 |             2,405 |        5,428 |        15,083 |     274 |
-| Projects                       |           63,340 |  7,705 |     22,962 |             2,405 |            0 |        29,994 |     274 |
-| Writing                        |           93,551 | 47,399 |     22,962 |             2,405 |        5,428 |        15,083 |     274 |
-| Shallow/deep embedding article |          135,717 | 48,588 |     22,962 |             2,405 |        5,428 |        56,060 |     274 |
-| FinagleCon comparison          |          128,860 | 56,326 |     22,962 |             2,405 |        5,428 |        41,465 |     274 |
+| Home                           |           70,395 | 24,206 |     22,999 |             2,405 |        5,428 |        15,083 |     274 |
+| Projects                       |           64,546 |  8,874 |     22,999 |             2,405 |            0 |        29,994 |     274 |
+| Writing                        |           94,940 | 48,751 |     22,999 |             2,405 |        5,428 |        15,083 |     274 |
+| Shallow/deep embedding article |          137,161 | 49,995 |     22,999 |             2,405 |        5,428 |        56,060 |     274 |
+| FinagleCon comparison          |          130,255 | 57,684 |     22,999 |             2,405 |        5,428 |        41,465 |     274 |
 
 Article pages use a local 15,060-byte regular prose WOFF2 and load matching bold (14,888 bytes), italic (14,572 bytes) or bold italic (14,544 bytes) faces when used. Inline code in typography scopes requests an 11,448-byte monospace WOFF2. Article summaries also use the regular prose font; the home profile and navigation retain system fonts. There are two shared JavaScript files for appearance, navigation, and code copying. Blog posts and pages containing article summaries additionally load a 5,428-byte gzipped geometry guard. The optimizer runs only in Go during build/preview; there is no browser optimizer or Go WebAssembly runtime. CSS and JavaScript filenames include content fingerprints, and font filenames are versioned, so they can be cached across article visits. Each representative page's local transfer estimate excludes the two deferred external CI badges on Projects, which are listed separately in the report.
 

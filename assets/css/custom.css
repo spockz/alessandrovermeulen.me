@@ -1,4 +1,4 @@
-/* Keep article layout, typography, and project emblem styling inside the theme's local CSS bundle. */
+/* Keep layout, typography, project emblems, and footer styling inside the theme's local CSS bundle. */
 @font-face {
   font-family: "Article Sans";
   src: url("/fonts/article-sans-v3052-latin.woff2") format("woff2");
@@ -37,6 +37,20 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
+}
+
+.footer-social-links {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.footer-social-links a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.75rem;
+  min-height: 2.75rem;
 }
 
 #main-content > article:has(> #single_header) {

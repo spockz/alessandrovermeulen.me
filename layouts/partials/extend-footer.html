@@ -1,0 +1,6 @@
+{{/* Keep footer links in sync with the home profile through the theme's shared author-links partial. */}}
+{{ with .Site.Params.Author.links }}
+  <nav class="footer-social-links" aria-label="Social links">
+    {{ partial "author-links.html" $ }}
+  </nav>
+{{ end }}
