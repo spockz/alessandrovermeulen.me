@@ -1,4 +1,4 @@
-# Verify automatic post URLs and protect the original retained downloads.
+# Protect generated post URLs, retained downloads, and the narrow allowance for live project status images.
 import csv
 import io
 import json
@@ -8,7 +8,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from check_site import check_downloads
+from check_site import Page, check_downloads, check_references
 
 
 def list_fixture_pages(project: Path):
@@ -122,6 +122,26 @@ class PostPermalinkTest(unittest.TestCase):
         self.assertEqual(
             post["permalink"], "https://alessandrovermeulen.me/posts/a-fresh-leaf/"
         )
+
+
+class ProjectStatusBadgeReferenceTest(unittest.TestCase):
+    def test_only_configured_badges_on_projects_allow_external_loading(self):
+        public = Path("/site/public")
+        badge = "https://github.com/spockz/semantic-editor/actions/workflows/ci.yml/badge.svg?branch=main"
+        cases = [
+            ("projects/index.html", badge, True),
+            ("about/index.html", badge, False),
+            ("projects/index.html", badge.replace("main", "other"), False),
+            ("projects/index.html", "https://github.com/unrelated/image.svg", False),
+        ]
+        for route, source, allowed in cases:
+            with self.subTest(route=route, source=source):
+                pages = {public / route: Page(f'<img src="{source}">')}
+                if allowed:
+                    check_references(public, pages, frozenset({badge}))
+                else:
+                    with self.assertRaisesRegex(AssertionError, "External loading"):
+                        check_references(public, pages, frozenset({badge}))
 
 
 class DownloadIntegrityTest(unittest.TestCase):

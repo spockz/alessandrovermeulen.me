@@ -177,13 +177,23 @@ async function checkProjectBadges(page) {
           colorScheme: document.documentElement.classList.contains("dark")
             ? "dark"
             : "light",
-          cards: document.querySelectorAll(".project-showcase .group > h3")
-            .length,
+          cards: document.querySelectorAll(
+            ".project-showcase .project-card-title > h3",
+          ).length,
           overflow: document.documentElement.scrollWidth > innerWidth,
           badges: badges.map((svg) => {
             const box = svg.getBoundingClientRect();
             const symbol = svg.querySelector("g");
             const glyph = symbol.getBBox();
+            const card = svg.closest("article");
+            const metadata = card.querySelector(".project-meta");
+            const footer = card.querySelector(".project-card-footer");
+            const link = footer.querySelector("a").getBoundingClientRect();
+            const languages = card.querySelector(
+              ".project-card-title .project-languages",
+            );
+            const statusBox = metadata.getBoundingClientRect();
+            const labels = [...languages.querySelectorAll(".project-label")];
             return {
               id: svg.dataset.projectBadge,
               width: box.width,
@@ -197,6 +207,31 @@ async function checkProjectBadges(page) {
                 glyph.x + glyph.width <= 84 &&
                 glyph.y + glyph.height <= 84,
               decorative: svg.getAttribute("aria-hidden") === "true",
+              metadata: metadata.dataset.projectMeta,
+              languages: labels.map((label) => label.textContent.trim()),
+              pills: labels.every((label) => {
+                const style = getComputedStyle(label);
+                return (
+                  parseFloat(style.borderRadius) >=
+                    label.getBoundingClientRect().height / 2 &&
+                  style.borderTopStyle === "solid" &&
+                  parseFloat(style.borderTopWidth) >= 1 &&
+                  style.backgroundColor !== "rgba(0, 0, 0, 0)"
+                );
+              }),
+              sameRow:
+                Math.abs(
+                  statusBox.top +
+                    statusBox.height / 2 -
+                    (link.top + link.height / 2),
+                ) < 1,
+              rightAligned:
+                Math.abs(
+                  statusBox.right - footer.getBoundingClientRect().right,
+                ) < 1,
+              statuses: metadata.querySelectorAll(
+                ".project-ci-badge, .project-ci-unconfigured",
+              ).length,
             };
           }),
         };
@@ -235,6 +270,22 @@ async function checkProjectBadges(page) {
         assert.equal(badge.width, 72, badge.id);
         assert.equal(badge.height, 72, badge.id);
         assert.ok(badge.visible && badge.fits && badge.decorative, badge.id);
+        assert.equal(
+          badge.metadata,
+          badge.id,
+          "Metadata must match its project",
+        );
+        assert.ok(badge.languages.length > 0 && badge.languages.every(Boolean));
+        assert.ok(badge.pills, `Languages must be pills: ${badge.id}`);
+        assert.ok(
+          badge.sameRow,
+          `CI status must share the link row: ${badge.id}`,
+        );
+        assert.ok(
+          badge.rightAligned,
+          `CI status must align right: ${badge.id}`,
+        );
+        assert.equal(badge.statuses, 1, "Each card needs one honest CI status");
       }
       report.push({
         colorScheme,

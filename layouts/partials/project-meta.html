@@ -1,0 +1,17 @@
+{{/* Render a reusable CI label without build-time network access or a hard-coded passing state. */}}
+{{- $project := .project -}}
+{{- $repository := printf "https://github.com/%s" $project.repository -}}
+<div class="project-meta" data-project-meta="{{ .id }}">
+  {{- with $project.workflow }}
+    {{- $workflow := printf "%s/actions/workflows/%s" $repository . -}}
+    {{- $query := querify "branch" $project.branch -}}
+    {{- $workflowURL := printf "%s?%s" $workflow $query -}}
+    {{- $badgeURL := printf "%s/badge.svg?%s" $workflow $query -}}
+    <a class="project-ci" href="{{ $workflowURL }}" aria-label="{{ $project.scope | default "Project" }} CI on {{ $project.branch }}: view workflow runs" title="{{ $project.scope | default "Project" }} workflow on {{ $project.branch }}">
+      {{- with $project.scope }}<span class="sr-only">{{ . }}</span>{{ end -}}
+      <span class="project-ci-image"><img class="project-ci-badge" src="{{ $badgeURL }}" alt="{{ $project.scope | default "Project" }} CI status on {{ $project.branch }}" width="160" height="20" loading="lazy" decoding="async" referrerpolicy="no-referrer"></span>
+    </a>
+  {{- else }}
+    <span class="project-label project-ci-unconfigured" title="CI is not configured for this repository" aria-label="CI: not configured">No CI</span>
+  {{- end }}
+</div>

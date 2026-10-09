@@ -46,7 +46,7 @@ This uses `PREVIEW_BASE_URL` by default; override `BROWSER_BASE_URL` to check an
 
 - `content/posts/`: the imported archive, two retained drafts, and new writing.
 - `content/about.md`: the current biography, with planned prose layout.
-- `content/projects/index.md`: curated project cards, grouped under AI-adjacent, Service mesh-adjacent and Utilities headings. Edit the descriptions and shortcode order here; contributions, forks and roadmap features are labelled explicitly. Contribution cards describe the specific work and link to published upstream documentation. The page uses Blowfish's static `feature-grid`/`feature` cards, with a small local layout to use the available site width. It makes no GitHub API requests during builds or visits.
+- `content/projects/index.md`: curated project cards, grouped under AI-adjacent, Service mesh-adjacent and Utilities headings. Edit the descriptions and shortcode order here; contributions, forks and roadmap features are labelled explicitly. Contribution cards describe the specific work and link to published upstream documentation. The page uses Blowfish's feature grid and card styling, with a small local layout to use the available site width and a feature override for language and CI labels. It makes no GitHub API requests during builds or visits; configured CI badges load GitHub's status SVGs lazily.
 - `config/_default/languages.en.toml`: site description, author headline, and social links.
 - `config/_default/params.toml`: appearance and theme features.
 - `config/_default/menus.en.toml`: navigation.
@@ -79,6 +79,16 @@ make badges-check
 Add a `[badges.<project-id>]` entry with a `concept` and `shapes` list, then use `icon="project-<project-id>"` on its feature card in `content/projects/index.md`. Supported shapes are paths, circles, rectangles, lines, polylines, and polygons. Commit the specification and generated SVGs together. The generator owns the `project-*.svg` prefix and removes generated icons whose definitions have been removed.
 
 Build, preview, and release commands reject missing or stale generated badges. `make check` also verifies that every project card has exactly one distinct emblem from the catalog. `make check-browser` checks emblem sizing, distinct symbols, clipping, and card overflow at phone, tablet, and desktop widths in light and dark modes. The SVGs are inserted into the cards by Blowfish's existing icon partial, requiring no additional image requests or JavaScript.
+
+## Project language and CI labels
+
+[data/project-metadata.toml](data/project-metadata.toml) stores each project's public repository and language labels. Language pills follow the title. CI status aligns right beside the source or documentation link. [layouts/shortcodes/feature.html](layouts/shortcodes/feature.html) extends Blowfish v3.8.0 for this placement while retaining its card styling and grid; [layouts/partials/project-meta.html](layouts/partials/project-meta.html) renders the CI status. The shared pill styles live in `assets/css/custom.css`.
+
+Add a `workflow` filename and explicit `branch` to display a live [GitHub Actions status badge](https://docs.github.com/en/actions/how-tos/monitor-workflows/add-a-status-badge). The badge links to that workflow's runs. For contributions, `scope = "Upstream"` identifies the repository-wide status in its accessible label and tooltip: Dynamic fault injection reports Built on Envoy's Extensions workflow, which includes the Go composer tests. Entries without a workflow display a neutral “No CI” label, with “CI: not configured” as its accessible description.
+
+Languages, source trees, and available workflows were checked against the public repositories on 9 October 2026. Labels describe the published sources; Agentic dotfiles currently publishes Markdown. Update this file when adding code, changing branches, or introducing CI. Metadata IDs match the emblem IDs, so a feature with `icon="project-<project-id>"` automatically receives its labels.
+
+Language pills and unconfigured labels are local HTML. Only the two configured live badges request external SVGs, with lazy loading and reserved space; no browser script or build-time API access is added. `make check` verifies card coverage, workflow URLs and branches, accessibility, and lazy loading, and permits only these configured images on Projects. Its transfer report lists deferred external badges separately from local transfer estimates. `make check-browser` verifies pill shape beside titles and CI status sharing the source-link row, aligned right, in both themes at phone, tablet, and desktop widths.
 
 ## Paragraph typography
 

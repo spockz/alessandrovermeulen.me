@@ -1,0 +1,54 @@
+# Keep verified project languages and workflow references local so cards build without GitHub API access.
+
+[projects.semantic-editor]
+repository = "spockz/semantic-editor"
+languages = ["Go"]
+branch = "main"
+workflow = "ci.yml"
+
+[projects.gemini-mcp]
+repository = "spockz/gemini-mcp"
+languages = ["Go"]
+
+[projects.llama-tooling]
+repository = "spockz/llama-benchmark-and-controller"
+languages = ["Go"]
+
+[projects.knowledgebase-viewer]
+repository = "spockz/knowledgebase-viewer"
+languages = ["Swift"]
+
+[projects.agentic-dotfiles]
+repository = "spockz/agentic-dotfiles"
+languages = ["Markdown"]
+
+[projects.dynamic-fault-injection]
+repository = "tetratelabs/built-on-envoy"
+languages = ["Go"]
+branch = "main"
+workflow = "extensions.yaml"
+scope = "Upstream"
+
+[projects.k6-library]
+repository = "spockz/k6-as-a-library-showcase"
+languages = ["Go"]
+
+[projects.spring-finagle]
+repository = "spockz/spring-boot-with-finagle-native-image"
+languages = ["Java"]
+
+[projects.tls-benchmarks]
+repository = "spockz/tls-benchmarks"
+languages = ["Java", "Shell"]
+
+[projects.finagle-testcases]
+repository = "spockz/finagle-testcases"
+languages = ["Scala"]
+
+[projects.api-centric-mesh]
+repository = "spockz/api-centric-service-mesh-demo"
+languages = ["YAML"]
+
+[projects.go-psrecord]
+repository = "spockz/go-psrecord"
+languages = ["Go"]

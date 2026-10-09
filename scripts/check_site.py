@@ -9,10 +9,11 @@ import re
 import subprocess
 import sys
 import xml.etree.ElementTree as ET
+from collections import Counter
 from dataclasses import dataclass
 from html.parser import HTMLParser
 from pathlib import Path
-from urllib.parse import unquote, urljoin, urlsplit
+from urllib.parse import unquote, urlencode, urljoin, urlsplit
 
 import tomllib
 
@@ -57,6 +58,9 @@ class Page(HTMLParser):
         self.article_scopes: list[dict[str, str | None]] = []
         self.summary_scopes: list[dict[str, str | None]] = []
         self.project_badges: list[str] = []
+        self.project_metadata: list[str] = []
+        self.project_ci_images: list[dict[str, str | None]] = []
+        self.project_ci_unconfigured = 0
         self.feature_cards = 0
         self.scopes: list[FontScope] = []
         self.feed(source)
@@ -192,6 +196,12 @@ class Page(HTMLParser):
             self.feature_cards += 1
         if tag == "svg" and "project-badge" in attrs.get("class", "").split():
             self.project_badges.append(attrs.get("data-project-badge", ""))
+        if "project-meta" in attrs.get("class", "").split():
+            self.project_metadata.append(attrs.get("data-project-meta", ""))
+        if tag == "img" and "project-ci-badge" in attrs.get("class", "").split():
+            self.project_ci_images.append(attrs)
+        if "project-ci-unconfigured" in attrs.get("class", "").split():
+            self.project_ci_unconfigured += 1
         if "article-link__summary" in attrs.get("class", "").split():
             self.summary_scopes.append(attrs)
         if (
@@ -456,7 +466,11 @@ def check_feed(public: Path, post_routes: set[str]):
         )
 
 
-def check_references(public: Path, pages: dict[Path, Page]):
+def check_references(
+    public: Path,
+    pages: dict[Path, Page],
+    allowed_status_badges: frozenset[str] = frozenset(),
+):
     for filename, page in pages.items():
         relative = filename.relative_to(public).as_posix()
         route = "/" + relative.removesuffix("index.html")
@@ -468,7 +482,10 @@ def check_references(public: Path, pages: dict[Path, Page]):
                 continue
             if parsed.hostname != "alessandrovermeulen.me":
                 require(
-                    not reference.asset,
+                    not reference.asset
+                    or (
+                        route == "/projects/" and reference.url in allowed_status_badges
+                    ),
                     f"External loading dependency: {filename}: {reference.url}",
                 )
                 continue
@@ -495,6 +512,7 @@ def page_weight(public: Path, route: str, pages: dict[Path, Page]) -> dict:
         output_file(public, reference.url)
         for reference in page.references
         if reference.asset
+        and urlsplit(reference.url).hostname in {None, "alessandrovermeulen.me"}
     )
     for filename in resources.copy():
         if filename.suffix != ".css":
@@ -550,7 +568,12 @@ def page_weight(public: Path, route: str, pages: dict[Path, Page]) -> dict:
     require(
         compressed < 200_000, f"Initial transfer budget exceeded: {route}: {compressed}"
     )
-    return {"route": route, "gzip_bytes": compressed, "files": files}
+    return {
+        "route": route,
+        "gzip_bytes": compressed,
+        "files": files,
+        "deferred_external_assets": [image["src"] for image in page.project_ci_images],
+    }
 
 
 def check_downloads(public: Path, manifest: dict):
@@ -575,7 +598,7 @@ def check_downloads(public: Path, manifest: dict):
         )
 
 
-def check_project_badges(site: Path, page: Page):
+def check_project_badges(site: Path, page: Page) -> frozenset[str]:
     catalog = tomllib.loads((site / "data/project-badges.toml").read_text())
     expected = set(catalog["badges"])
     require(
@@ -584,6 +607,46 @@ def check_project_badges(site: Path, page: Page):
         and page.feature_cards == len(expected),
         "Every project card must have one unique emblem from the shared badge catalog",
     )
+    metadata = tomllib.loads((site / "data/project-metadata.toml").read_text())[
+        "projects"
+    ]
+    require(set(metadata) == expected, "Project metadata must cover the emblem catalog")
+    require(
+        set(page.project_metadata) == expected
+        and len(page.project_metadata) == len(expected),
+        "Every project card must include its language and CI labels",
+    )
+    expected_status_images = [
+        f"https://github.com/{project['repository']}/actions/workflows/"
+        f"{project['workflow']}/badge.svg?{urlencode({'branch': project['branch']})}"
+        for project in metadata.values()
+        if project.get("workflow")
+    ]
+    status_badges = frozenset(expected_status_images)
+    require(
+        Counter(image.get("src") for image in page.project_ci_images)
+        == Counter(expected_status_images),
+        "CI badges must use configured workflows and explicit branches",
+    )
+    require(
+        {url.replace("/badge.svg?", "?") for url in status_badges}
+        <= {reference.url for reference in page.references if not reference.asset},
+        "CI badges must link to their configured workflow and branch",
+    )
+    for image in page.project_ci_images:
+        require(
+            image.get("loading") == "lazy"
+            and image.get("height") == "20"
+            and image.get("width") == "160"
+            and bool(image.get("alt")),
+            "CI badges must load lazily with reserved dimensions and accessible text",
+        )
+    require(
+        page.project_ci_unconfigured
+        == sum(not project.get("workflow") for project in metadata.values()),
+        "Projects without a workflow must say CI is not configured",
+    )
+    return status_badges
 
 
 def main():
@@ -596,7 +659,8 @@ def main():
     pages = {filename: Page.from_file(filename) for filename in public.rglob("*.html")}
     post_routes = check_routes(site, public, manifest)
     check_feed(public, post_routes)
-    check_references(public, pages)
+    status_badges = check_project_badges(site, pages[public / "projects/index.html"])
+    check_references(public, pages, status_badges)
     for filename, page in pages.items():
         if page.redirect is None:
             require(
@@ -621,7 +685,6 @@ def main():
                 f"Summary layout guard missing: {filename}",
             )
     check_downloads(public, manifest)
-    check_project_badges(site, pages[public / "projects/index.html"])
     weights = [
         page_weight(public, route, pages)
         for route in (
