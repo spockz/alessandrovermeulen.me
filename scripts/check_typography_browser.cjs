@@ -60,9 +60,9 @@ async function inspect(page) {
       }
     }
     const main = document.querySelector("#main-content");
-    const list = main.querySelector(":scope > header")
-      ? main.querySelector(":scope > section:has(> .article-link--simple)")
-      : null;
+    const list = main.querySelector(
+      ":scope > section:has(> .article-link--simple), :scope > section > section:has(> .article-link--simple)",
+    );
     if (list) {
       const box = list.getBoundingClientRect();
       const mainBox = main.getBoundingClientRect();
@@ -77,9 +77,11 @@ async function inspect(page) {
         failures.push(`Post listing is off-center by ${offset}px`);
       if (Math.abs(box.width - expectedWidth) > widthTolerance)
         failures.push(`Post listing width changed: ${box.width}px`);
-      for (const element of main.querySelectorAll(
-        ":scope > :is(header, section, ul)",
-      )) {
+      const alignmentTargets =
+        list.parentElement === main
+          ? main.querySelectorAll(":scope > :is(header, section, ul)")
+          : [list.parentElement];
+      for (const element of alignmentTargets) {
         const rect = element.getBoundingClientRect();
         if (
           Math.abs(rect.left - box.left) > widthTolerance ||
@@ -87,6 +89,18 @@ async function inspect(page) {
         )
           failures.push(
             `${element.tagName} does not align with its post listing`,
+          );
+      }
+      if (list.parentElement !== main) {
+        const profile = main
+          .querySelector(":scope > article")
+          .getBoundingClientRect();
+        if (
+          Math.abs(profile.left - mainBox.left) > widthTolerance ||
+          Math.abs(profile.width - mainBox.width) > widthTolerance
+        )
+          failures.push(
+            "Centering recent articles must preserve the home profile layout",
           );
       }
       for (const summary of list.querySelectorAll(".typography-summary")) {
@@ -388,6 +402,11 @@ async function main() {
             ),
         );
         const result = await inspect(page);
+        if (["/", "/posts/", "/posts/page/2/", "/tags/scala/"].includes(route))
+          assert.ok(
+            result.column?.centered,
+            `${route} must have a checked centered article list`,
+          );
         report.push({
           route,
           width,
@@ -431,6 +450,13 @@ async function main() {
         if (route === "/about/" && width === 402) {
           await page.screenshot({
             path: path.join(output, "webkit-about-planned.png"),
+            scale: "css",
+            fullPage: true,
+          });
+        }
+        if (route === "/" && width === 1280) {
+          await page.screenshot({
+            path: path.join(output, "webkit-home-centered.png"),
             scale: "css",
             fullPage: true,
           });

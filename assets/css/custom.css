@@ -59,21 +59,19 @@
 }
 
 #main-content:has(> header):has(> section > .article-link--simple)
-  > :is(header, section, ul) {
+  > :is(header, section, ul),
+#main-content > section:has(> section > .article-link--simple) {
   width: 36rem;
   max-width: 100%;
   margin-inline: auto;
 }
 
-#main-content:has(> header)
-  > section
-  > .article-link--simple
-  > div:has(> .typography-summary) {
+#main-content .article-link--simple > div:has(> .typography-summary) {
   width: 100%;
   min-width: 0;
 }
 
-#main-content:has(> header) > section > .article-link--simple > div:empty {
+#main-content .article-link--simple > div:empty {
   display: none;
 }
 
