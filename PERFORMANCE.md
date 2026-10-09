@@ -10,11 +10,11 @@ Transfer sizes updated on 9 October 2026 using Hugo 0.166.0 extended and Blowfis
 
 | Page                           | Total gzip bytes |   HTML | Shared CSS | Shared JavaScript | Layout guard | Article fonts | Favicon |
 | ------------------------------ | ---------------: | -----: | ---------: | ----------------: | -----------: | ------------: | ------: |
-| Home                           |           70,395 | 24,206 |     22,999 |             2,405 |        5,428 |        15,083 |     274 |
-| Projects                       |           64,546 |  8,874 |     22,999 |             2,405 |            0 |        29,994 |     274 |
-| Writing                        |           94,940 | 48,751 |     22,999 |             2,405 |        5,428 |        15,083 |     274 |
-| Shallow/deep embedding article |          137,161 | 49,995 |     22,999 |             2,405 |        5,428 |        56,060 |     274 |
-| FinagleCon comparison          |          130,255 | 57,684 |     22,999 |             2,405 |        5,428 |        41,465 |     274 |
+| Home                           |           70,442 | 24,255 |     22,997 |             2,405 |        5,428 |        15,083 |     274 |
+| Projects                       |           64,591 |  8,921 |     22,997 |             2,405 |            0 |        29,994 |     274 |
+| Writing                        |           94,996 | 48,809 |     22,997 |             2,405 |        5,428 |        15,083 |     274 |
+| Shallow/deep embedding article |          137,213 | 50,049 |     22,997 |             2,405 |        5,428 |        56,060 |     274 |
+| FinagleCon comparison          |          130,303 | 57,734 |     22,997 |             2,405 |        5,428 |        41,465 |     274 |
 
 Article pages use a local 15,060-byte regular prose WOFF2 and load matching bold (14,888 bytes), italic (14,572 bytes) or bold italic (14,544 bytes) faces when used. Inline code in typography scopes requests an 11,448-byte monospace WOFF2. Article summaries also use the regular prose font; the home profile and navigation retain system fonts. There are two shared JavaScript files for appearance, navigation, and code copying. Blog posts and pages containing article summaries additionally load a 5,428-byte gzipped geometry guard. The optimizer runs only in Go during build/preview; there is no browser optimizer or Go WebAssembly runtime. CSS and JavaScript filenames include content fingerprints, and font filenames are versioned, so they can be cached across article visits. Each representative page's local transfer estimate excludes the two deferred external CI badges on Projects, which are listed separately in the report.
 
@@ -84,3 +84,5 @@ The target runs both WebKit scripts against `PREVIEW_BASE_URL`, which defaults t
 The layout script checks actual rendered line fragments at 320, 390, 402, 834, 874, 1024, and 1280 pixels on four articles, four listing pages, and About, including links, inline code, and quotes. Every route must retain active planned text at each width. Single-column article pages must be centered at their existing prose width, with their headers and article footers aligned. Writing, its pagination, tag articles, and home-page recent articles must also be centered at that width. The home profile retains its original layout. It also checks resizing, horizontal overflow, and native print wrapping. Subpixel width differences up to one CSS pixel are allowed; extra visual lines are not. The selection script checks native word and paragraph selection, clean clipboard output, resizing with an active selection, and selectable Writing descriptions. Evidence is saved to `.cache/review/webkit-typography.json` and `.cache/review/webkit-selection.json`, with phone-width screenshots in `.cache/review/webkit-iphone-fixed.png` and `.cache/review/webkit-writing-planned.png`, and a home-page screenshot in `.cache/review/webkit-home-centered.png`.
 
 The site uses lowercase post URLs, so the same build and validation commands work on macOS and Linux.
+
+The layout script also checks cold font loading on About and home summaries at phone and desktop widths. It holds font requests open and captures actual pixels without Playwright's usual wait for fonts: no fallback glyphs may appear during the blocking period, and loaded text must be visible at the same 16-pixel size. The regular face must use one request shared by the preload and CSS. Failed font requests and disabled JavaScript must retain readable native text. Results are saved to `.cache/review/webkit-font-loading.json`.

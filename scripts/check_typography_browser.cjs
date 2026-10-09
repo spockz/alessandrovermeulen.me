@@ -1,4 +1,4 @@
-// Check real browser line fragments because font measurements alone cannot detect CSS rewrapping.
+// Check rendered glyphs and line fragments because final font measurements hide loading flashes and CSS rewrapping.
 const assert = require("node:assert/strict");
 const fs = require("node:fs/promises");
 const path = require("node:path");
@@ -363,11 +363,184 @@ async function checkProjectBadges(page) {
   );
 }
 
+async function hasPaintedText(paragraph, waitForFonts = true) {
+  const previousFontWait = process.env.PW_TEST_SCREENSHOT_NO_FONTS_READY;
+  try {
+    // Playwright's font wait would hide the loading transition being checked.
+    if (!waitForFonts) process.env.PW_TEST_SCREENSHOT_NO_FONTS_READY = "1";
+    const visible = await paragraph.screenshot();
+    const empty = await paragraph.screenshot({
+      mask: [paragraph],
+      maskColor: "#ffffff",
+    });
+    return !visible.equals(empty);
+  } finally {
+    if (previousFontWait === undefined)
+      delete process.env.PW_TEST_SCREENSHOT_NO_FONTS_READY;
+    else process.env.PW_TEST_SCREENSHOT_NO_FONTS_READY = previousFontWait;
+  }
+}
+
+function articleFontLoaded() {
+  return [...document.fonts].some(
+    (face) =>
+      face.family.toLowerCase().includes("article sans") &&
+      face.weight === "400" &&
+      face.style === "normal" &&
+      face.status === "loaded",
+  );
+}
+
+async function checkColdFontLoading(browser) {
+  const report = [];
+  for (const route of ["/about/", "/"]) {
+    for (const width of [390, 1280]) {
+      const context = await browser.newContext({
+        viewport: { width, height: 874 },
+        colorScheme: "light",
+      });
+      let releaseFonts;
+      const fontGate = new Promise((resolve) => {
+        releaseFonts = resolve;
+      });
+      try {
+        const page = await context.newPage();
+        let fontRequests = 0;
+        await page.route("**/fonts/**", async (request) => {
+          if (
+            request.request().url().endsWith("/article-sans-v3052-latin.woff2")
+          )
+            fontRequests += 1;
+          await fontGate;
+          await request.continue();
+        });
+        const response = await page.goto(new URL(route, baseURL).href, {
+          waitUntil: "domcontentloaded",
+        });
+        assert.equal(response.status(), 200, route);
+        const paragraph = page
+          .locator(".article-content p, .typography-summary p")
+          .first();
+        await page.waitForFunction(() => {
+          const node = document.querySelector(
+            ".article-content p, .typography-summary p",
+          );
+          return (
+            node &&
+            getComputedStyle(node)
+              .fontFamily.toLowerCase()
+              .includes("article sans") &&
+            [...document.fonts].some((face) =>
+              face.family.toLowerCase().includes("article sans"),
+            )
+          );
+        });
+        assert.equal(
+          await page
+            .locator(
+              'head link[rel="preload"][as="font"][href="/fonts/article-sans-v3052-latin.woff2"][crossorigin]',
+            )
+            .count(),
+          1,
+          "The article font must be discovered in the page head",
+        );
+        const beforeSize = await paragraph.evaluate(
+          (node) => getComputedStyle(node).fontSize,
+        );
+        assert.equal(beforeSize, "16px");
+        assert.equal(
+          await page.evaluate(articleFontLoaded),
+          false,
+          "Cold-load capture must happen before the article font is available",
+        );
+        assert.equal(
+          await hasPaintedText(paragraph, false),
+          false,
+          `${route} at ${width}px must not paint larger fallback glyphs before the article font loads`,
+        );
+        releaseFonts();
+        await page.evaluate(() => document.fonts.ready);
+        assert.equal(
+          await page.evaluate(articleFontLoaded),
+          true,
+          "Article text must use its downloaded font after loading",
+        );
+        await paragraph.waitFor({ state: "visible" });
+        await page.waitForFunction(() =>
+          document.querySelector(".planned-paragraph"),
+        );
+        assert.equal(
+          await hasPaintedText(paragraph),
+          true,
+          "Loaded article text must be visible",
+        );
+        const afterSize = await paragraph.evaluate(
+          (node) => getComputedStyle(node).fontSize,
+        );
+        assert.equal(afterSize, beforeSize);
+        assert.equal(
+          fontRequests,
+          1,
+          "Font preload must reuse the CSS request",
+        );
+        report.push({
+          mode: "delayed font",
+          route,
+          width,
+          beforeSize,
+          afterSize,
+          fontRequests,
+        });
+      } finally {
+        releaseFonts();
+        await context.unrouteAll({ behavior: "wait" });
+        await context.close();
+      }
+    }
+  }
+  for (const mode of ["failed font", "disabled JavaScript"]) {
+    const context = await browser.newContext({
+      viewport: { width: 390, height: 874 },
+      colorScheme: "light",
+      javaScriptEnabled: mode !== "disabled JavaScript",
+    });
+    try {
+      const page = await context.newPage();
+      if (mode === "failed font")
+        await page.route("**/fonts/**", (request) => request.abort());
+      const response = await page.goto(new URL("/about/", baseURL).href, {
+        waitUntil: "networkidle",
+      });
+      assert.equal(response.status(), 200);
+      await page.evaluate(() => document.fonts.ready);
+      const paragraph = page.locator(".article-content p").first();
+      assert.equal(
+        await hasPaintedText(paragraph),
+        true,
+        `${mode} must retain readable text`,
+      );
+      assert.equal(
+        await page.locator(".planned-paragraph").count(),
+        0,
+        `${mode} must retain native wrapping`,
+      );
+      report.push({ mode, route: "/about/", width: 390 });
+    } finally {
+      await context.close();
+    }
+  }
+  await fs.writeFile(
+    path.join(output, "webkit-font-loading.json"),
+    JSON.stringify(report, null, 2) + "\n",
+  );
+}
+
 async function main() {
   const browser = await webkit.launch({ headless: true });
   const report = [];
   await fs.mkdir(output, { recursive: true });
   try {
+    await checkColdFontLoading(browser);
     const context = await browser.newContext({
       viewport: { width: 402, height: 874 },
       isMobile: true,
