@@ -11,6 +11,7 @@ const routes = [
   "/2013/07/13/the-difference-between-shallow-and-deep-embedding/",
   "/2014/07/15/notes-on-the-advanced-akka-course/",
   "/posts/",
+  "/posts/page/2/",
   "/",
   "/tags/scala/",
   "/posts/a-fresh-leaf/",
@@ -56,6 +57,47 @@ async function inspect(page) {
           )
             failures.push(`${element.tagName} does not align with its article`);
         }
+      }
+    }
+    const main = document.querySelector("#main-content");
+    const list = main.querySelector(":scope > header")
+      ? main.querySelector(":scope > section:has(> .article-link--simple)")
+      : null;
+    if (list) {
+      const box = list.getBoundingClientRect();
+      const mainBox = main.getBoundingClientRect();
+      const offset =
+        box.left + box.width / 2 - (mainBox.left + mainBox.width / 2);
+      const expectedWidth = Math.min(
+        mainBox.width,
+        36 * parseFloat(getComputedStyle(document.documentElement).fontSize),
+      );
+      column = { width: box.width, centered: true, offset };
+      if (Math.abs(offset) > widthTolerance)
+        failures.push(`Post listing is off-center by ${offset}px`);
+      if (Math.abs(box.width - expectedWidth) > widthTolerance)
+        failures.push(`Post listing width changed: ${box.width}px`);
+      for (const element of main.querySelectorAll(
+        ":scope > :is(header, section, ul)",
+      )) {
+        const rect = element.getBoundingClientRect();
+        if (
+          Math.abs(rect.left - box.left) > widthTolerance ||
+          Math.abs(rect.width - box.width) > widthTolerance
+        )
+          failures.push(
+            `${element.tagName} does not align with its post listing`,
+          );
+      }
+      for (const summary of list.querySelectorAll(".typography-summary")) {
+        const rect = summary.getBoundingClientRect();
+        if (
+          Math.abs(rect.left - box.left) > widthTolerance ||
+          Math.abs(rect.width - expectedWidth) > widthTolerance
+        )
+          failures.push(
+            "Post summary must retain the full centered text width",
+          );
       }
     }
     const active = [...document.querySelectorAll(".planned-paragraph")];

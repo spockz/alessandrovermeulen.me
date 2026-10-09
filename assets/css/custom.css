@@ -58,6 +58,25 @@
   }
 }
 
+#main-content:has(> header):has(> section > .article-link--simple)
+  > :is(header, section, ul) {
+  width: 36rem;
+  max-width: 100%;
+  margin-inline: auto;
+}
+
+#main-content:has(> header)
+  > section
+  > .article-link--simple
+  > div:has(> .typography-summary) {
+  width: 100%;
+  min-width: 0;
+}
+
+#main-content:has(> header) > section > .article-link--simple > div:empty {
+  display: none;
+}
+
 .article-content,
 .typography-summary {
   max-width: 36rem;
