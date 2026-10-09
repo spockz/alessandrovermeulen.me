@@ -51,7 +51,7 @@ class Page(HTMLParser):
         self.feed_links: list[dict[str, str | None]] = []
         self.used_fonts: set[str] = set()
         self.has_article_text = False
-        self.blog_typography = False
+        self.article_typography = False
         self.article_scopes: list[dict[str, str | None]] = []
         self.summary_scopes: list[dict[str, str | None]] = []
         self.scopes: list[FontScope] = []
@@ -187,7 +187,7 @@ class Page(HTMLParser):
             and attrs.get("name") == "article-typography"
             and attrs.get("content") == "planned"
         ):
-            self.blog_typography = True
+            self.article_typography = True
         if attrs.get("id"):
             self.ids.add(attrs["id"])
         if tag == "meta" and attrs.get("http-equiv", "").lower() == "refresh":
@@ -357,20 +357,29 @@ def check_routes(site: Path, public: Path, manifest: dict):
         require(
             output_file(public, route).is_file(), f"Published page missing: {route}"
         )
-    for path, route in published.items():
-        if not path.startswith("posts/"):
+    for row in published_rows:
+        if row["kind"] != "page" or (
+            row["section"] != "posts" and row["path"] != "content/about.md"
+        ):
             continue
+        route = urlsplit(row["permalink"]).path
         page = Page.from_file(output_file(public, route))
         require(
-            page.blog_typography and len(page.article_scopes) == 1,
-            f"Blog typography missing: {route}",
+            page.article_typography and len(page.article_scopes) == 1,
+            f"Article typography missing: {route}",
         )
         scope = page.article_scopes[0]
         require(
             scope.get("data-plan-lines") == "responsive"
             and scope.get("data-plan-generated") == "true"
             and "typography-prose" in scope.get("class", "").split(),
-            f"Blog default layout missing: {route}",
+            f"Article default layout missing: {route}",
+        )
+        require(
+            any(
+                "planned-layout.min." in reference.url for reference in page.references
+            ),
+            f"Article layout guard missing: {route}",
         )
     namespace = {"sitemap": "http://www.sitemaps.org/schemas/sitemap/0.9"}
     sitemap = ET.parse(public / "sitemap.xml")

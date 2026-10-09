@@ -1,4 +1,4 @@
-# Keep the replacement separate during migration while retaining the public site's identity and feed address.
+# Define the site's identity, automatic post URLs, and retained feed address.
 baseURL = 'https://alessandrovermeulen.me/'
 title = 'Alessandro Vermeulen'
 defaultContentLanguage = 'en'
@@ -13,6 +13,9 @@ pagerSize = 10
 [taxonomies]
 tag = 'tags'
 category = 'categories'
+
+[permalinks.page]
+posts = '/posts/:slug/'
 
 [permalinks.taxonomy]
 categories = '/category/'

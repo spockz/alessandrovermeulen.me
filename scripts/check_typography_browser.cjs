@@ -13,6 +13,7 @@ const routes = [
   "/posts/",
   "/",
   "/tags/scala/",
+  "/about/",
 ];
 
 async function inspect(page) {
@@ -159,6 +160,10 @@ async function main() {
           false,
           `${route} overflows at ${width}px`,
         );
+        assert.ok(
+          result.active > 0,
+          `${route} must retain planned typography at ${width}px`,
+        );
         const current = { links: result.links, code: result.code };
         if (identity)
           assert.deepEqual(
@@ -181,6 +186,13 @@ async function main() {
           await page.screenshot({
             path: path.join(output, "webkit-iphone-fixed.png"),
             scale: "css",
+          });
+        }
+        if (route === "/about/" && width === 402) {
+          await page.screenshot({
+            path: path.join(output, "webkit-about-planned.png"),
+            scale: "css",
+            fullPage: true,
           });
         }
       }

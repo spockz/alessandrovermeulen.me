@@ -1,6 +1,7 @@
 # Keep development and validation reproducible with the pinned Hugo release and project-local caches.
 SHELL := /bin/bash
 .SHELLFLAGS := -eu -o pipefail -c
+.DEFAULT_GOAL := build
 HUGO_VERSION := 0.166.0
 export HUGO_CACHEDIR := $(CURDIR)/.cache/hugo
 export GOMODCACHE := $(CURDIR)/.cache/go-mod
@@ -14,7 +15,8 @@ TYPOGRAPHY_SOURCES := $(wildcard scripts/typography/*.go scripts/typography/go.m
 .PHONY: check-hugo site-check typography-check build serve check check-browser release
 
 check-hugo:
-	@hugo version | python3 -c 'import sys; expected = "v$(HUGO_VERSION)"; actual = sys.stdin.read().split()[1].split("+")[0]; sys.exit(0 if actual == expected else "Expected Hugo " + expected + ", got " + actual)'
+	@version="$$(hugo version)" || exit "$$?"; \
+	python3 -c 'import re, sys; expected = "v$(HUGO_VERSION)"; fields = sys.argv[1].split(); actual = fields[1] if len(fields) > 1 else "(missing version)"; release = re.sub(r"-[0-9a-f]{7,40}$$", "", actual.split("+")[0]); sys.exit(0 if release == expected else "Expected Hugo " + expected + ", got " + actual)' "$$version"
 
 $(TYPOGRAPHY): $(TYPOGRAPHY_SOURCES)
 	mkdir -p ".cache/tools"

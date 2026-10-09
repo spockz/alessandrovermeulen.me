@@ -26,7 +26,7 @@ A read-only MCP server for Gemini-powered code reviews, plan challenges and repo
 Benchmark coding-agent workloads on llama.cpp and compare model configurations, throughput and resource use.
 {{< /feature >}}
 
-{{< feature icon="file-lines" title="Knowledgebake viewer" url="https://github.com/spockz/knowledgebake-viewer" label="View source" headingLevel="h3" >}}
+{{< feature icon="file-lines" title="Knowledgebase viewer" url="https://github.com/spockz/knowledgebase-viewer" label="View source" headingLevel="h3" >}}
 A native macOS browser for offline knowledge libraries. Its roadmap includes a local AI assistant with source citations.
 {{< /feature >}}
 

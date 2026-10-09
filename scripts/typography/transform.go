@@ -1,4 +1,4 @@
-// Apply the blog default and explicit typography scopes through the same transform in preview and release.
+// Apply article defaults and explicit typography scopes through the same transform in preview and release.
 package main
 
 import (
@@ -21,7 +21,7 @@ func transformHTML(source []byte) ([]byte, bool, error) {
 	if err != nil {
 		return nil, false, fmt.Errorf("parse HTML: %w", err)
 	}
-	changed, err := markBlogContent(doc)
+	changed, err := markArticleContent(doc)
 	if err != nil {
 		return nil, false, err
 	}
@@ -81,7 +81,7 @@ func markSummaryContent(root *html.Node) bool {
 	return changed
 }
 
-func markBlogContent(root *html.Node) (bool, error) {
+func markArticleContent(root *html.Node) (bool, error) {
 	marked := false
 	var scopes []*html.Node
 	var visit func(*html.Node)
@@ -103,7 +103,7 @@ func markBlogContent(root *html.Node) (bool, error) {
 		return false, nil
 	}
 	if len(scopes) != 1 {
-		return false, fmt.Errorf("blog typography marker requires one article-content scope, found %d", len(scopes))
+		return false, fmt.Errorf("article typography marker requires one article-content scope, found %d", len(scopes))
 	}
 	scope := scopes[0]
 	if hasAttribute(scope, "data-plan-lines") {

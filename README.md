@@ -10,11 +10,13 @@ The design uses a text profile, recent writing, tags, syntax highlighting, light
 
 Required tools: Hugo **0.166.0 extended**, Go **1.26 or later**, Python **3.11 or later**, Node **20 or later** for JavaScript checks, and Make. The theme and typography helper dependencies are pinned in their respective `go.mod` and `go.sum` files; the first build downloads those modules.
 
+The Hugo release check accepts the pinned version with commit hashes and build metadata, as reported by Netlify and Homebrew binaries. Other releases and prereleases are rejected.
+
 ```sh
 make serve
 ```
 
-The preview is available at [localhost:1313](http://localhost:1313/). Published archive posts retain their exact dated URLs from the live site, including slugs that differ from their filenames. New posts default to `/posts/<slug>/`, without a publication date. Dates that describe the subject can remain in the filename or slug. Writing remains at `/posts/`.
+The preview is available at [localhost:1313](http://localhost:1313/). Published archive posts retain their exact dated URLs from the live site, including slugs that differ from their filenames. New posts automatically use `/posts/<title>/`, with the title converted to a URL segment. Publication dates in filenames do not enter these URLs; dates in titles remain. Writing remains at `/posts/`.
 
 To share the preview with devices on your local network, bind it to this computer's LAN address and use that address in the browser-facing URL:
 
@@ -28,7 +30,7 @@ Replace the example address with the computer's current LAN address. Other devic
 make check
 ```
 
-This performs a minified build with warnings treated as errors, applies soft hyphens and line plans to every blog post, runs download integrity tests, the Go helper's tests and static analysis and the browser guard's unit tests, then checks the captured live article URLs and compatibility aliases, default typography on all posts, draft exclusions, the sitemap and robots.txt, the complete Atom feed and its discovery link in every page head, local links and anchors, original download hashes, and page-weight budgets including the article fonts. Results are saved to `.cache/review/site.json`.
+This performs a minified build with warnings treated as errors, applies soft hyphens and line plans to every blog post and About, runs Hugo version, permalink, and download integrity tests, the Go helper's tests and static analysis and the browser guard's unit tests, then checks the captured live article URLs and compatibility aliases, default typography on all posts and About, draft exclusions, the sitemap and robots.txt, the complete Atom feed and its discovery link in every page head, local links and anchors, original download hashes, and page-weight budgets including the article fonts. Results are saved to `.cache/review/site.json`.
 
 With the preview running, optional WebKit regression checks verify rendered typography at phone and desktop widths, native text selection and copying, resizing, and printing:
 
@@ -38,12 +40,12 @@ make check-browser
 
 This uses `PREVIEW_BASE_URL` by default; override `BROWSER_BASE_URL` to check another running preview. It requires Playwright with its WebKit browser; see [PERFORMANCE.md](PERFORMANCE.md#repeat-the-browser-measurement) for module/cache options.
 
-`make build` writes review output to `.cache/build/`. It cleans obsolete build files. Module, build, and review caches stay inside this directory and are ignored by Git.
+`make` and `make build` write review output to `.cache/build/`. They clean obsolete build files. `make release` writes the deployment output to `public/`. Module, build, and review caches stay inside `.cache/` and are ignored by Git.
 
 ## Content and configuration
 
-- `content/posts/`: the 34 published posts and two retained drafts.
-- `content/about.md`: the historical biography, visibly marked as an archive.
+- `content/posts/`: the imported archive, two retained drafts, and new writing.
+- `content/about.md`: the current biography, with planned prose layout.
 - `content/projects/index.md`: curated project cards, grouped under AI-adjacent, Service mesh-adjacent and Utilities headings. Edit the descriptions and shortcode order here; contributions, forks and roadmap features are labelled explicitly. Contribution cards describe the specific work and link to published upstream documentation. The page uses Blowfish's static `feature-grid`/`feature` cards, with a small local layout to use the available site width. It makes no GitHub API requests during builds or visits.
 - `config/_default/languages.en.toml`: site description, author headline, and social links.
 - `config/_default/params.toml`: appearance and theme features.
@@ -51,15 +53,19 @@ This uses `PREVIEW_BASE_URL` by default; override `BROWSER_BASE_URL` to check an
 - `static/`: original downloads, recovered images, and favicon.
 - `layouts/rss.xml`: the original `/atom.xml` subscription endpoint. Every rendered page advertises this shared blog feed in its head; redirect pages are excluded.
 
-The migration procedure, source-to-post mappings, and missing archive assets are recorded in [MIGRATION.md](MIGRATION.md) and `migration.json`. The biography needs an author update before its 2016 information can be presented as current.
+The migration procedure, source-to-post mappings, and missing archive assets are recorded in [MIGRATION.md](MIGRATION.md) and `migration.json`.
 
 The one-time importer and original sources are preserved at Git commit `1c746d6`. They are no longer part of the active checkout. The retained migration manifest records the original filenames, exact public URLs, recovered references and SHA-256 hashes of the two retained reports. The old CV download has been retired; About links to LinkedIn for current professional information. Builds and checks require only the current Hugo sources.
 
-New posts can use `hugo new content posts/example.md`. The archetype creates a draft; set `draft = false` to publish it. The checker verifies the imported archive and also includes new published posts in its feed and sitemap checks.
+New posts can use `hugo new content posts/example.md`. The archetype creates a draft and removes a leading `YYYY-MM-DD-` from its suggested title; set `draft = false` to publish it. The checker verifies the imported archive and also includes new published posts in its feed and sitemap checks.
+
+Hugo excludes posts with a future publication date, even when `draft = false`. Use the correct UTC offset for the intended publication time: Amsterdam uses `+02:00` during summer time and `+01:00` during winter time. `hugo list future` identifies scheduled posts.
+
+Posts need no `url` or `slug` field. The shared `/posts/:slug/` permalink rule uses the post's title when `slug` is absent: `2026-10-08-a-fresh-leaf.md` with title “A fresh leaf” becomes `/posts/a-fresh-leaf/`. An explicit `slug` overrides the title; an explicit `url` overrides the entire pattern, preserving the imported archive's routes. Changing a title changes its generated URL, so use an optional `slug` when renaming a published article whose URL should stay fixed.
 
 ## Paragraph typography
 
-Planned typography is the default for every blog post, including new posts, and for the article descriptions on Writing, its pagination, home-page recent posts, and tag/category article lists. No front matter or shortcode is required. A head marker identifies single post pages, and the shared preview/build transform scopes typography to their article content without copying the theme's single-page template. The transform also marks Blowfish's existing summary containers and preserves their article links and three-line clamp. Descriptions use the same pinned font and a maximum 576-pixel text column. Navigation, metadata, headings, About and project cards retain native wrapping.
+Planned typography is the default for every blog post, including new posts, and for the article descriptions on Writing, its pagination, home-page recent posts, and tag/category article lists. No front matter or shortcode is required for posts. About opts into the same layout with `typography: planned` in its front matter; other standalone prose pages can do the same. A head marker identifies these pages, and the shared preview/build transform scopes typography to their article content without copying the theme's single-page template. The transform also marks Blowfish's existing summary containers and preserves their article links and three-line clamp. Descriptions use the same pinned font and a maximum 576-pixel text column. Navigation, metadata, headings, and project cards retain native wrapping.
 
 Use a shortcode to override a section's mode or to add typography outside blog posts:
 

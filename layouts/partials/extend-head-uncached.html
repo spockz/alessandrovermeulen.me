@@ -4,12 +4,12 @@
     <link rel="alternate" type="{{ .MediaType.Type }}" href="{{ .RelPermalink }}" title="{{ $.Site.Title }}">
   {{ end }}
 {{ end }}
-{{ $blog := and .IsPage (eq .Section "posts") }}
+{{ $plannedProse := and .IsPage (or (eq .Section "posts") (eq .Params.typography "planned")) }}
 {{ $summaries := or (and .IsHome .Site.Params.homepage.showRecent) (and (or .IsSection (eq .Kind "term")) .Site.Params.list.showSummary) (.HasShortcode "list") }}
-{{ if $blog }}
+{{ if $plannedProse }}
   <meta name="article-typography" content="planned">
 {{ end }}
-{{ if or $blog $summaries (.HasShortcode "typography") }}
+{{ if or $plannedProse $summaries (.HasShortcode "typography") }}
   {{ $guard := resources.Get "js/planned-layout.js" | minify | fingerprint }}
   <script defer src="{{ $guard.RelPermalink }}" integrity="{{ $guard.Data.Integrity }}"></script>
 {{ end }}
