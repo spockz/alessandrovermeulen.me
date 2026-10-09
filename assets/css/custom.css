@@ -39,6 +39,25 @@
   font-display: swap;
 }
 
+#main-content > article:has(> #single_header) {
+  max-width: 36rem;
+  margin-inline: auto;
+}
+
+#main-content
+  > article:has(> #single_header)
+  > section
+  > div:has(> .article-content) {
+  width: 36rem;
+  max-width: 100%;
+}
+
+@media (min-width: 64rem) {
+  #main-content > article:has(> #single_header):has(.toc) {
+    max-width: none;
+  }
+}
+
 .article-content,
 .typography-summary {
   max-width: 36rem;

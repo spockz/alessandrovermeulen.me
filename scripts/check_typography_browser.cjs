@@ -13,6 +13,7 @@ const routes = [
   "/posts/",
   "/",
   "/tags/scala/",
+  "/posts/a-fresh-leaf/",
   "/about/",
 ];
 
@@ -21,6 +22,42 @@ async function inspect(page) {
     const failures = [];
     // WebKit can apply fractional word spacing differently at a text-fragment boundary.
     const widthTolerance = 1;
+    let column = null;
+    const header = document.querySelector("#single_header");
+    if (header) {
+      const article = header.closest("article");
+      const content = article.querySelector(".article-content");
+      const box = content.getBoundingClientRect();
+      const main = document
+        .querySelector("#main-content")
+        .getBoundingClientRect();
+      const sidebar = article.querySelector(".toc-right");
+      const centered = !sidebar || sidebar.getClientRects().length === 0;
+      const offset = box.left + box.width / 2 - (main.left + main.width / 2);
+      column = { width: box.width, centered, offset };
+      if (centered) {
+        if (Math.abs(offset) > widthTolerance)
+          failures.push(`Article column is off-center by ${offset}px`);
+        const expectedWidth = Math.min(
+          main.width,
+          36 * parseFloat(getComputedStyle(document.documentElement).fontSize),
+        );
+        if (Math.abs(box.width - expectedWidth) > widthTolerance)
+          failures.push(`Article column width changed: ${box.width}px`);
+        for (const element of [
+          header,
+          article.querySelector(":scope > footer"),
+        ]) {
+          if (!element) continue;
+          const rect = element.getBoundingClientRect();
+          if (
+            Math.abs(rect.left - box.left) > widthTolerance ||
+            Math.abs(rect.width - box.width) > widthTolerance
+          )
+            failures.push(`${element.tagName} does not align with its article`);
+        }
+      }
+    }
     const active = [...document.querySelectorAll(".planned-paragraph")];
     for (const [index, paragraph] of active.entries()) {
       const style = getComputedStyle(paragraph);
@@ -96,6 +133,7 @@ async function inspect(page) {
     return {
       active: active.length,
       failures,
+      column,
       overflow: document.documentElement.scrollWidth > innerWidth,
       links: [
         ...document.querySelectorAll(
@@ -139,7 +177,7 @@ async function main() {
         document.querySelector(".planned-layout"),
       );
       let identity;
-      for (const width of [320, 390, 402, 874, 1280]) {
+      for (const width of [320, 390, 402, 834, 874, 1024, 1280]) {
         console.error(`Checking ${width}px`);
         await page.setViewportSize({ width, height: 874 });
         await page.evaluate(
@@ -154,6 +192,7 @@ async function main() {
           width,
           active: result.active,
           failures: result.failures,
+          column: result.column,
         });
         assert.equal(
           result.overflow,
