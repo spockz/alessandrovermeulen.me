@@ -14,6 +14,8 @@ from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import unquote, urljoin, urlsplit
 
+import tomllib
+
 
 @dataclass(frozen=True)
 class Reference:
@@ -54,6 +56,8 @@ class Page(HTMLParser):
         self.article_typography = False
         self.article_scopes: list[dict[str, str | None]] = []
         self.summary_scopes: list[dict[str, str | None]] = []
+        self.project_badges: list[str] = []
+        self.feature_cards = 0
         self.scopes: list[FontScope] = []
         self.feed(source)
 
@@ -180,6 +184,14 @@ class Page(HTMLParser):
             )
         if "article-content" in attrs.get("class", "").split():
             self.article_scopes.append(attrs)
+        if (
+            tag == "article"
+            and parent.in_article
+            and "group" in attrs.get("class", "").split()
+        ):
+            self.feature_cards += 1
+        if tag == "svg" and "project-badge" in attrs.get("class", "").split():
+            self.project_badges.append(attrs.get("data-project-badge", ""))
         if "article-link__summary" in attrs.get("class", "").split():
             self.summary_scopes.append(attrs)
         if (
@@ -563,6 +575,17 @@ def check_downloads(public: Path, manifest: dict):
         )
 
 
+def check_project_badges(site: Path, page: Page):
+    catalog = tomllib.loads((site / "data/project-badges.toml").read_text())
+    expected = set(catalog["badges"])
+    require(
+        set(page.project_badges) == expected
+        and len(page.project_badges) == len(expected)
+        and page.feature_cards == len(expected),
+        "Every project card must have one unique emblem from the shared badge catalog",
+    )
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("public", type=Path)
@@ -598,6 +621,7 @@ def main():
                 f"Summary layout guard missing: {filename}",
             )
     check_downloads(public, manifest)
+    check_project_badges(site, pages[public / "projects/index.html"])
     weights = [
         page_weight(public, route, pages)
         for route in (

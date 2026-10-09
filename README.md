@@ -63,6 +63,23 @@ Hugo excludes posts with a future publication date, even when `draft = false`. U
 
 Posts need no `url` or `slug` field. The shared `/posts/:slug/` permalink rule uses the post's title when `slug` is absent: `2026-10-08-a-fresh-leaf.md` with title “A fresh leaf” becomes `/posts/a-fresh-leaf/`. An explicit `slug` overrides the title; an explicit `url` overrides the entire pattern, preserving the imported archive's routes. Changing a title changes its generated URL, so use an optional `slug` when renaming a published article whose URL should stay fixed.
 
+## Project emblems
+
+Every project card uses an original SVG emblem from the same family. The reusable specification is [data/project-badges.toml](data/project-badges.toml): shared frame and stroke settings, each project's visual concept, and its SVG shapes. [scripts/generate_project_badges.py](scripts/generate_project_badges.py) generates the local theme icons in `assets/icons/project-*.svg`. It uses Python's standard library and makes no network requests.
+
+Keep new symbols simple and geometric, centred within the 20–80 region of a 96-by-96 canvas. Use rounded three-unit strokes, open space, and one visual metaphor for the project's purpose. The family has a softly tinted rounded frame and no embedded text, shadows, or vendor logos. All colour uses `currentColor`, so the emblems follow Blowfish's light and dark palette. Presentation size and card integration are in `assets/css/custom.css`; cards retain the theme's feature grid.
+
+To add or update an emblem, edit the shared specification and run:
+
+```sh
+make badges
+make badges-check
+```
+
+Add a `[badges.<project-id>]` entry with a `concept` and `shapes` list, then use `icon="project-<project-id>"` on its feature card in `content/projects/index.md`. Supported shapes are paths, circles, rectangles, lines, polylines, and polygons. Commit the specification and generated SVGs together. The generator owns the `project-*.svg` prefix and removes generated icons whose definitions have been removed.
+
+Build, preview, and release commands reject missing or stale generated badges. `make check` also verifies that every project card has exactly one distinct emblem from the catalog. `make check-browser` checks emblem sizing, distinct symbols, clipping, and card overflow at phone, tablet, and desktop widths in light and dark modes. The SVGs are inserted into the cards by Blowfish's existing icon partial, requiring no additional image requests or JavaScript.
+
 ## Paragraph typography
 
 Planned typography is the default for every blog post, including new posts, and for the article descriptions on Writing, its pagination, home-page recent posts, and tag/category article lists. No front matter or shortcode is required for posts. About opts into the same layout with `typography: planned` in its front matter; other standalone prose pages can do the same. A head marker identifies these pages, and the shared preview/build transform scopes typography to their article content without copying the theme's single-page template. The transform also marks Blowfish's existing summary containers and preserves their article links and three-line clamp. Descriptions use the same pinned font and a maximum 576-pixel text column. Navigation, metadata, headings, and project cards retain native wrapping.

@@ -1,0 +1,117 @@
+# Keep shared badge geometry and original project symbols together for reproducible theme-native SVG emblems.
+[style]
+canvas = 96
+frame_inset = 4
+frame_radius = 22
+stroke_width = 3
+frame_stroke_width = 1.5
+surface_opacity = 0.06
+frame_opacity = 0.28
+
+[badges.semantic-editor]
+concept = 'An abstract syntax tree, linking a root to editable branches.'
+shapes = [
+  { tag = 'path', d = 'M48 32v10M32 48v-6h32v6M32 56v8M64 56v8' },
+  { tag = 'circle', cx = 48, cy = 27, r = 5 },
+  { tag = 'rect', x = 27, y = 48, width = 10, height = 8, rx = 2 },
+  { tag = 'rect', x = 59, y = 48, width = 10, height = 8, rx = 2 },
+  { tag = 'circle', cx = 32, cy = 69, r = 5 },
+  { tag = 'path', d = 'm59 69 4 4 8-9' },
+]
+
+[badges.gemini-mcp]
+concept = 'A review conversation bridged to a second tool, with a small reasoning spark.'
+shapes = [
+  { tag = 'path', d = 'M47 51H32l-9 7V32a6 6 0 0 1 6-6h27a6 6 0 0 1 6 6v5' },
+  { tag = 'path', d = 'M48 43h21a5 5 0 0 1 5 5v23l-8-6H48a5 5 0 0 1-5-5V48a5 5 0 0 1 5-5Z' },
+  { tag = 'path', d = 'm40 33 2 5 5 2-5 2-2 5-2-5-5-2 5-2Z' },
+  { tag = 'path', d = 'M52 54h13M52 59h8' },
+]
+
+[badges.llama-tooling]
+concept = 'A compute chip with a benchmark trace, reflecting local model performance tooling.'
+shapes = [
+  { tag = 'rect', x = 28, y = 28, width = 40, height = 40, rx = 8 },
+  { tag = 'path', d = 'M38 21v7M48 21v7M58 21v7M38 68v7M48 68v7M58 68v7M21 38h7M21 48h7M21 58h7M68 38h7M68 48h7M68 58h7' },
+  { tag = 'path', d = 'm36 57 8-12 8 5 9-13M36 61h24' },
+]
+
+[badges.knowledgebase-viewer]
+concept = 'An open reference book with a magnifying lens for browsing an offline library.'
+shapes = [
+  { tag = 'path', d = 'M48 66c-8-6-16-7-24-4V29c8-3 16-2 24 4 8-6 16-7 24-4v16M48 33v33M31 38l9 3M31 47l9 3M55 38l9-3' },
+  { tag = 'circle', cx = 64, cy = 58, r = 9 },
+  { tag = 'path', d = 'm70 65 7 8' },
+]
+
+[badges.agentic-dotfiles]
+concept = 'A configuration document with a terminal prompt and adjustable shared settings.'
+shapes = [
+  { tag = 'path', d = 'M53 23H31a5 5 0 0 0-5 5v40a5 5 0 0 0 5 5h34a5 5 0 0 0 5-5V40L53 23ZM53 23v17h17' },
+  { tag = 'path', d = 'm35 38 5 5-5 5M45 48h8M35 61h26' },
+  { tag = 'circle', cx = 49, cy = 61, r = 3.5, fill = 'currentColor' },
+]
+
+[badges.dynamic-fault-injection]
+concept = 'A disrupted service path with an injected fault at its centre.'
+shapes = [
+  { tag = 'circle', cx = 27, cy = 48, r = 7 },
+  { tag = 'circle', cx = 69, cy = 48, r = 7 },
+  { tag = 'path', d = 'M34 48h6M56 48h6M48 23v7M48 67v7' },
+  { tag = 'path', d = 'm51 32-13 19h10l-3 13 14-19H49Z' },
+]
+
+[badges.k6-library]
+concept = 'A load gauge paired with a code bracket, linking load testing to library APIs.'
+shapes = [
+  { tag = 'path', d = 'M24 54a24 24 0 0 1 48 0M24 54h7M65 54h7M32 37l5 5M64 37l-5 5M48 30v7M48 54l12-12' },
+  { tag = 'circle', cx = 48, cy = 54, r = 3.5, fill = 'currentColor' },
+  { tag = 'path', d = 'm37 63-7 6 7 6M59 63l7 6-7 6M51 63l-6 12' },
+]
+
+[badges.spring-finagle]
+concept = 'A spring leaf paired with a native executable, expressing the framework integration.'
+shapes = [
+  { tag = 'path', d = 'M25 51c-2-19 12-27 29-26 2 17-6 29-23 27ZM25 59l24-28' },
+  { tag = 'rect', x = 43, y = 45, width = 30, height = 28, rx = 5 },
+  { tag = 'path', d = 'm50 53 5 5-5 5M59 63h7' },
+]
+
+[badges.tls-benchmarks]
+concept = 'A secure connection measured with a timing dial.'
+shapes = [
+  { tag = 'path', d = 'M27 44v-8a10 10 0 0 1 20 0v8' },
+  { tag = 'rect', x = 23, y = 44, width = 28, height = 26, rx = 6 },
+  { tag = 'path', d = 'M37 53v8M67 31v10M62 31h10' },
+  { tag = 'circle', cx = 67, cy = 54, r = 13 },
+  { tag = 'path', d = 'M67 46v8l6 4' },
+]
+
+[badges.finagle-testcases]
+concept = 'Two branching service assumptions ending in checked test outcomes.'
+shapes = [
+  { tag = 'circle', cx = 28, cy = 48, r = 6 },
+  { tag = 'path', d = 'M34 48h10V32h12M44 48v16h12' },
+  { tag = 'rect', x = 56, y = 24, width = 20, height = 16, rx = 4 },
+  { tag = 'rect', x = 56, y = 56, width = 20, height = 16, rx = 4 },
+  { tag = 'path', d = 'm61 32 3 3 6-6M61 64l3 3 6-6' },
+]
+
+[badges.api-centric-mesh]
+concept = 'An API gateway surrounded by connected services.'
+shapes = [
+  { tag = 'path', d = 'm31 31 8 8M65 31l-8 8M31 65l8-8M65 65l-8-8' },
+  { tag = 'rect', x = 37, y = 37, width = 22, height = 22, rx = 5 },
+  { tag = 'circle', cx = 27, cy = 27, r = 6 },
+  { tag = 'circle', cx = 69, cy = 27, r = 6 },
+  { tag = 'circle', cx = 27, cy = 69, r = 6 },
+  { tag = 'circle', cx = 69, cy = 69, r = 6 },
+  { tag = 'path', d = 'M43 48h10' },
+]
+
+[badges.go-psrecord]
+concept = 'A process-monitoring chart with a recorded CPU and memory trace.'
+shapes = [
+  { tag = 'rect', x = 23, y = 25, width = 50, height = 38, rx = 6 },
+  { tag = 'path', d = 'M32 53h7l5-17 8 20 6-12h7M40 63v8M56 63v8M33 72h30' },
+]

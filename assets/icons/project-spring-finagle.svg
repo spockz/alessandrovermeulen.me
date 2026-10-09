@@ -1,0 +1,9 @@
+<!-- Generated from data/project-badges.toml with make badges to preserve the shared project emblem style. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" class="project-badge" data-project-badge="spring-finagle" aria-hidden="true" focusable="false">
+  <rect x="4" y="4" width="88" height="88" rx="22" fill="currentColor" fill-opacity="0.06" stroke="currentColor" stroke-opacity="0.28" stroke-width="1.5" />
+  <g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M25 51c-2-19 12-27 29-26 2 17-6 29-23 27ZM25 59l24-28" />
+    <rect x="43" y="45" width="30" height="28" rx="5" />
+    <path d="m50 53 5 5-5 5M59 63h7" />
+  </g>
+</svg>

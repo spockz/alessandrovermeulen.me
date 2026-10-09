@@ -1,4 +1,4 @@
-/* Keep blog typography, native fallback, and comparison controls inside the theme's local CSS bundle. */
+/* Keep article layout, typography, and project emblem styling inside the theme's local CSS bundle. */
 @font-face {
   font-family: "Article Sans";
   src: url("/fonts/article-sans-v3052-latin.woff2") format("woff2");
@@ -81,6 +81,17 @@
 
 .project-showcase .article-content {
   max-width: none;
+}
+
+.project-showcase .group > span:has(.project-badge) {
+  padding: 0;
+  background: transparent;
+}
+
+.project-showcase .icon > .project-badge {
+  display: block;
+  width: 4.5rem;
+  height: 4.5rem;
 }
 
 .typography-prose a {

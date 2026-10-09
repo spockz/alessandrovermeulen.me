@@ -148,6 +148,114 @@ async function inspect(page) {
   });
 }
 
+async function checkProjectBadges(page) {
+  await page.emulateMedia({ media: "screen" });
+  const response = await page.goto(new URL("/projects/", baseURL).href, {
+    waitUntil: "networkidle",
+  });
+  assert.equal(response.status(), 200);
+  await page.evaluate(() => document.fonts.ready);
+  const report = [];
+  for (const colorScheme of ["light", "dark"]) {
+    await page.emulateMedia({ colorScheme });
+    await page.waitForFunction(
+      (scheme) =>
+        document.documentElement.classList.contains("dark") ===
+        (scheme === "dark"),
+      colorScheme,
+    );
+    await page.evaluate(() =>
+      Promise.all(
+        document.getAnimations().map((animation) => animation.finished),
+      ),
+    );
+    for (const width of [320, 834, 1280]) {
+      await page.setViewportSize({ width, height: 874 });
+      const result = await page.evaluate(() => {
+        const badges = [...document.querySelectorAll(".project-badge")];
+        return {
+          colorScheme: document.documentElement.classList.contains("dark")
+            ? "dark"
+            : "light",
+          cards: document.querySelectorAll(".project-showcase .group > h3")
+            .length,
+          overflow: document.documentElement.scrollWidth > innerWidth,
+          badges: badges.map((svg) => {
+            const box = svg.getBoundingClientRect();
+            const symbol = svg.querySelector("g");
+            const glyph = symbol.getBBox();
+            return {
+              id: svg.dataset.projectBadge,
+              width: box.width,
+              height: box.height,
+              color: getComputedStyle(svg).color,
+              symbol: symbol.innerHTML,
+              visible: glyph.width > 0 && glyph.height > 0,
+              fits:
+                glyph.x >= 12 &&
+                glyph.y >= 12 &&
+                glyph.x + glyph.width <= 84 &&
+                glyph.y + glyph.height <= 84,
+              decorative: svg.getAttribute("aria-hidden") === "true",
+            };
+          }),
+        };
+      });
+      assert.equal(
+        result.colorScheme,
+        colorScheme,
+        "Check the rendered theme, not a pending preference change",
+      );
+      assert.ok(result.cards > 0);
+      assert.equal(
+        result.overflow,
+        false,
+        `Project cards overflow at ${width}px`,
+      );
+      assert.equal(
+        result.badges.length,
+        result.cards,
+        "Each card needs an emblem",
+      );
+      assert.equal(
+        new Set(result.badges.map((badge) => badge.id)).size,
+        result.cards,
+      );
+      assert.equal(
+        new Set(result.badges.map((badge) => badge.symbol)).size,
+        result.cards,
+        "Project symbols must be distinct",
+      );
+      assert.equal(
+        new Set(result.badges.map((badge) => badge.color)).size,
+        1,
+        "Emblems must share the theme palette",
+      );
+      for (const badge of result.badges) {
+        assert.equal(badge.width, 72, badge.id);
+        assert.equal(badge.height, 72, badge.id);
+        assert.ok(badge.visible && badge.fits && badge.decorative, badge.id);
+      }
+      report.push({
+        colorScheme,
+        width,
+        cards: result.cards,
+        color: result.badges[0].color,
+      });
+      if (width === 1280)
+        await page.screenshot({
+          path: path.join(output, `project-badges-${colorScheme}.png`),
+          fullPage: true,
+          scale: "css",
+        });
+    }
+  }
+  await fs.writeFile(
+    path.join(output, "webkit-project-badges.json"),
+    JSON.stringify(report, null, 2) + "\n",
+  );
+}
+
 async function main() {
   const browser = await webkit.launch({ headless: true });
   const report = [];
@@ -253,6 +361,7 @@ async function main() {
       printed.breaks.every((value) => value === "none"),
       "Print must hide generated breaks and hyphens",
     );
+    await checkProjectBadges(page);
     assert.deepEqual(
       errors,
       [],

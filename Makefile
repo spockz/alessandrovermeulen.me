@@ -12,7 +12,7 @@ PREVIEW_BASE_URL ?= http://localhost:1313/
 BROWSER_BASE_URL ?= $(PREVIEW_BASE_URL)
 TYPOGRAPHY_SOURCES := $(wildcard scripts/typography/*.go scripts/typography/go.mod scripts/typography/go.sum scripts/typography/*.txt scripts/typography/*.md scripts/typography/linebreak/*.go scripts/typography/font/*.ttf)
 
-.PHONY: check-hugo site-check typography-check build serve check check-browser release
+.PHONY: check-hugo badges badges-check site-check typography-check build serve check check-browser release
 
 check-hugo:
 	@version="$$(hugo version)" || exit "$$?"; \
@@ -22,6 +22,12 @@ $(TYPOGRAPHY): $(TYPOGRAPHY_SOURCES)
 	mkdir -p ".cache/tools"
 	cd scripts/typography && go build -o "$(CURDIR)/$(TYPOGRAPHY)" .
 
+badges:
+	python3 scripts/generate_project_badges.py
+
+badges-check:
+	python3 scripts/generate_project_badges.py --check
+
 typography-check:
 	cd scripts/typography && go test ./... && go vet ./...
 	node --test scripts/planned-layout.test.cjs
@@ -29,11 +35,11 @@ typography-check:
 site-check:
 	python3 -m unittest discover -s scripts -p '*_test.py'
 
-build: check-hugo $(TYPOGRAPHY)
+build: check-hugo badges-check $(TYPOGRAPHY)
 	hugo --minify --gc --panicOnWarning --cleanDestinationDir
 	"$(TYPOGRAPHY)" process .cache/build
 
-serve: check-hugo $(TYPOGRAPHY)
+serve: check-hugo badges-check $(TYPOGRAPHY)
 	"$(TYPOGRAPHY)" serve --bind "$(PREVIEW_BIND)" --baseURL "$(PREVIEW_BASE_URL)"
 
 check: build site-check typography-check
@@ -43,7 +49,7 @@ check-browser:
 	node scripts/check_typography_browser.cjs "$(BROWSER_BASE_URL)"
 	TYPOGRAPHY_BROWSER=webkit node scripts/check_selection_browser.cjs "$(BROWSER_BASE_URL)"
 
-release: check-hugo $(TYPOGRAPHY)
+release: check-hugo badges-check $(TYPOGRAPHY)
 	hugo --minify --gc --panicOnWarning --cleanDestinationDir --destination public
 	"$(TYPOGRAPHY)" process public
 	python3 scripts/check_site.py public
