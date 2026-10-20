@@ -19,7 +19,9 @@
 
 People have asked me how to launch a program through the terminal in the
 background but with it's own terminal screen similar to the way the "start"
-command in the Windows CMD prompt works. Well here it is. Add the following two
+command in the Windows CMD prompt works.
+Well here it is.
+Add the following two
 files (start.applescript) and start to your path, and make them executable
 (`chmod +x {start.applescript,start}`).
 

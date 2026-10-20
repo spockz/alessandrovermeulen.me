@@ -13,7 +13,8 @@
 }
 ---
 
-Here are some updates on my previous article. <a href="/2009/04/17/doctrine-meets-codeigniter/">Doctrine meets Codeigniter</a>.
+Here are some updates on my previous article.
+<a href="/2009/04/17/doctrine-meets-codeigniter/">Doctrine meets Codeigniter</a>.
 
 Do not forget to add the following autoload directive to your hooks/doctrine.php and the doctrine.php cli:
 

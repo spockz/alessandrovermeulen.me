@@ -16,7 +16,9 @@
 ---
 
 With this script it should be possible to install and build the JCU app in a
-local directory. It does *not* build the UHC for you. If that is wanted the
+local directory.
+It does *not* build the UHC for you.
+If that is wanted the
 option could be build in of course!
 
 `install.rb`

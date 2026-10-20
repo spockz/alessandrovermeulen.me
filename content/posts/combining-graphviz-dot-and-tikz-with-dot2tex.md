@@ -21,12 +21,17 @@
 ---
 
 We all want to create good looking documents and good looking documents need
-good looking images. Because we want consistency and because we are lazy we
-want to do this as automatic as possible. That is why we use <span>L<span style="text-transform: uppercase; font-size: 70%; margin-left: -0.36em; vertical-align: 0.3em; line-height: 0; margin-right: -0.15em;">a</span>T<span style="text-transform: uppercase; margin-left: -0.1667em; vertical-align: -0.5ex; line-height: 0; margin-right: -0.125em;">e</span>X</span>,
+good looking images.
+Because we want consistency and because we are lazy we
+want to do this as automatic as possible.
+That is why we use <span>L<span style="text-transform: uppercase; font-size: 70%; margin-left: -0.36em; vertical-align: 0.3em; line-height: 0; margin-right: -0.15em;">a</span>T<span style="text-transform: uppercase; margin-left: -0.1667em; vertical-align: -0.5ex; line-height: 0; margin-right: -0.125em;">e</span>X</span>,
 it creates beautifully typeset documents without much manual effort.
 
-Similarly, we use graphviz to generate our graphs for us. It's automatic layout is the best in the
-field and the ([declarative](/2013/05/19/why-you-should-switch-to-declarative-programming/)) dot language is easy to understand and compact to write. We can either include the PDFs dot generated in our document by using `\includegraphics` or we could use the latex [graphviz package](https://github.com/mprentice/GraphViz-sty), remember that we are lazy. We can easily get
+Similarly, we use graphviz to generate our graphs for us.
+It's automatic layout is the best in the
+field and the ([declarative](/2013/05/19/why-you-should-switch-to-declarative-programming/)) dot language is easy to understand and compact to write.
+We can either include the PDFs dot generated in our document by using `\includegraphics` or we could use the latex [graphviz package](https://github.com/mprentice/GraphViz-sty), remember that we are lazy.
+We can easily get
 the image in <a href="#example1">our first example</a> in our PDF.
 
 <figure id="example1">
@@ -35,27 +40,32 @@ the image in <a href="#example1">our first example</a> in our PDF.
 </figure>
 
 
-There is a shadow side to using Graphviz/dot as well. There are two problems.
+There is a shadow side to using Graphviz/dot as well.
+There are two problems.
 Firstly, the image just looks a bit out of place around the nicely smoothed
-text in a PDF. Secondly, we lack the ability to use TeX code in our graph.
+text in a PDF.
+Secondly, we lack the ability to use TeX code in our graph.
 This means we are limited to the formatting by dot and the graphs could
 therefore appear out of style with other figures in our document.
 
 No worries, with TikZ it is possible to create very fancy graphs and images in
-general but you have to all the positioning manually! Imagine inserting a node
+general but you have to all the positioning manually!
+Imagine inserting a node
 and having to reorder everything!
 
 Enter [dot2tex](http://www.fauskes.net/code/dot2tex/) it brings all the love
-of graphviz/dot to TeX/TikZ. Using dot2tex has many advantages:
+of graphviz/dot to TeX/TikZ.
+Using dot2tex has many advantages:
 
 1. Lets you write your graphs in familiar dot syntax;
 2. Let dot -- or whichever layout engine you prefer -- determine the placement of
-   your nodes and arrows;
+your nodes and arrows;
 3. Style your nodes however you want by using TikZ styles;
 4. Optionally, fine-tune the graph by adding extra tikz drawings.
 
 Rather than manually calling dot2tex for every dot file you have please use
-the [dot2texi package](http://www.ctan.org/pkg/dot2texi). This is the interface to dot2tex and when used as follows generates the image as displayed in [Figure 2](#example2).
+the [dot2texi package](http://www.ctan.org/pkg/dot2texi).
+This is the interface to dot2tex and when used as follows generates the image as displayed in [Figure 2](#example2).
 
 ``` latex
   \begin{tikzpicture}[>=latex',scale=0.5]

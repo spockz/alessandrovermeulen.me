@@ -17,4 +17,5 @@
 ---
 
 The photo's of the DMN Seniorenwedstrijd 21-01-2012 at Colijn Dance Masters are
-now available. You can order them [here](http://oypo.nl/pixxer.asp?id=B1835D91132DA171).
+now available.
+You can order them [here](http://oypo.nl/pixxer.asp?id=B1835D91132DA171).

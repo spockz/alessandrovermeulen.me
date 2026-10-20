@@ -20,16 +20,21 @@
 
 On several occasions I noticed that when performing a `cabal update` that the
 index was being downloaded at the rate of plus min 300 KB/s. Finally I got around to do
-something about this. I've set up a caching server located in Utrecht, The
-Netherlands. It is a caching proxy for the hackage repository. If you want to
-use it, add the following to your `~/.cabal/config` file. (Or equivalent on
+something about this.
+I've set up a caching server located in Utrecht, The
+Netherlands.
+It is a caching proxy for the hackage repository.
+If you want to
+use it, add the following to your `~/.cabal/config` file.
+(Or equivalent on
 Windows.)
 
 ``` bash
 remote-repo: cache:http://spockz.nl:12080/packages/archive
 ```
 
-Be sure to comment out the already existing remote-repo. Otherwise, cabal will
+Be sure to comment out the already existing remote-repo.
+Otherwise, cabal will
 download both indexes and merge them, and we don't want this.
 
 ## The funny bit
@@ -58,12 +63,15 @@ cabal update -v3  7,57s user 0,25s system 28% cpu 27,372 total
 ```
 
 So here we see that the user time is roughly the same but you spent almost three
-times more seconds waiting for your coffee to get cold. Any further speed
+times more seconds waiting for your coffee to get cold.
+Any further speed
 improvements for cabal update will probably require optimalisation of the code.
 
 ## The caching server
 I'm using <a href="https://www.varnish-cache.org/" title="Varnish">Varnish</a>
-to cache the request to hackage. And here is my config file. Please shoot if you
+to cache the request to hackage.
+And here is my config file.
+Please shoot if you
 see any improvements.
 
 ```

@@ -22,12 +22,14 @@ setup of your application</a> with CI (CodeIgniter), I'll use this post to
 provide a method of setting up your environment for multiple applications.
 <!--more-->
 Now, in the previous post I was really sloppy about the locations of both the
-CodeIgniter system files and the application files. The same guidelines still
+CodeIgniter system files and the application files.
+The same guidelines still
 apply, both the system folder and application folder should reside outside of
 the web document root to ensure safety.
 
 First, we want to store our applications and CodeIgniter releases in separate
-folders. So for example store your CodeIgniter system folder in
+folders.
+So for example store your CodeIgniter system folder in
 <em>/var/codeigniter/</em>. This could be done by doing a svn export (or
 checkout) with the following command-line statement:
 
@@ -41,9 +43,11 @@ release</a> from the CodeIgniter website and copy the contents of the system
 folder to <em>/var/codeigniter/release-1.7.1</em>.
 
 Now for each application you want to build you can do a export/checkout to our
-applications directory. As we are going to store our applications outside the
+applications directory.
+As we are going to store our applications outside the
 document root you could pick <em>/var/applications/</em> as root directory for
-your CI applications. Now if you want to make a blog you just have to execute
+your CI applications.
+Now if you want to make a blog you just have to execute
 this command:
 
 ``` bash
@@ -79,9 +83,11 @@ $system_folder = '/var/codeigniter/release-1.7.1';
 $application_folder = '/var/applications/blog';
 ```
 
-Now you can add your web stuff like CSS, JS to your /var/www/blog. Of course
+Now you can add your web stuff like CSS, JS to your /var/www/blog.
+Of course
 this follows the same principle as creating the non-www and www directories
 mentioned in the previous post.
 
 Now for each application you want to add, retake the above steps and replace
-'blog' with something relevant. Good steaming!
+'blog' with something relevant.
+Good steaming!

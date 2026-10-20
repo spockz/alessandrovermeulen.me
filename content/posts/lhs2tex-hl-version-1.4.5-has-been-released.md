@@ -21,8 +21,10 @@ I've just released a new version of <a href="https://github.com/spockz/lhs2texhl
 <ol>
 	<li>Added support for recursively traversing includes of .lhs files</li>
 	<li>The program now doesn't fail completely when haskell-src-exts fails to parse
-    a file. An error is reported and the program continues. :) A fmt file is
-    still generated.</li>
+a file.
+An error is reported and the program continues.
+:) A fmt file is
+still generated.</li>
 	<li>functions that aren't functions but constants are now given the tag `constant'</li>
 	<li>Removed a faulty command from the list.</li>
 	<li>Cleaned up some code. (Probably introduced other ugly code) </li>

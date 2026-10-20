@@ -12,7 +12,7 @@ PREVIEW_BASE_URL ?= http://localhost:1313/
 BROWSER_BASE_URL ?= $(PREVIEW_BASE_URL)
 TYPOGRAPHY_SOURCES := $(wildcard scripts/typography/*.go scripts/typography/go.mod scripts/typography/go.sum scripts/typography/*.txt scripts/typography/*.md scripts/typography/linebreak/*.go scripts/typography/font/*.ttf)
 
-.PHONY: check-hugo badges badges-check site-check typography-check build serve check check-browser release
+.PHONY: check-hugo badges badges-check site-check typography-check build serve check check-browser release format lint
 
 check-hugo:
 	@version="$$(hugo version)" || exit "$$?"; \
@@ -34,6 +34,12 @@ typography-check:
 
 site-check:
 	python3 -m unittest discover -s scripts -p '*_test.py'
+
+format:
+	python3 scripts/sembr.py -w content/posts/*.md
+
+lint:
+	python3 scripts/sembr.py --check content/posts/*.md
 
 build: check-hugo badges-check $(TYPOGRAPHY)
 	hugo --minify --gc --panicOnWarning --cleanDestinationDir

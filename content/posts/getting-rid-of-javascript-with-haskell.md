@@ -18,16 +18,19 @@
 ---
 
 For my Experimentation Project at Utrecht University I ported the "JCU"
-application to Haskell. The JCU application is used to give Dutch High school
+application to Haskell.
+The JCU application is used to give Dutch High school
 students the opportunity to taste Prolog.
 
-The project uses the Utrecht Haskell Compiler and its JavaScript backend. The UHC
+The project uses the Utrecht Haskell Compiler and its JavaScript backend.
+The UHC
 translates Haskell to Core and then translates this Core language to JavaScript.
 For more information on this see the blog of the creator of the
 [UHC JavaScript backend](http://utrechthaskellcompiler.wordpress.com/2010/10/18/haskell-to-javascript-backend/).
 
 Please read my [report](/downloads/report-on-getting-rid-of-js.pdf) on this
-project. The project is hosted on GitHub in the following repositories:
+project.
+The project is hosted on GitHub in the following repositories:
 
 * [JCU](https://github.com/spockz/JCU),
 * [uhc-jscript](https://github.com/spockz/uhc-jscript),

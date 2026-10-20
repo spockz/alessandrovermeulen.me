@@ -19,12 +19,16 @@
 ---
 
 Most of you are familiar with CSS reset scripts to reset CSS behaviour to
-something uniform across several browsers. I have been searching for a good CSS
-stylesheet that would do the same for the formatting of my text. That is, to
-give the text on a site a markup, suitable for reading. As a great fan of LaTeX
+something uniform across several browsers.
+I have been searching for a good CSS
+stylesheet that would do the same for the formatting of my text.
+That is, to
+give the text on a site a markup, suitable for reading.
+As a great fan of LaTeX
 this markup should follow the default markup of LaTeX as closely as possible.
 
-As I could not find such a stylesheet I build my own. It probably is far from
+As I could not find such a stylesheet I build my own.
+It probably is far from
 finished, although I tried to cover the most common cases in this script.
 
 In time there will be a git <a href="http://github.com">repository</a> that will

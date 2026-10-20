@@ -21,8 +21,11 @@
 ---
 
 Deep and shallow embedding are terms associated with Domain Specific Languages
-(DSL). A DSL is  a language geared toward a specific domain. The [dot language](http://www.graphviz.org/content/dot-language) is
-an example of such a DSL for describing Graphs. Conceptually, a shallow
+(DSL).
+A DSL is  a language geared toward a specific domain.
+The [dot language](http://www.graphviz.org/content/dot-language) is
+an example of such a DSL for describing Graphs.
+Conceptually, a shallow
 embedding captures the semantics of the data of the domain in a data type and
 provides a *fixed* interpretation of the data, whereas a deep embedding goes
 beyond this and captures the semantics of the operations on the domain enabling
@@ -30,10 +33,12 @@ beyond this and captures the semantics of the operations on the domain enabling
 
 We will illustrate this difference by embedding a simple expression language
 with summation, multiplication and constants in
-[Haskell](http://www.haskell.org). Haskell is especially well-suited for and
+[Haskell](http://www.haskell.org).
+Haskell is especially well-suited for and
 often used as a host language for embedded DSLs.
 
-We express our language with the following interface. A type synonym `Exp` for
+We express our language with the following interface.
+A type synonym `Exp` for
 normal `Int`s and three separate functions representing summation,
 multiplication, and constants.
 
@@ -55,8 +60,10 @@ val = const 4 `plus` (const 6 `times` const 8)
 ```
 
 The advantage of this embedding that calculating the value of our expression
-is very fast. Other than the value we cannot determine anything else regarding
-our expression. This becomes more problematic when we add variables to our
+is very fast.
+Other than the value we cannot determine anything else regarding
+our expression.
+This becomes more problematic when we add variables to our
 language.
 
 We change our type to contain binding information and add two functions to
@@ -75,7 +82,9 @@ And in our naivity we can write the expression $x + 6 * 8$ as follows:
 val = var "x" `plus` (const 6 `times` const 8)
 ```
 
-Obviously, evaluating this creates havoc! What is the value of `x`? We should,
+Obviously, evaluating this creates havoc!
+What is the value of `x`?
+We should,
 of course, have introduced it first:
 
 ``` haskell
@@ -86,7 +95,8 @@ Now we have assigned a value to `x` and we can safely use it in our
 expression.
 
 Had we used a deep embedding we could have prevented the cataclysmic error by
-first checking whether each variable is assigned before it is used. We create
+first checking whether each variable is assigned before it is used.
+We create
 a deep embedding of our expression by using a Haskell data type.
 
 ``` haskell
@@ -99,7 +109,8 @@ data Exp where
 ```
 
 Note that we do not specify *how* the bindings should be stored, only that
-such a thing exists. We now define a function that checks whether we use a
+such a thing exists.
+We now define a function that checks whether we use a
 variable before it is defined.[^folds]
 
 ``` haskell
@@ -129,7 +140,8 @@ diff (Var var)        dx | var == dx = Const 1
 ```
 
 Deep embedding allows us to utilize the semantics of our model by defining
-multiple interpretations of our DSL. The downside is that just calculating the
+multiple interpretations of our DSL.
+The downside is that just calculating the
 value of our expression has become slower due to the added overhead of the
 constructors, whereas the shallow embedding can be evaluated by only using
 `Int`s.
@@ -137,7 +149,7 @@ constructors, whereas the shallow embedding can be evaluated by only using
 In short:
 
 * **Shallow embedding** should be used when you only need a single interpretation or
-  when you are in a hurry.
+when you are in a hurry.
 * **Deep embedding** should be used in all other cases.
 
 More reading material on this subject:

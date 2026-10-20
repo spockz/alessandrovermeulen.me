@@ -20,7 +20,9 @@
 }
 ---
 
-I'm proud to announce the first release of my lhs2TeX-hl tool. For us who fancy using colours in our presentations or papers this should now go a whole lot easier. Go to the <a href="https://github.com/spockz/lhs2texhl">lhs2TeX-hl homepage</a>!
+I'm proud to announce the first release of my lhs2TeX-hl tool.
+For us who fancy using colours in our presentations or papers this should now go a whole lot easier.
+Go to the <a href="https://github.com/spockz/lhs2texhl">lhs2TeX-hl homepage</a>!
 
 Install it like this:
 
@@ -28,7 +30,8 @@ Install it like this:
 &gt; cabal install lhs2TeX-hl
 [/bash]
 
-lhs2TeX-hl is run before you run lhs2TeX and you supply it with the input file and the output file. A typical execution would look like this:
+lhs2TeX-hl is run before you run lhs2TeX and you supply it with the input file and the output file.
+A typical execution would look like this:
 
 [bash]
 &gt; lhs2TeX-hl -o MyPaper.fmt MyPaper.lhs
