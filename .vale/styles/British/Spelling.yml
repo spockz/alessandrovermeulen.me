@@ -1,0 +1,11 @@
+extends: spelling
+message: "Did you really mean '%s'?"
+level: error
+dicpath: config/dictionaries
+dictionaries:
+  - en_GB
+filters:
+  # Ignore Hugo shortcodes and markdown links
+  - '(?s)\{\{<.+?>\}\}'
+  - '(?s)\{\{%.+?%\}\}'
+  - '\[\^[^\]]+\]'

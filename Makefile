@@ -12,7 +12,7 @@ PREVIEW_BASE_URL ?= http://localhost:1313/
 BROWSER_BASE_URL ?= $(PREVIEW_BASE_URL)
 TYPOGRAPHY_SOURCES := $(wildcard scripts/typography/*.go scripts/typography/go.mod scripts/typography/go.sum scripts/typography/*.txt scripts/typography/*.md scripts/typography/linebreak/*.go scripts/typography/font/*.ttf)
 
-.PHONY: check-hugo badges badges-check site-check typography-check build serve check check-browser release format lint
+.PHONY: check-hugo badges badges-check site-check typography-check build serve check check-browser release format lint vale
 
 check-hugo:
 	@version="$$(hugo version)" || exit "$$?"; \
@@ -38,7 +38,7 @@ site-check:
 format:
 	python3 scripts/sembr.py -w content/posts/*.md
 
-lint:
+lint: vale
 	python3 scripts/sembr.py --check content/posts/*.md
 
 build: check-hugo badges-check $(TYPOGRAPHY)
@@ -48,7 +48,10 @@ build: check-hugo badges-check $(TYPOGRAPHY)
 serve: check-hugo badges-check $(TYPOGRAPHY)
 	"$(TYPOGRAPHY)" serve --bind "$(PREVIEW_BIND)" --baseURL "$(PREVIEW_BASE_URL)"
 
-check: build site-check typography-check
+vale:
+	vale content/posts
+
+check: build site-check typography-check vale
 	python3 scripts/check_site.py .cache/build
 
 check-browser:

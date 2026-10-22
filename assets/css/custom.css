@@ -516,3 +516,17 @@
     display: none;
   }
 }
+
+/* Auto-numbered textbook observation blocks */
+article {
+  counter-reset: observation-counter;
+}
+
+.observation-box {
+  counter-increment: observation-counter;
+}
+
+.observation-label::before {
+  content: "Observation " counter(observation-counter);
+}
+

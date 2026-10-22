@@ -1,0 +1,9 @@
+{{ $title := .Get "title" }}
+<aside class="observation-box my-6 rounded-r-xl border-l-4 border-primary-500 bg-neutral-100/70 p-4 shadow-sm dark:bg-neutral-800/50">
+  <div class="observation-header font-bold text-neutral-900 dark:text-white">
+    <span class="observation-label"></span>{{ with $title }}<span class="observation-title text-neutral-600 dark:text-neutral-400 font-normal"> ({{ . }})</span>{{ end }}
+  </div>
+  <div class="observation-body mt-2 text-sm leading-relaxed text-neutral-700 dark:text-neutral-300">
+    {{ .Inner | markdownify }}
+  </div>
+</aside>
