@@ -36,7 +36,7 @@ The imperative instructions bear little resemblance to the original description 
 When the business model changes the imperative counterpart could change entirely but what happens is that programmers make incremental updates to the code.
 This is done because either they do not see that a more drastic change is necessary or because they are under pressure to deliver results.
 Over time this leads to bugs and unmaintainable code.
-Summarized, bugs are introduced because there is a manual translation step between the business model and the program code.
+Summarised, bugs are introduced because there is a manual translation step between the business model and the program code.
 
 Imagine a system for calculating whether a person should receive a certain allowance.
 To receive the allowance a person has to meet several criteria such as `age > 18 and income < 2400`.

@@ -55,7 +55,7 @@ Example usages are [LoggingFilter](https://twitter.github.io/finagle/docs/index.
 
 The use of Futures makes it easy to test asynchronous computations.
 Services and
-filters both can be created separately, each containing their specialized logic.
+filters both can be created separately, each containing their specialised logic.
 This modularity makes it easy to test and reason about them separately.
 Services
 and filters are easily composed, just like functions do, which makes it
@@ -112,7 +112,7 @@ is not yet known.
 
 ## The community
 
-The Finagle team will synchronize the internal Finagle repository with the
+The Finagle team will synchronise the internal Finagle repository with the
 Github repository every Monday.
 They will strive to publish a snapshot version
 of the change as well.

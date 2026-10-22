@@ -139,7 +139,7 @@ diff (Var var)        dx | var == dx = Const 1
                          | otherwise = Const 0
 ```
 
-Deep embedding allows us to utilize the semantics of our model by defining
+Deep embedding allows us to utilise the semantics of our model by defining
 multiple interpretations of our DSL.
 The downside is that just calculating the
 value of our expression has become slower due to the added overhead of the

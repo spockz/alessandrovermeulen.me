@@ -14,7 +14,7 @@
 
 People tend to only understand what they can see.
 For most people it is
-difficult to grasp more abstract matters without somehow visualizing them.
+difficult to grasp more abstract matters without somehow visualising them.
 Software is an example of such an abstract matter.
 Let us visit the process of
 developing software through a comparison with developing a building.

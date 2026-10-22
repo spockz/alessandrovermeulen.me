@@ -27,10 +27,10 @@ Additionally all elements of the solution need to communicate through a common a
 
 Docker has always been a tool with a single purpose: the creating, transport, and running of images.
 Until today there where several issues with docker that make using it somewhat trying at times.
-It lacked in capabilities for orchestration which is categorized by:
+It lacked in capabilities for orchestration which is categorised by:
 
 1. Installation of a docker host from scratch;
-2. Clustering of multiple docker hosts to spread resource utilization over the cluster;
+2. Clustering of multiple docker hosts to spread resource utilisation over the cluster;
 3. Managing inter-container dependencies at runtime.
 
 Today this changed as Docker Inc.
@@ -55,12 +55,12 @@ More information can be found at [github](https://github.com/docker/machine).
 ## Clustering: Swarm
 
 Ideally you want to control a cluster of docker hosts with the same interface as you control a single host.
-In other words the interface needs to be transparent or standardized.
+In other words the interface needs to be transparent or standardised.
 With swarm you can.
 
 All existing commands on docker work with the swarm as well.
 Just point your docker binary to the swarm proxy and you are controlling the cluster instead of one single machine.
-Swarm is location/data center aware and also incorporates resource management.
+Swarm is location/data centre aware and also incorporates resource management.
 The default strategy is to use as little hosts as possible.
 The strategy places several lighter containers on the same node in order to reserve other nodes for heavier containers.
 

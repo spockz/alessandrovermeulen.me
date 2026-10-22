@@ -176,7 +176,7 @@ short we have the `data` keyword, followed by zero or more `type
 variables`, a `=` and then a number of `data
 constructors` separated by a `|`.
 
-Now that you have familiarized yourself with lists we can proceed to a slightly
+Now that you have familiarised yourself with lists we can proceed to a slightly
 more complicated datastructure.
 The Tree.
 In this example we will use a simple
