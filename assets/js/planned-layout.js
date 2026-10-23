@@ -284,9 +284,11 @@
 
   const pendingScopes = new Set();
   let framePending = false;
+  let layoutRevision = 0;
 
   function flushPlans() {
     framePending = false;
+    const revision = layoutRevision;
     const scopes = [...pendingScopes];
     pendingScopes.clear();
     const plans = scopes.map((validate) => validate()).filter(Boolean);
@@ -301,7 +303,7 @@
     });
     // Share layout work across scopes instead of alternating reads and writes per paragraph.
     for (const plan of plans) plan.run("rewrite");
-    for (const plan of plans) plan.run("prepare", probe);
+    for (const plan of plans) plan.run("prepare", { probe, revision });
     if (probe.childElementCount) {
       document.body.append(probe);
       try {
@@ -483,10 +485,14 @@
       return styles.get(node);
     }
     const lines = [];
+    const piecesByLine = new Map();
+    for (const piece of paragraph.querySelectorAll("[data-line]")) {
+      const key = piece.dataset.line;
+      if (!piecesByLine.has(key)) piecesByLine.set(key, []);
+      piecesByLine.get(key).push(piece);
+    }
     for (const first of paragraph.querySelectorAll("[data-natural]")) {
-      const pieces = [
-        ...paragraph.querySelectorAll(`[data-line="${first.dataset.line}"]`),
-      ];
+      const pieces = piecesByLine.get(first.dataset.line) ?? [];
       const row = document.createElement("div");
       row.style.width = "max-content";
       const ancestors = new Map();
@@ -598,6 +604,7 @@
 
     function fail(error) {
       failed = true;
+      layoutRevision++;
       scope.classList.remove("planned-layout");
       if (status)
         status.textContent = "Responsive wrapping: layout check failed.";
@@ -693,7 +700,7 @@
               result = { valid: false, reason: "column width not planned" };
               continue;
             }
-            candidates.push({ entry, selection, ready: false });
+            candidates.push({ entry, selection, geometry, ready: false });
           } catch (error) {
             reject(entry, error);
           }
@@ -718,23 +725,35 @@
                   result = { valid: false, reason: "text selection active" };
                   continue;
                 }
+                layoutRevision++;
                 paragraph.classList.remove("planned-paragraph");
                 rewriteParagraph(paragraph, entry.bundle, selection);
                 entry.pathID = selection.pathID;
               }
-              paragraph.dataset.planWidth = selection.width;
+              if (paragraph.dataset.planWidth !== String(selection.width)) {
+                layoutRevision++;
+                paragraph.dataset.planWidth = selection.width;
+              }
               candidate.ready = true;
             } catch (error) {
               reject(entry, error);
             }
           }
         },
-        prepare(probe) {
+        prepare({ probe, revision }) {
           const styles = new Map();
-          for (const { entry, selection, ready } of candidates) {
+          for (const {
+            entry,
+            selection,
+            ready,
+            geometry: originalGeometry,
+          } of candidates) {
             if (!ready) continue;
             try {
-              const geometry = readGeometry(entry);
+              const geometry =
+                layoutRevision !== revision
+                  ? readGeometry(entry)
+                  : originalGeometry;
               result = assessPlan(geometry);
               if (!result.valid) continue;
               const current = selectWidthPlan(entry.bundle, geometry.width);

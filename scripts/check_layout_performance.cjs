@@ -238,6 +238,27 @@ async function checkScopes(browser, html) {
         40,
       );
     }
+    await page.addStyleTag({
+      content:
+        "@media(max-height:760px){#image-text{letter-spacing:1px!important}}",
+    });
+    await settle(page);
+    await active(ids);
+    for (const height of [730, 874]) {
+      await page.setViewportSize({ width: 834, height });
+      if (height === 730) {
+        await page.waitForFunction(() => {
+          const paragraph = document.getElementById("image-text");
+          return (
+            getComputedStyle(paragraph).letterSpacing === "1px" &&
+            !paragraph.classList.contains("planned-paragraph")
+          );
+        });
+        await active(ids.filter((id) => id !== "image-text"));
+      } else {
+        await active(ids);
+      }
+    }
     await page.locator("#inline-image").evaluate((node) => {
       node.style.maxWidth = "20px";
     });
