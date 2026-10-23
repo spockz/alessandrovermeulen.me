@@ -54,9 +54,10 @@ vale:
 check: build site-check typography-check vale
 	python3 scripts/check_site.py .cache/build
 
-check-browser:
+check-browser: $(TYPOGRAPHY)
 	node scripts/check_typography_browser.cjs "$(BROWSER_BASE_URL)"
 	TYPOGRAPHY_BROWSER=webkit node scripts/check_selection_browser.cjs "$(BROWSER_BASE_URL)"
+	node scripts/check_layout_performance.cjs "$(BROWSER_BASE_URL)"
 
 release: check-hugo badges-check $(TYPOGRAPHY)
 	hugo --minify --gc --panicOnWarning --cleanDestinationDir --destination public

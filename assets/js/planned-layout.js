@@ -282,6 +282,46 @@
     };
   if (typeof document === "undefined") return;
 
+  const pendingScopes = new Set();
+  let framePending = false;
+
+  function flushPlans() {
+    framePending = false;
+    const scopes = [...pendingScopes];
+    pendingScopes.clear();
+    const plans = scopes.map((validate) => validate()).filter(Boolean);
+    const probe = document.createElement("div");
+    probe.setAttribute("aria-hidden", "true");
+    Object.assign(probe.style, {
+      position: "absolute",
+      visibility: "hidden",
+      left: "-100000px",
+      top: "0",
+      width: "max-content",
+    });
+    // Share layout work across scopes instead of alternating reads and writes per paragraph.
+    for (const plan of plans) plan.run("rewrite");
+    for (const plan of plans) plan.run("prepare", probe);
+    if (probe.childElementCount) {
+      document.body.append(probe);
+      try {
+        for (const plan of plans) plan.run("measure");
+      } finally {
+        probe.remove();
+      }
+    }
+    for (const plan of plans) plan.run("commit");
+  }
+
+  function readStyle(node) {
+    const style = getComputedStyle(node);
+    return Object.fromEntries(
+      [...measurementProperties, "wordSpacing", "textIndent"].map(
+        (property) => [property, style[property]],
+      ),
+    );
+  }
+
   function removePlanMarkup(paragraph) {
     for (const generated of paragraph.querySelectorAll(
       ".planned-break, .planned-hyphen",
@@ -425,14 +465,9 @@
     }
   }
 
-  function measureLines(paragraph, style) {
+  function prepareLines(paragraph, style, styles) {
     const probe = document.createElement("div");
-    probe.setAttribute("aria-hidden", "true");
     Object.assign(probe.style, {
-      position: "absolute",
-      visibility: "hidden",
-      left: "-100000px",
-      top: "0",
       whiteSpace: "nowrap",
       width: "max-content",
       padding: "0",
@@ -443,89 +478,86 @@
     });
     for (const property of fontProperties)
       probe.style[property] = style[property];
-    document.body.append(probe);
-    try {
-      const lines = [];
-      for (const first of paragraph.querySelectorAll("[data-natural]")) {
-        const pieces = [
-          ...paragraph.querySelectorAll(`[data-line="${first.dataset.line}"]`),
-        ];
-        const row = document.createElement("div");
-        row.style.width = "max-content";
-        const ancestors = new Map();
-        for (const piece of pieces) {
-          const ancestry = [];
-          for (
-            let ancestor = piece.parentElement;
-            ancestor !== paragraph;
-            ancestor = ancestor.parentElement
-          ) {
-            if (!ancestor) throw new Error("Planned piece escaped its block");
-            ancestry.push(ancestor);
-          }
-          let parent = row;
-          for (const ancestor of ancestry.reverse()) {
-            let box = ancestors.get(ancestor);
-            if (!box) {
-              box = ancestor.cloneNode(false);
-              box.removeAttribute("id");
-              const ancestorStyle = getComputedStyle(ancestor);
-              for (const property of measurementProperties)
-                box.style[property] = ancestorStyle[property];
-              box.style.whiteSpace = ancestor.closest("[data-plan-atom]")
-                ? "pre"
-                : "nowrap";
-              box.style.wordSpacing = "0px";
-              ancestors.set(ancestor, box);
-              parent.append(box);
-            }
-            parent = box;
-          }
-          const copy = piece.cloneNode(true);
-          const pieceStyle = getComputedStyle(piece);
-          for (const property of measurementProperties)
-            copy.style[property] = pieceStyle[property];
-          copy.style.whiteSpace = piece.closest("[data-plan-atom]")
-            ? "pre"
-            : "nowrap";
-          copy.style.wordSpacing = "0px";
-          for (const dash of copy.querySelectorAll(".planned-hyphen"))
-            dash.style.display = "inline";
-          const sourceImages = piece.querySelectorAll("img");
-          for (const [index, image] of [
-            ...copy.querySelectorAll("img"),
-          ].entries()) {
-            image.removeAttribute("id");
-            const imageStyle = getComputedStyle(sourceImages[index]);
-            for (const property of [
-              ...measurementProperties,
-              "width",
-              "height",
-              "minWidth",
-              "maxWidth",
-              "boxSizing",
-            ])
-              image.style[property] = imageStyle[property];
-            image.style.display = "inline-block";
-            image.style.maxWidth = "none";
-          }
-          parent.append(copy);
-        }
-        probe.append(row);
-        lines.push({
-          row,
-          pieces,
-          expected: Number(first.dataset.natural),
-          spaces: Number(first.dataset.spaces),
-          final: first.dataset.final === "true",
-        });
-      }
-      for (const line of lines)
-        line.actual = line.row.getBoundingClientRect().width;
-      return lines;
-    } finally {
-      probe.remove();
+    function sourceStyle(node) {
+      if (!styles.has(node)) styles.set(node, readStyle(node));
+      return styles.get(node);
     }
+    const lines = [];
+    for (const first of paragraph.querySelectorAll("[data-natural]")) {
+      const pieces = [
+        ...paragraph.querySelectorAll(`[data-line="${first.dataset.line}"]`),
+      ];
+      const row = document.createElement("div");
+      row.style.width = "max-content";
+      const ancestors = new Map();
+      for (const piece of pieces) {
+        const ancestry = [];
+        for (
+          let ancestor = piece.parentElement;
+          ancestor !== paragraph;
+          ancestor = ancestor.parentElement
+        ) {
+          if (!ancestor) throw new Error("Planned piece escaped its block");
+          ancestry.push(ancestor);
+        }
+        let parent = row;
+        for (const ancestor of ancestry.reverse()) {
+          let box = ancestors.get(ancestor);
+          if (!box) {
+            box = ancestor.cloneNode(false);
+            box.removeAttribute("id");
+            const ancestorStyle = sourceStyle(ancestor);
+            for (const property of measurementProperties)
+              box.style[property] = ancestorStyle[property];
+            box.style.whiteSpace = ancestor.closest("[data-plan-atom]")
+              ? "pre"
+              : "nowrap";
+            box.style.wordSpacing = "0px";
+            ancestors.set(ancestor, box);
+            parent.append(box);
+          }
+          parent = box;
+        }
+        const copy = piece.cloneNode(true);
+        const pieceStyle = sourceStyle(piece);
+        for (const property of measurementProperties)
+          copy.style[property] = pieceStyle[property];
+        copy.style.whiteSpace = piece.closest("[data-plan-atom]")
+          ? "pre"
+          : "nowrap";
+        copy.style.wordSpacing = "0px";
+        for (const dash of copy.querySelectorAll(".planned-hyphen"))
+          dash.style.display = "inline";
+        const sourceImages = piece.querySelectorAll("img");
+        for (const [index, image] of [
+          ...copy.querySelectorAll("img"),
+        ].entries()) {
+          image.removeAttribute("id");
+          const imageStyle = getComputedStyle(sourceImages[index]);
+          for (const property of [
+            ...measurementProperties,
+            "width",
+            "height",
+            "minWidth",
+            "maxWidth",
+            "boxSizing",
+          ])
+            image.style[property] = imageStyle[property];
+          image.style.display = "inline-block";
+          image.style.maxWidth = "none";
+        }
+        parent.append(copy);
+      }
+      probe.append(row);
+      lines.push({
+        row,
+        pieces,
+        expected: Number(first.dataset.natural),
+        spaces: Number(first.dataset.spaces),
+        final: first.dataset.final === "true",
+      });
+    }
+    return { probe, lines };
   }
 
   function inlineContracts(paragraph) {
@@ -561,141 +593,220 @@
       bundle: null,
       pathID: null,
     }));
-    let queued = false;
     let failed = false;
     let selectionDeferred = false;
 
+    function fail(error) {
+      failed = true;
+      scope.classList.remove("planned-layout");
+      if (status)
+        status.textContent = "Responsive wrapping: layout check failed.";
+      console.warn(
+        "Article layout validation failed; using responsive wrapping.",
+        error,
+      );
+    }
+
     function validate() {
-      queued = false;
-      if (failed) return;
+      if (failed) return null;
       try {
-        applyPlan();
+        const plan = preparePlan();
+        return {
+          run(stage, probe) {
+            if (failed) return;
+            try {
+              plan[stage](probe);
+            } catch (error) {
+              fail(error);
+            }
+          },
+        };
       } catch (error) {
-        failed = true;
-        scope.classList.remove("planned-layout");
-        if (status)
-          status.textContent = "Responsive wrapping: layout check failed.";
-        console.warn(
-          "Article layout validation failed; using responsive wrapping.",
-          error,
-        );
+        fail(error);
+        return null;
       }
     }
 
-    function applyPlan() {
+    function readGeometry(entry) {
+      const { paragraph } = entry;
+      const style = readStyle(paragraph);
+      const contracts = inlineContracts(paragraph);
+      const width = contentWidth(
+        paragraph.getBoundingClientRect().width,
+        style,
+      );
+      return {
+        fontReady:
+          Boolean(document.fonts) &&
+          fontsReady([...document.fonts], requiredFonts(paragraph, contracts)),
+        style,
+        size: Number(paragraph.dataset.planSize),
+        weight: paragraph.dataset.planWeight ?? "400",
+        fontStyle: paragraph.dataset.planStyle ?? "normal",
+        width,
+        plannedWidth: Math.floor(width),
+        widthTolerance: 1,
+        inlineMismatch: contracts.some(({ node, expected }) => {
+          const inlineStyle = readStyle(node);
+          return !(node.nodeName === "IMG"
+            ? imageStyleMatches(
+                node.getBoundingClientRect().width,
+                inlineStyle,
+                expected,
+              )
+            : inlineStyleMatches(inlineStyle, expected));
+        }),
+      };
+    }
+
+    function preparePlan() {
       const selected =
         !comparison ||
         comparison.querySelector(".typography-mode-planned").checked;
       let result = { valid: false, reason: "native mode selected" };
+      const candidates = [];
+      const measurements = [];
       const prepared = [];
-      const textSelection = window.getSelection();
+      function reject(entry, error) {
+        result = { valid: false, reason: "line plan invalid" };
+        if (entry.error !== error.message) {
+          entry.error = error.message;
+          console.warn(
+            "Article block layout validation failed; using responsive wrapping.",
+            error,
+          );
+        }
+      }
       if (selected && paragraphs.length) {
         for (const entry of entries) {
           try {
             const { paragraph } = entry;
+            const geometry = readGeometry(entry);
+            result = assessPlan(geometry);
+            if (!result.valid) continue;
             if (entry.bundle === null) {
               entry.bundle = JSON.parse(paragraph.dataset.linePlans);
               entry.pathID = entry.bundle.widths[paragraph.dataset.planWidth];
             }
-            const style = getComputedStyle(paragraph);
-            const contracts = inlineContracts(paragraph);
-            const width = contentWidth(
-              paragraph.getBoundingClientRect().width,
-              style,
-            );
-            const geometry = {
-              fontReady:
-                Boolean(document.fonts) &&
-                fontsReady(
-                  [...document.fonts],
-                  requiredFonts(paragraph, contracts),
-                ),
-              style,
-              size: Number(paragraph.dataset.planSize),
-              weight: paragraph.dataset.planWeight ?? "400",
-              fontStyle: paragraph.dataset.planStyle ?? "normal",
-              width,
-              plannedWidth: Math.floor(width),
-              widthTolerance: 1,
-              inlineMismatch: contracts.some(({ node, expected }) => {
-                const inlineStyle = getComputedStyle(node);
-                return !(node.nodeName === "IMG"
-                  ? imageStyleMatches(
-                      node.getBoundingClientRect().width,
-                      inlineStyle,
-                      expected,
-                    )
-                  : inlineStyleMatches(inlineStyle, expected));
-              }),
-            };
-            result = assessPlan(geometry);
-            if (!result.valid) continue;
-            const selection = selectWidthPlan(entry.bundle, width);
+            const selection = selectWidthPlan(entry.bundle, geometry.width);
             if (!selection) {
               result = { valid: false, reason: "column width not planned" };
               continue;
             }
-            const { bundle } = entry;
-            if (entry.pathID !== selection.pathID) {
-              if (
-                textSelection &&
-                !textSelection.isCollapsed &&
-                [...Array(textSelection.rangeCount).keys()].some((index) =>
-                  textSelection.getRangeAt(index).intersectsNode(paragraph),
-                )
-              ) {
-                selectionDeferred = true;
-                result = { valid: false, reason: "text selection active" };
-                continue;
-              }
-              paragraph.classList.remove("planned-paragraph");
-              rewriteParagraph(paragraph, bundle, selection);
-              entry.pathID = selection.pathID;
-            }
-            paragraph.dataset.planWidth = selection.width;
-            const lines = measureLines(paragraph, style);
-            result = assessPlan(geometry, lines);
-            if (!result.valid) continue;
-            for (const [index, line] of lines.entries()) {
-              for (const piece of line.pieces) {
-                const spacing = `${result.adjustments[index]}px`;
-                if (
-                  piece.style.getPropertyValue("--plan-spacing") !== spacing
-                ) {
-                  piece.style.setProperty("--plan-spacing", spacing);
-                }
-              }
-            }
-            prepared.push({ entry, geometry, style, selection });
-            entry.error = null;
+            candidates.push({ entry, selection, ready: false });
           } catch (error) {
-            result = { valid: false, reason: "line plan invalid" };
-            if (entry.error !== error.message) {
-              entry.error = error.message;
-              console.warn(
-                "Article block layout validation failed; using responsive wrapping.",
-                error,
-              );
-            }
+            reject(entry, error);
           }
         }
       }
-      const active = new Set(prepared.map(({ entry }) => entry.paragraph));
-      for (const paragraph of paragraphs)
-        paragraph.classList.toggle("planned-paragraph", active.has(paragraph));
-      scope.classList.toggle("planned-layout", active.size > 0);
-      if (status) {
-        const message = active.size
-          ? `Planned lines active in ${prepared.length} prose blocks at ${[...new Set(prepared.map(({ geometry }) => geometry.plannedWidth))].join(", ")} px.${prepared.length < paragraphs.length ? ` ${paragraphs.length - prepared.length} ${paragraphs.length - prepared.length === 1 ? "uses" : "use"} native wrapping.` : ""}`
-          : `Responsive wrapping: ${result.reason}.`;
-        if (status.textContent !== message) status.textContent = message;
-      }
+      return {
+        rewrite() {
+          for (const candidate of candidates) {
+            const { entry, selection } = candidate;
+            const { paragraph } = entry;
+            try {
+              if (entry.pathID !== selection.pathID) {
+                const textSelection = window.getSelection();
+                if (
+                  textSelection &&
+                  !textSelection.isCollapsed &&
+                  [...Array(textSelection.rangeCount).keys()].some((index) =>
+                    textSelection.getRangeAt(index).intersectsNode(paragraph),
+                  )
+                ) {
+                  selectionDeferred = true;
+                  result = { valid: false, reason: "text selection active" };
+                  continue;
+                }
+                paragraph.classList.remove("planned-paragraph");
+                rewriteParagraph(paragraph, entry.bundle, selection);
+                entry.pathID = selection.pathID;
+              }
+              paragraph.dataset.planWidth = selection.width;
+              candidate.ready = true;
+            } catch (error) {
+              reject(entry, error);
+            }
+          }
+        },
+        prepare(probe) {
+          const styles = new Map();
+          for (const { entry, selection, ready } of candidates) {
+            if (!ready) continue;
+            try {
+              const geometry = readGeometry(entry);
+              result = assessPlan(geometry);
+              if (!result.valid) continue;
+              const current = selectWidthPlan(entry.bundle, geometry.width);
+              if (
+                !current ||
+                current.pathID !== selection.pathID ||
+                current.width !== selection.width
+              ) {
+                result = { valid: false, reason: "column width changed" };
+                schedule();
+                continue;
+              }
+              const measurement = prepareLines(
+                entry.paragraph,
+                geometry.style,
+                styles,
+              );
+              probe.append(measurement.probe);
+              measurements.push({ entry, geometry, lines: measurement.lines });
+            } catch (error) {
+              reject(entry, error);
+            }
+          }
+        },
+        measure() {
+          for (const measurement of measurements) {
+            try {
+              for (const line of measurement.lines)
+                line.actual = line.row.getBoundingClientRect().width;
+              result = assessPlan(measurement.geometry, measurement.lines);
+              if (!result.valid) continue;
+              prepared.push({
+                ...measurement,
+                adjustments: result.adjustments,
+              });
+              measurement.entry.error = null;
+            } catch (error) {
+              reject(measurement.entry, error);
+            }
+          }
+        },
+        commit() {
+          for (const { lines, adjustments } of prepared) {
+            for (const [index, line] of lines.entries()) {
+              const spacing = `${adjustments[index]}px`;
+              for (const piece of line.pieces)
+                if (piece.style.getPropertyValue("--plan-spacing") !== spacing)
+                  piece.style.setProperty("--plan-spacing", spacing);
+            }
+          }
+          const active = new Set(prepared.map(({ entry }) => entry.paragraph));
+          for (const paragraph of paragraphs)
+            paragraph.classList.toggle(
+              "planned-paragraph",
+              active.has(paragraph),
+            );
+          scope.classList.toggle("planned-layout", active.size > 0);
+          if (status) {
+            const message = active.size
+              ? `Planned lines active in ${prepared.length} prose blocks at ${[...new Set(prepared.map(({ geometry }) => geometry.plannedWidth))].join(", ")} px.${prepared.length < paragraphs.length ? ` ${paragraphs.length - prepared.length} ${paragraphs.length - prepared.length === 1 ? "uses" : "use"} native wrapping.` : ""}`
+              : `Responsive wrapping: ${result.reason}.`;
+            if (status.textContent !== message) status.textContent = message;
+          }
+        },
+      };
     }
 
     function schedule() {
-      if (!queued) {
-        queued = true;
-        requestAnimationFrame(validate);
+      pendingScopes.add(validate);
+      if (!framePending) {
+        framePending = true;
+        requestAnimationFrame(flushPlans);
       }
     }
 
@@ -751,7 +862,7 @@
     });
     document.addEventListener("visibilitychange", schedule);
     if (!document.fonts) {
-      validate();
+      schedule();
       return;
     }
     document.fonts.addEventListener("loading", () => {

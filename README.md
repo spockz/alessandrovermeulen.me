@@ -32,7 +32,7 @@ make check
 
 This performs a minified build with warnings treated as errors, applies soft hyphens and line plans to every blog post and About, runs Hugo version, permalink, and download integrity tests, the Go helper's tests and static analysis and the browser guard's unit tests, then checks the captured live article URLs and compatibility aliases, default typography on all posts and About, draft exclusions, the sitemap and robots.txt, the complete Atom feed and its discovery link in every page head, local links and anchors, original download hashes, and page-weight budgets including the article fonts. Results are saved to `.cache/review/site.json`.
 
-With the preview running, optional WebKit regression checks verify rendered typography at phone and desktop widths, native text selection and copying, resizing, and printing:
+With the preview running, optional browser regression checks verify rendered typography at phone and desktop widths, native text selection and copying, resizing, printing, and Chromium layout work:
 
 ```sh
 make check-browser
@@ -119,6 +119,8 @@ Each paragraph stores its source text once, shared line metrics, shared sequence
 Planned line breaks and displayed hyphens are empty inline markers rendered with CSS pseudo-elements. They create no source newlines or hyphen characters, so native word and paragraph selection crosses the composed lines. Source spaces and soft hyphens at chosen breaks remain selectable at zero visual width. Original explicit breaks are preserved for native wrapping, printing and copying. The copy handler strips discretionary hyphens and plan markup from both whole paragraphs and individual words.
 
 A small deferred script enables `.planned-layout` only after each required font face loads, declared block and inline styling matches, and actual browser measurements of every chosen line agree within 0.4 pixels. Resize, font-loading and style changes revalidate the plans without running the optimizer. Larger text, font changes, missing JavaScript or failed font loading retain continuous, justified text with soft hyphens. Widths outside the covered range and individual blocks whose chosen lines cannot fit with the allowed spacing also use native wrapping. Other eligible blocks remain planned. Printing uses native wrapping too.
+
+All scheduled typography scopes share one validation frame. The guard snapshots source styles, rewrites changed line sequences, rechecks widths, builds measurement boxes while detached, reads their widths together, and then applies spacing and classes. This avoids alternating DOM writes and layout reads for each paragraph. Measurements remain fresh on every update; observers also revalidate the committed layout. `make check-browser` checks Chromium layout counts after resizing and exercises nested scopes and inline-image fallback in both Chromium and WebKit. Both browser engines must be installed in Playwright's cache.
 
 Inline code uses **Article Mono at 0.875em**, with 5 pixels of padding on each side. Both font advances and padding count toward the line width. Code boxes stay whole in planned lines, including spaces and hyphens inside them. Their spaces remain fixed; only prose spaces stretch or shrink. The browser measures the code boxes with their actual font and padding and disables plans if they differ from the build contract.
 

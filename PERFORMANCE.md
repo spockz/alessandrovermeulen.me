@@ -2,7 +2,7 @@
 
 # Loading performance
 
-Transfer sizes updated on 9 October 2026 using Hugo 0.166.0 extended and Blowfish v3.8.0. These are local lab measurements, not measurements of the deployed site.
+Transfer sizes updated on 23 October 2026 using Hugo 0.166.0 extended and Blowfish v3.8.0. These are local lab measurements, not measurements of the deployed site.
 
 ## Transfer sizes
 
@@ -10,13 +10,13 @@ Transfer sizes updated on 9 October 2026 using Hugo 0.166.0 extended and Blowfis
 
 | Page                           | Total gzip bytes |   HTML | Shared CSS | Shared JavaScript | Layout guard | Article fonts | Favicon |
 | ------------------------------ | ---------------: | -----: | ---------: | ----------------: | -----------: | ------------: | ------: |
-| Home                           |           70,497 | 24,310 |     22,997 |             2,405 |        5,428 |        15,083 |     274 |
-| Projects                       |           64,649 |  8,979 |     22,997 |             2,405 |            0 |        29,994 |     274 |
-| Writing                        |           95,058 | 48,871 |     22,997 |             2,405 |        5,428 |        15,083 |     274 |
-| Shallow/deep embedding article |          137,283 | 50,119 |     22,997 |             2,405 |        5,428 |        56,060 |     274 |
-| FinagleCon comparison          |          130,359 | 57,790 |     22,997 |             2,405 |        5,428 |        41,465 |     274 |
+| Home                           |           68,091 | 21,422 |     23,055 |             2,405 |        5,852 |        15,083 |     274 |
+| Projects                       |           64,712 |  8,984 |     23,055 |             2,405 |            0 |        29,994 |     274 |
+| Writing                        |           97,096 | 50,427 |     23,055 |             2,405 |        5,852 |        15,083 |     274 |
+| Shallow/deep embedding article |          137,765 | 50,119 |     23,055 |             2,405 |        5,852 |        56,060 |     274 |
+| FinagleCon comparison          |          130,831 | 57,780 |     23,055 |             2,405 |        5,852 |        41,465 |     274 |
 
-Article pages use a local 15,060-byte regular prose WOFF2 and load matching bold (14,888 bytes), italic (14,572 bytes) or bold italic (14,544 bytes) faces when used. Inline code in typography scopes requests an 11,448-byte monospace WOFF2. Article summaries also use the regular prose font; the home profile and navigation retain system fonts. There are two shared JavaScript files for appearance, navigation, and code copying. Blog posts and pages containing article summaries additionally load a 5,428-byte gzipped geometry guard. The optimizer runs only in Go during build/preview; there is no browser optimizer or Go WebAssembly runtime. CSS and JavaScript filenames include content fingerprints, and font filenames are versioned, so they can be cached across article visits. Each representative page's local transfer estimate excludes the two deferred external CI badges on Projects, which are listed separately in the report.
+Article pages use a local 15,060-byte regular prose WOFF2 and load matching bold (14,888 bytes), italic (14,572 bytes) or bold italic (14,544 bytes) faces when used. Inline code in typography scopes requests an 11,448-byte monospace WOFF2. Article summaries also use the regular prose font; the home profile and navigation retain system fonts. There are two shared JavaScript files for appearance, navigation, and code copying. Blog posts and pages containing article summaries additionally load a 5,852-byte gzipped geometry guard. The optimizer runs only in Go during build/preview; there is no browser optimizer or Go WebAssembly runtime. CSS and JavaScript filenames include content fingerprints, and font filenames are versioned, so they can be cached across article visits. Each representative page's local transfer estimate excludes the two deferred external CI badges on Projects, which are listed separately in the report.
 
 The Projects page uses Blowfish's feature grid and card styling and loads the regular and bold article fonts. Each project has a distinct inline SVG emblem generated from the shared local style catalog. Language pills beside titles and unconfigured CI labels are local HTML. The two configured workflows use GitHub's live status SVGs with lazy loading and reserved space. Builds make no GitHub requests, and the labels add no JavaScript. WebKit checks cover emblem sizing, distinct symbols, clipping, overflow, and title pills, and CI status aligned right in the source-link row at phone, tablet, and desktop widths in light and dark modes.
 
@@ -75,7 +75,7 @@ node scripts/measure_browser.cjs http://127.0.0.1:1314/
 
 If Playwright is installed outside normal Node module resolution, set `PLAYWRIGHT_MODULE` to that package's absolute path. Set `PLAYWRIGHT_BROWSERS_PATH` when using a non-default browser cache. The script uses an isolated browser and does not control the interactive preview.
 
-With Playwright's WebKit browser installed and `make serve` running, check the responsive typography separately:
+With Playwright's Chromium and WebKit browsers installed and `make serve` running, check responsive typography and layout work:
 
 ```sh
 make check-browser
@@ -88,3 +88,20 @@ The layout script checks actual rendered line fragments at 320, 390, 402, 834, 8
 The site uses lowercase post URLs, so the same build and validation commands work on macOS and Linux.
 
 The layout script also checks cold font loading on About and home summaries at phone and desktop widths. It holds font requests open and captures actual pixels without Playwright's usual wait for fonts: no fallback glyphs may appear during the blocking period, and loaded text must be visible at the same 16-pixel size. The regular face must use one request shared by the preload and CSS. Failed font requests and disabled JavaScript must retain readable native text. Results are saved to `.cache/review/webkit-font-loading.json`.
+
+## Batched browser measurements
+
+On 23 October, the browser guard changed from interleaving paragraph writes and layout reads to shared read, rewrite, measurement, and commit phases.[^layout-thrashing] Source styles are copied into primitive records before writes; geometry and inline contracts are checked again after rewrites. All measurement boxes are built detached, attached together, read together, and removed before spacing is written. Existing observers still check the committed result, preserving native fallback and selection handling.
+
+Chromium 151 at a 390-pixel viewport and 4× CPU slowdown produced these page-level layout counts on the same saved content, served locally without live reload. Counts include normal page layout as well as forced layout; timings depend on the machine and these are not measurements of the deployed site.
+
+| Page                   | Cold load before | Cold load after | Resize before | Resize after |
+| ---------------------- | ---------------: | --------------: | ------------: | -----------: |
+| Home                   |               21 |              12 |            21 |            9 |
+| Writing                |               41 |              17 |            41 |           13 |
+| FinagleCon             |              116 |              27 |            77 |           20 |
+| Shallow/deep embedding |              170 |              25 |            89 |           18 |
+
+`make check-browser` includes `scripts/check_layout_performance.cjs`. It checks four routes at phone and desktop widths in Chromium, limits resize updates to 24 layout and style recalculations each, and verifies that subsequent idle time does no additional work. A fixture generated by the real Go transformer checks nested and sibling scopes, line widths, and inline-image changes in Chromium and WebKit. Analytics is stubbed during these isolated checks to avoid recording test traffic. Results are saved in `.cache/review/chromium-layout-performance.json`.
+
+[^layout-thrashing]: Wagner, Lewis, and Pollard. [Avoid large, complex layouts and layout thrashing](https://web.dev/articles/avoid-large-complex-layouts-and-layout-thrashing). Google web.dev, updated 7 May 2025.

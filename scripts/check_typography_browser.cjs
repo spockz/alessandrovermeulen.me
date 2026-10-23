@@ -220,10 +220,14 @@ async function checkProjectBadges(page) {
         (scheme === "dark"),
       colorScheme,
     );
-    await page.evaluate(() =>
-      Promise.all(
-        document.getAnimations().map((animation) => animation.finished),
-      ),
+    // A theme change can cancel a previous transition before its promise resolves.
+    await page.waitForFunction(() =>
+      document
+        .getAnimations()
+        .every(
+          (animation) =>
+            !animation.pending && animation.playState !== "running",
+        ),
     );
     for (const width of [320, 834, 1280]) {
       await page.setViewportSize({ width, height: 874 });
